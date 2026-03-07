@@ -915,14 +915,14 @@
                             </linearGradient>
                         </defs>
                         
-                        <!-- Connection Paths -->
-                        <path id="path-1-2" class="journey-path" d="M 150 100 Q 225 100, 300 150" 
+                        <!-- Connection Paths (edge-to-edge connections) -->
+                        <path id="path-1-2" class="journey-path" d="M 200 100 Q 325 125, 400 150" 
                               stroke="url(#path-gradient)" stroke-width="4" fill="none" opacity="0.3"/>
-                        <path id="path-2-3" class="journey-path" d="M 450 150 Q 525 150, 600 250" 
+                        <path id="path-2-3" class="journey-path" d="M 500 150 Q 625 200, 700 250" 
                               stroke="url(#path-gradient)" stroke-width="4" fill="none" opacity="0.3"/>
-                        <path id="path-3-4" class="journey-path" d="M 750 250 Q 825 250, 900 150" 
+                        <path id="path-3-4" class="journey-path" d="M 800 250 Q 925 200, 1000 150" 
                               stroke="url(#path-gradient)" stroke-width="4" fill="none" opacity="0.3"/>
-                        <path id="path-4-5" class="journey-path" d="M 1050 150 Q 1125 150, 1200 100" 
+                        <path id="path-4-5" class="journey-path" d="M 1100 150 Q 1150 125, 1150 100" 
                               stroke="url(#path-gradient)" stroke-width="4" fill="none" opacity="0.3"/>
                         
                         <!-- Journey Nodes -->
@@ -1327,6 +1327,11 @@
         </div>
     </footer>
 
+    <!-- Hover-only Product Label (for 3D products) -->
+    <div id="product-label" style="position: absolute; display: none; background: rgba(15,15,15,0.9); padding: 10px 20px; border-radius: 8px; pointer-events: none; transition: opacity 0.3s; z-index: 9999; border: 1px solid #C87533;">
+        <p style="color: #C87533; font-weight: 600; margin: 0; white-space: nowrap;"></p>
+    </div>
+
     <script>
         // ========== INTERACTIVE SUPPLY CHAIN JOURNEY ==========
         const journeyState = {
@@ -1685,10 +1690,11 @@
             ground.receiveShadow = true;
             scene.add(ground);
 
-            // Create products
+            // Create products with realistic 3D shapes
             const productMeshes = [];
-            products.forEach((product, index) => {
-                const geometry = new THREE.BoxGeometry(product.size[0], product.size[1], product.size[2]);
+            
+            // Helper function to create product geometries
+            function createProduct(index, product) {
                 const material = new THREE.MeshStandardMaterial({
                     color: product.color,
                     roughness: 0.7,
@@ -1696,8 +1702,106 @@
                     emissive: product.color,
                     emissiveIntensity: 0.05
                 });
+
+                let mesh;
                 
-                const mesh = new THREE.Mesh(geometry, material);
+                switch(index) {
+                    case 0: // Eco-Concrete Blocks - rectangular blocks with beveled edges
+                        const blockGeometry = new THREE.BoxGeometry(4, 6, 4, 2, 2, 2);
+                        mesh = new THREE.Mesh(blockGeometry, material);
+                        break;
+                        
+                    case 1: // Sustainable Aggregates - pile of small rocks
+                        const aggregateGroup = new THREE.Group();
+                        for (let i = 0; i < 25; i++) {
+                            const rockSize = Math.random() * 0.5 + 0.3;
+                            const rockGeom = new THREE.DodecahedronGeometry(rockSize);
+                            const rockMesh = new THREE.Mesh(rockGeom, material);
+                            rockMesh.position.set(
+                                (Math.random() - 0.5) * 3,
+                                Math.random() * 2,
+                                (Math.random() - 0.5) * 3
+                            );
+                            rockMesh.castShadow = true;
+                            rockMesh.receiveShadow = true;
+                            aggregateGroup.add(rockMesh);
+                        }
+                        mesh = aggregateGroup;
+                        break;
+                        
+                    case 2: // Green Paving Stones - hexagonal paver
+                        const paverGeometry = new THREE.CylinderGeometry(2.5, 2.5, 0.8, 6);
+                        mesh = new THREE.Mesh(paverGeometry, material);
+                        break;
+                        
+                    case 3: // Low-Carbon Bricks - stack of bricks
+                        const brickGroup = new THREE.Group();
+                        for (let i = 0; i < 4; i++) {
+                            const brickGeom = new THREE.BoxGeometry(4, 2, 2);
+                            const brickMesh = new THREE.Mesh(brickGeom, material);
+                            brickMesh.position.y = i * 2.1;
+                            brickMesh.castShadow = true;
+                            brickMesh.receiveShadow = true;
+                            brickGroup.add(brickMesh);
+                        }
+                        mesh = brickGroup;
+                        break;
+                        
+                    case 4: // Geopolymer Cement - barrel/cylinder
+                        const barrelGroup = new THREE.Group();
+                        const barrelBody = new THREE.Mesh(
+                            new THREE.CylinderGeometry(1.2, 1.2, 7, 16),
+                            material
+                        );
+                        barrelBody.castShadow = true;
+                        barrelBody.receiveShadow = true;
+                        barrelGroup.add(barrelBody);
+                        
+                        // Add metal bands
+                        const bandMaterial = new THREE.MeshStandardMaterial({
+                            color: 0x333333,
+                            roughness: 0.3,
+                            metalness: 0.8
+                        });
+                        for (let i = -2; i <= 2; i++) {
+                            const band = new THREE.Mesh(
+                                new THREE.CylinderGeometry(1.25, 1.25, 0.2, 16),
+                                bandMaterial
+                            );
+                            band.position.y = i * 1.5;
+                            barrelGroup.add(band);
+                        }
+                        mesh = barrelGroup;
+                        break;
+                        
+                    case 5: // Recycled Fill Material - pile of chunky spheres
+                        const fillGroup = new THREE.Group();
+                        for (let i = 0; i < 35; i++) {
+                            const chunkSize = Math.random() * 0.6 + 0.4;
+                            const chunkGeom = new THREE.SphereGeometry(chunkSize, 6, 6);
+                            const chunkMesh = new THREE.Mesh(chunkGeom, material);
+                            chunkMesh.position.set(
+                                (Math.random() - 0.5) * 4,
+                                Math.random() * 2.5,
+                                (Math.random() - 0.5) * 4
+                            );
+                            chunkMesh.castShadow = true;
+                            chunkMesh.receiveShadow = true;
+                            fillGroup.add(chunkMesh);
+                        }
+                        mesh = fillGroup;
+                        break;
+                        
+                    case 6: // Industrial Sand - cone/pyramid pile
+                        const coneGeometry = new THREE.ConeGeometry(2.5, 4.5, 32);
+                        mesh = new THREE.Mesh(coneGeometry, material);
+                        break;
+                        
+                    default:
+                        const defaultGeometry = new THREE.BoxGeometry(4, 6, 4);
+                        mesh = new THREE.Mesh(defaultGeometry, material);
+                }
+                
                 mesh.position.set(product.pos[0], product.pos[1], product.pos[2]);
                 mesh.castShadow = true;
                 mesh.receiveShadow = true;
@@ -1708,27 +1812,13 @@
                     index: index
                 };
                 
+                return mesh;
+            }
+            
+            products.forEach((product, index) => {
+                const mesh = createProduct(index, product);
                 scene.add(mesh);
                 productMeshes.push(mesh);
-
-                // Add text sprite for labels
-                const canvas = document.createElement('canvas');
-                const context = canvas.getContext('2d');
-                canvas.width = 512;
-                canvas.height = 128;
-                context.fillStyle = 'rgba(0,0,0,0.7)';
-                context.fillRect(0, 0, canvas.width, canvas.height);
-                context.font = 'bold 36px "Plus Jakarta Sans", sans-serif';
-                context.fillStyle = '#C87533';
-                context.textAlign = 'center';
-                context.fillText(product.name, 256, 70);
-                
-                const texture = new THREE.CanvasTexture(canvas);
-                const spriteMaterial = new THREE.SpriteMaterial({ map: texture, transparent: true });
-                const sprite = new THREE.Sprite(spriteMaterial);
-                sprite.scale.set(8, 2, 1);
-                sprite.position.set(product.pos[0], product.pos[1] + product.size[1]/2 + 3, product.pos[2]);
-                scene.add(sprite);
             });
 
             // Mouse interaction variables
@@ -1745,6 +1835,20 @@
             const infoPanel = document.getElementById('product-info-panel');
             const productName = document.getElementById('product-name');
             const productDescription = document.getElementById('product-description');
+            const productLabel = document.getElementById('product-label');
+            
+            // Helper function to convert 3D position to screen position
+            function toScreenPosition(obj, camera) {
+                const vector = new THREE.Vector3();
+                const canvas = renderer.domElement;
+                obj.updateMatrixWorld();
+                vector.setFromMatrixPosition(obj.matrixWorld);
+                vector.project(camera);
+                return {
+                    x: (vector.x * 0.5 + 0.5) * canvas.clientWidth,
+                    y: (vector.y * -0.5 + 0.5) * canvas.clientHeight
+                };
+            }
 
             // Mouse events
             container.addEventListener('mousedown', (e) => {
@@ -1766,26 +1870,64 @@
                     targetRotationX = Math.max(-Math.PI / 4, Math.min(Math.PI / 4, targetRotationX));
                     previousMouseX = e.clientX;
                     previousMouseY = e.clientY;
+                    // Hide label while dragging
+                    productLabel.style.display = 'none';
                 } else {
                     // Raycasting for hover effect
                     raycaster.setFromCamera(mouse, camera);
-                    const intersects = raycaster.intersectObjects(productMeshes);
+                    const intersects = raycaster.intersectObjects(productMeshes, true);
                     
                     // Reset previous hover
                     if (hoveredProduct && (!intersects.length || intersects[0].object !== hoveredProduct)) {
-                        hoveredProduct.material.emissiveIntensity = 0.05;
+                        // Reset emissive for previous hover
+                        if (hoveredProduct.material && hoveredProduct.material.emissiveIntensity !== undefined) {
+                            hoveredProduct.material.emissiveIntensity = 0.05;
+                        } else if (hoveredProduct.children) {
+                            hoveredProduct.traverse((child) => {
+                                if (child.material && child.material.emissiveIntensity !== undefined) {
+                                    child.material.emissiveIntensity = 0.05;
+                                }
+                            });
+                        }
                         hoveredProduct = null;
                         container.style.cursor = 'grab';
+                        productLabel.style.display = 'none';
                     }
                     
                     // Set new hover
                     if (intersects.length > 0) {
-                        const object = intersects[0].object;
-                        if (object !== hoveredProduct) {
-                            hoveredProduct = object;
-                            hoveredProduct.material.emissiveIntensity = 0.2;
-                            container.style.cursor = 'pointer';
+                        let object = intersects[0].object;
+                        // Find the parent product mesh (not individual children)
+                        while (object.parent && !object.userData.name && object.parent.type !== 'Scene') {
+                            object = object.parent;
                         }
+                        
+                        if (object.userData.name && object !== hoveredProduct) {
+                            hoveredProduct = object;
+                            
+                            // Highlight product
+                            if (hoveredProduct.material && hoveredProduct.material.emissiveIntensity !== undefined) {
+                                hoveredProduct.material.emissiveIntensity = 0.2;
+                            } else if (hoveredProduct.children) {
+                                hoveredProduct.traverse((child) => {
+                                    if (child.material && child.material.emissiveIntensity !== undefined) {
+                                        child.material.emissiveIntensity = 0.2;
+                                    }
+                                });
+                            }
+                            
+                            container.style.cursor = 'pointer';
+                            
+                            // Show and position label
+                            const screenPos = toScreenPosition(hoveredProduct, camera);
+                            productLabel.style.left = (rect.left + screenPos.x) + 'px';
+                            productLabel.style.top = (rect.top + screenPos.y - 60) + 'px';
+                            productLabel.querySelector('p').textContent = object.userData.name;
+                            productLabel.style.display = 'block';
+                            productLabel.style.opacity = '1';
+                        }
+                    } else {
+                        productLabel.style.display = 'none';
                     }
                 }
             });
@@ -1796,6 +1938,19 @@
 
             container.addEventListener('mouseleave', () => {
                 isDragging = false;
+                productLabel.style.display = 'none';
+                if (hoveredProduct) {
+                    if (hoveredProduct.material && hoveredProduct.material.emissiveIntensity !== undefined) {
+                        hoveredProduct.material.emissiveIntensity = 0.05;
+                    } else if (hoveredProduct.children) {
+                        hoveredProduct.traverse((child) => {
+                            if (child.material && child.material.emissiveIntensity !== undefined) {
+                                child.material.emissiveIntensity = 0.05;
+                            }
+                        });
+                    }
+                    hoveredProduct = null;
+                }
             });
 
             container.addEventListener('click', (e) => {
