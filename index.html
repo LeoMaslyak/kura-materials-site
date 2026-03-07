@@ -1889,6 +1889,21 @@
                 threeObserver.observe(threeContainer);
             }
         });
+
+                // ========== HIDE LOADING SCREEN ==========
+                window.addEventListener('load', () => {
+                    const loadingScreen = document.getElementById('loading-screen');
+                                if (loadingScreen) {
+                                                    loadingScreen.classList.add('hidden');
+        }
+                });
+                // Fallback: hide after 3s in case load event is slow
+                setTimeout(() => {
+                                                            const loadingScreen = document.getElementById('loading-screen');
+                                if (loadingScreen) {
+                            loadingScreen.classList.add('hidden');
+        }
+        }, 3000);
     </script>
 </body>
 </html>
