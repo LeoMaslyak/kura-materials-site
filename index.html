@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kura Materials — From Waste to Worth</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --charcoal: #1a1a1a;
+            --copper: #C87533;
+            --sage: #4A7C59;
+            --earth-dark: #2a2520;
+            --earth-light: #3d3530;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--charcoal);
+            color: #e8e8e8;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        /* Grain texture overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            z-index: 9999;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.8; }
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        .parallax-layer {
+            transition: transform 0.1s ease-out;
+        }
+
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(135deg, var(--copper) 0%, #e8a75d 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gradient-text-green {
+            background: linear-gradient(135deg, var(--sage) 0%, #6fa87d 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Particle background */
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--copper);
+            opacity: 0.15;
+            animation: pulse-slow 4s ease-in-out infinite;
+        }
+
+        /* Card hover effects */
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(200, 117, 51, 0.15);
+        }
+
+        /* Circular progress */
+        .circle-progress {
+            transform: rotate(-90deg);
+        }
+
+        .circle-progress circle {
+            transition: stroke-dashoffset 2s ease-out;
+        }
+
+        /* Scroll indicator */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+        }
+
+        .scroll-indicator {
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        /* Button styles */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--copper) 0%, #e8a75d 100%);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(200, 117, 51, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(200, 117, 51, 0.4);
+        }
+
+        .btn-secondary {
+            border: 2px solid var(--copper);
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: var(--copper);
+            transform: translateY(-2px);
+        }
+
+        /* SDG colors */
+        .sdg-9 { background: linear-gradient(135deg, #fd6925 0%, #ff8547 100%); }
+        .sdg-11 { background: linear-gradient(135deg, #fd9d24 0%, #fdb447 100%); }
+        .sdg-12 { background: linear-gradient(135deg, #bf8b2e 0%, #d4a347 100%); }
+        .sdg-13 { background: linear-gradient(135deg, #3f7e44 0%, #5a9960 100%); }
+        .sdg-15 { background: linear-gradient(135deg, #56c02b 0%, #73d34d 100%); }
+
+        /* Flow diagram animation */
+        @keyframes flow {
+            0% { stroke-dashoffset: 1000; }
+            100% { stroke-dashoffset: 0; }
+        }
+
+        .flow-line {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+        }
+
+        .flow-line.active {
+            animation: flow 3s ease-out forwards;
+        }
+
+        /* Hidden by default for scroll animations */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .scroll-animate.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .particle { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Particle Background Container -->
+    <div id="particles" class="fixed inset-0 pointer-events-none overflow-hidden" style="z-index: 0;"></div>
+
+    <!-- SECTION 1: HERO -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden" style="z-index: 1;">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#1a1a1a]"></div>
+        
+        <div class="container mx-auto px-6 relative z-10 text-center parallax-layer" data-speed="0.5">
+            <div class="max-w-5xl mx-auto">
+                <h1 class="text-6xl md:text-8xl lg:text-9xl font-bold mb-6 animate-fade-in-up" style="animation-delay: 0.2s; opacity: 0;">
+                    From Waste<br/>to <span class="gradient-text">Worth</span>
+                </h1>
+                <p class="text-xl md:text-2xl lg:text-3xl text-gray-400 mb-12 font-light max-w-3xl mx-auto animate-fade-in-up" style="animation-delay: 0.4s; opacity: 0;">
+                    Transforming mining tailings into the building blocks of a sustainable future
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up" style="animation-delay: 0.6s; opacity: 0;">
+                    <a href="#process" class="btn-primary px-8 py-4 rounded-full text-lg font-semibold text-white inline-block">
+                        Discover Our Process
+                    </a>
+                    <a href="#products" class="btn-secondary px-8 py-4 rounded-full text-lg font-semibold text-white inline-block">
+                        View Products
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 scroll-indicator animate-fade-in" style="animation-delay: 1s; opacity: 0;">
+            <svg width="30" height="50" viewBox="0 0 30 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="1" y="1" width="28" height="48" rx="14" stroke="#C87533" stroke-width="2"/>
+                <circle cx="15" cy="15" r="4" fill="#C87533">
+                    <animate attributeName="cy" from="15" to="35" dur="1.5s" repeatCount="indefinite"/>
+                    <animate attributeName="opacity" from="1" to="0" dur="1.5s" repeatCount="indefinite"/>
+                </circle>
+            </svg>
+        </div>
+    </section>
+
+    <!-- SECTION 2: THE PROBLEM -->
+    <section class="relative py-32 bg-gradient-to-b from-[#1a1a1a] to-[#2a2520]" style="z-index: 1;">
+        <div class="container mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <!-- Left: Big Stat -->
+                <div class="scroll-animate">
+                    <div class="text-8xl md:text-9xl font-bold gradient-text mb-6 counter" data-target="10">0</div>
+                    <div class="text-4xl md:text-5xl font-bold text-white mb-4">BILLION TONS</div>
+                    <p class="text-xl text-gray-400">of mining tailings generated annually worldwide</p>
+                </div>
+
+                <!-- Right: Problem Cards -->
+                <div class="space-y-6">
+                    <div class="scroll-animate card-hover bg-[#2a2520] border border-gray-800 rounded-2xl p-8" style="animation-delay: 0.1s;">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[#C87533] to-[#e8a75d] mb-6 flex items-center justify-center">
+                            <span class="text-2xl">⚠️</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-4">Mining Waste Crisis</h3>
+                        <p class="text-gray-400 leading-relaxed">Billions of tons of tailings create environmental risks, contamination threats, and massive storage costs for mining operations globally.</p>
+                    </div>
+
+                    <div class="scroll-animate card-hover bg-[#2a2520] border border-gray-800 rounded-2xl p-8" style="animation-delay: 0.2s;">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[#C87533] to-[#e8a75d] mb-6 flex items-center justify-center">
+                            <span class="text-2xl">🏭</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-4">Construction Emissions</h3>
+                        <p class="text-gray-400 leading-relaxed">The construction sector produces 8% of global CO₂ emissions, primarily from cement production and material manufacturing.</p>
+                    </div>
+
+                    <div class="scroll-animate card-hover bg-[#2a2520] border border-gray-800 rounded-2xl p-8" style="animation-delay: 0.3s;">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[#4A7C59] to-[#6fa87d] mb-6 flex items-center justify-center">
+                            <span class="text-2xl">♻️</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-4">Disconnected System</h3>
+                        <p class="text-gray-400 leading-relaxed">Two massive problems, one elegant solution — bridging mining waste management with sustainable construction materials.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: MARKET OPPORTUNITY -->
+    <section class="relative py-32 bg-[#2a2520]" style="z-index: 1;">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 scroll-animate">
+                <h2 class="text-5xl md:text-7xl font-bold text-white mb-6">Market <span class="gradient-text">Opportunity</span></h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">At the intersection of two global industries lies unprecedented potential for sustainable innovation</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div class="scroll-animate text-center p-8 bg-gradient-to-b from-[#3d3530] to-transparent rounded-2xl" style="animation-delay: 0.1s;">
+                    <div class="text-6xl md:text-7xl font-bold gradient-text mb-4">$<span class="counter" data-target="400">0</span>B+</div>
+                    <p class="text-xl text-gray-300 font-semibold mb-2">Global Concrete Market</p>
+                    <p class="text-gray-500">Annual market size and growing</p>
+                </div>
+
+                <div class="scroll-animate text-center p-8 bg-gradient-to-b from-[#3d3530] to-transparent rounded-2xl" style="animation-delay: 0.2s;">
+                    <div class="text-6xl md:text-7xl font-bold gradient-text-green mb-4"><span class="counter" data-target="10">0</span>B+</div>
+                    <p class="text-xl text-gray-300 font-semibold mb-2">Tons of Tailings</p>
+                    <p class="text-gray-500">Generated annually worldwide</p>
+                </div>
+
+                <div class="scroll-animate text-center p-8 bg-gradient-to-b from-[#3d3530] to-transparent rounded-2xl" style="animation-delay: 0.3s;">
+                    <div class="text-6xl md:text-7xl font-bold gradient-text mb-4"><span class="counter" data-target="100">0</span>%</div>
+                    <p class="text-xl text-gray-300 font-semibold mb-2">Scalable Solution</p>
+                    <p class="text-gray-500">Adaptable to any mining operation</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: OUR PROCESS -->
+    <section id="process" class="relative py-32 bg-gradient-to-b from-[#2a2520] to-[#1a1a1a]" style="z-index: 1;">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-20 scroll-animate">
+                <h2 class="text-5xl md:text-7xl font-bold text-white mb-6">Our <span class="gradient-text">Process</span></h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">From waste to worth in three transformative stages</p>
+            </div>
+
+            <div class="max-w-6xl mx-auto">
+                <!-- Process Steps -->
+                <div class="grid md:grid-cols-3 gap-8 mb-16">
+                    <div class="scroll-animate text-center" style="animation-delay: 0.1s;">
+                        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-[#C87533] to-[#e8a75d] mx-auto mb-6 flex items-center justify-center text-3xl font-bold text-white">1</div>
+                        <h3 class="text-2xl font-bold text-white mb-4">Tailings Collection</h3>
+                        <p class="text-gray-400 leading-relaxed">Sourcing mining byproduct from operations worldwide, recovering a waste stream with massive potential.</p>
+                    </div>
+
+                    <div class="scroll-animate text-center" style="animation-delay: 0.2s;">
+                        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-[#C87533] to-[#e8a75d] mx-auto mb-6 flex items-center justify-center text-3xl font-bold text-white">2</div>
+                        <h3 class="text-2xl font-bold text-white mb-4">Treatment & Processing</h3>
+                        <p class="text-gray-400 leading-relaxed">Proprietary combination of physical and chemical processes, including alkali activation. Recovers valuable metals and water.</p>
+                    </div>
+
+                    <div class="scroll-animate text-center" style="animation-delay: 0.3s;">
+                        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-[#4A7C59] to-[#6fa87d] mx-auto mb-6 flex items-center justify-center text-3xl font-bold text-white">3</div>
+                        <h3 class="text-2xl font-bold text-white mb-4">Product Manufacturing</h3>
+                        <p class="text-gray-400 leading-relaxed">Creating high-performance materials: concrete, aggregates, geopolymers, and urban furniture for sustainable cities.</p>
+                    </div>
+                </div>
+
+                <!-- Circular Progress Indicator -->
+                <div class="scroll-animate text-center">
+                    <div class="inline-block relative">
+                        <svg width="200" height="200" class="circle-progress">
+                            <circle cx="100" cy="100" r="90" stroke="#3d3530" stroke-width="12" fill="none"/>
+                            <circle id="progress-circle" cx="100" cy="100" r="90" stroke="url(#gradient)" stroke-width="12" fill="none" 
+                                    stroke-dasharray="565.48" stroke-dashoffset="565.48" stroke-linecap="round"/>
+                            <defs>
+                                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#C87533;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#4A7C59;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center">
+                            <div class="text-5xl font-bold gradient-text"><span class="counter" data-target="95">0</span>%</div>
+                            <div class="text-sm text-gray-400 mt-2">Waste Diverted</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mt-8 max-w-2xl mx-auto">Low investment, high return. Adaptable to any mining operation with proven results.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: PRODUCTS -->
+    <section id="products" class="relative py-32 bg-[#1a1a1a]" style="z-index: 1;">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-20 scroll-animate">
+                <h2 class="text-5xl md:text-7xl font-bold text-white mb-6">Our <span class="gradient-text">Products</span></h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Premium sustainable materials for the built environment</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <div class="scroll-animate card-hover bg-gradient-to-br from-[#2a2520] to-[#1a1a1a] border border-gray-800 rounded-2xl p-10" style="animation-delay: 0.1s;">
+                    <div class="text-5xl mb-6">🏗️</div>
+                    <h3 class="text-3xl font-bold text-white mb-4">Eco-Concrete</h3>
+                    <p class="text-gray-400 leading-relaxed mb-4">Up to 70% recycled tailings content. Certified for both structural and decorative applications with performance matching traditional concrete.</p>
+                    <div class="inline-block px-4 py-2 bg-[#C87533] bg-opacity-20 rounded-full text-[#C87533] text-sm font-semibold">Certified Structural</div>
+                </div>
+
+                <div class="scroll-animate card-hover bg-gradient-to-br from-[#2a2520] to-[#1a1a1a] border border-gray-800 rounded-2xl p-10" style="animation-delay: 0.2s;">
+                    <div class="text-5xl mb-6">⚙️</div>
+                    <h3 class="text-3xl font-bold text-white mb-4">Artificial Aggregates</h3>
+                    <p class="text-gray-400 leading-relaxed mb-4">100% tailing-derived aggregates using alkali-activation technology. Superior performance with zero environmental impact.</p>
+                    <div class="inline-block px-4 py-2 bg-[#4A7C59] bg-opacity-20 rounded-full text-[#6fa87d] text-sm font-semibold">100% Recycled</div>
+                </div>
+
+                <div class="scroll-animate card-hover bg-gradient-to-br from-[#2a2520] to-[#1a1a1a] border border-gray-800 rounded-2xl p-10" style="animation-delay: 0.3s;">
+                    <div class="text-5xl mb-6">🧪</div>
+                    <h3 class="text-3xl font-bold text-white mb-4">Geopolymers</h3>
+                    <p class="text-gray-400 leading-relaxed mb-4">Complete cement replacement using 100% tailing material. Advanced binding properties with dramatically reduced carbon footprint.</p>
+                    <div class="inline-block px-4 py-2 bg-[#C87533] bg-opacity-20 rounded-full text-[#C87533] text-sm font-semibold">Zero Cement</div>
+                </div>
+
+                <div class="scroll-animate card-hover bg-gradient-to-br from-[#2a2520] to-[#1a1a1a] border border-gray-800 rounded-2xl p-10" style="animation-delay: 0.4s;">
+                    <div class="text-5xl mb-6">🪑</div>
+                    <h3 class="text-3xl font-bold text-white mb-4">Urban Furniture</h3>
+                    <p class="text-gray-400 leading-relaxed mb-4">Benches, planters, and bollards for public spaces. Durable, beautiful, and sustainable infrastructure for modern cities.</p>
+                    <div class="inline-block px-4 py-2 bg-[#4A7C59] bg-opacity-20 rounded-full text-[#6fa87d] text-sm font-semibold">Public Spaces</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: SCIENCE & RESEARCH -->
+    <section class="relative py-32 bg-gradient-to-b from-[#1a1a1a] to-[#2a2520]" style="z-index: 1;">
+        <div class="container mx-auto px-6">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-16 scroll-animate">
+                    <h2 class="text-5xl md:text-7xl font-bold text-white mb-6">Backed by <span class="gradient-text">Science</span></h2>
+                    <p class="text-2xl text-gray-400">10+ Years of Research & Development</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-12">
+                    <div class="scroll-animate" style="animation-delay: 0.1s;">
+                        <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                            <span class="text-3xl">🎓</span>
+                            Academic Excellence
+                        </h3>
+                        <ul class="space-y-4 text-gray-400">
+                            <li class="flex items-start gap-3">
+                                <span class="text-[#C87533] mt-1">✓</span>
+                                <span>Founded at Pontificia Universidad Católica de Chile</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-[#C87533] mt-1">✓</span>
+                                <span>4 peer-reviewed papers published in 2025</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-[#C87533] mt-1">✓</span>
+                                <span>Topics: alkali-activated aggregates, copper tailings, mortar applications</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="scroll-animate" style="animation-delay: 0.2s;">
+                        <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                            <span class="text-3xl">🌍</span>
+                            Global Recognition
+                        </h3>
+                        <ul class="space-y-4 text-gray-400">
+                            <li class="flex items-start gap-3">
+                                <span class="text-[#4A7C59] mt-1">✓</span>
+                                <span>Featured at London Design Biennale 2025</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-[#4A7C59] mt-1">✓</span>
+                                <span>Showcased at ExpoMin 2025</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-[#4A7C59] mt-1">✓</span>
+                                <span>PhD researchers from Utah, Politecnico di Milano, Notre Dame, PUC Chile</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="scroll-animate mt-16 p-10 bg-gradient-to-br from-[#3d3530] to-transparent border border-gray-800 rounded-2xl" style="animation-delay: 0.3s;">
+                    <p class="text-xl text-gray-300 leading-relaxed text-center">
+                        "Our research demonstrates that mining tailings can be transformed into high-performance construction materials through innovative alkali-activation processes, creating a circular economy solution that benefits both industries."
+                    </p>
+                    <p class="text-center mt-6 text-[#C87533] font-semibold">— Research Team, T2CM</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 7: SDG IMPACT -->
+    <section class="relative py-32 bg-[#2a2520]" style="z-index: 1;">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-20 scroll-animate">
+                <h2 class="text-5xl md:text-7xl font-bold text-white mb-6">Sustainable Development <span class="gradient-text">Impact</span></h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Contributing to the United Nations Sustainable Development Goals</p>
+            </div>
+
+            <div class="grid md:grid-cols-5 gap-6 max-w-6xl mx-auto">
+                <div class="scroll-animate text-center" style="animation-delay: 0.1s;">
+                    <div class="sdg-9 w-32 h-32 rounded-2xl mx-auto mb-4 flex items-center justify-center text-white text-5xl font-bold shadow-xl">9</div>
+                    <h4 class="text-white font-semibold mb-2">Industry & Innovation</h4>
+                    <p class="text-sm text-gray-500">Infrastructure</p>
+                </div>
+
+                <div class="scroll-animate text-center" style="animation-delay: 0.2s;">
+                    <div class="sdg-11 w-32 h-32 rounded-2xl mx-auto mb-4 flex items-center justify-center text-white text-5xl font-bold shadow-xl">11</div>
+                    <h4 class="text-white font-semibold mb-2">Sustainable</h4>
+                    <p class="text-sm text-gray-500">Cities</p>
+                </div>
+
+                <div class="scroll-animate text-center" style="animation-delay: 0.3s;">
+                    <div class="sdg-12 w-32 h-32 rounded-2xl mx-auto mb-4 flex items-center justify-center text-white text-5xl font-bold shadow-xl">12</div>
+                    <h4 class="text-white font-semibold mb-2">Responsible</h4>
+                    <p class="text-sm text-gray-500">Consumption</p>
+                </div>
+
+                <div class="scroll-animate text-center" style="animation-delay: 0.4s;">
+                    <div class="sdg-13 w-32 h-32 rounded-2xl mx-auto mb-4 flex items-center justify-center text-white text-5xl font-bold shadow-xl">13</div>
+                    <h4 class="text-white font-semibold mb-2">Climate</h4>
+                    <p class="text-sm text-gray-500">Action</p>
+                </div>
+
+                <div class="scroll-animate text-center" style="animation-delay: 0.5s;">
+                    <div class="sdg-15 w-32 h-32 rounded-2xl mx-auto mb-4 flex items-center justify-center text-white text-5xl font-bold shadow-xl">15</div>
+                    <h4 class="text-white font-semibold mb-2">Life</h4>
+                    <p class="text-sm text-gray-500">on Land</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 8: CIRCULAR ECONOMY -->
+    <section class="relative py-32 bg-gradient-to-b from-[#2a2520] to-[#1a1a1a]" style="z-index: 1;">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-20 scroll-animate">
+                <h2 class="text-5xl md:text-7xl font-bold text-white mb-6">Circular <span class="gradient-text-green">Economy</span></h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Closing the loop between mining and construction</p>
+            </div>
+
+            <div class="max-w-4xl mx-auto scroll-animate">
+                <!-- Circular Flow Diagram -->
+                <div class="relative aspect-square mb-16">
+                    <svg viewBox="0 0 400 400" class="w-full h-full">
+                        <!-- Central circle -->
+                        <circle cx="200" cy="200" r="60" fill="url(#center-gradient)" />
+                        <text x="200" y="205" text-anchor="middle" fill="white" font-size="14" font-weight="bold">T2CM</text>
+                        
+                        <!-- Flow circles -->
+                        <g id="flow-mining">
+                            <circle cx="200" cy="80" r="40" fill="#3d3530" stroke="#C87533" stroke-width="2"/>
+                            <text x="200" y="85" text-anchor="middle" fill="white" font-size="12" font-weight="600">Mining</text>
+                        </g>
+                        
+                        <g id="flow-tailings">
+                            <circle cx="320" cy="200" r="40" fill="#3d3530" stroke="#C87533" stroke-width="2"/>
+                            <text x="320" y="205" text-anchor="middle" fill="white" font-size="12" font-weight="600">Tailings</text>
+                        </g>
+                        
+                        <g id="flow-materials">
+                            <circle cx="200" cy="320" r="40" fill="#3d3530" stroke="#4A7C59" stroke-width="2"/>
+                            <text x="200" y="318" text-anchor="middle" fill="white" font-size="11" font-weight="600">Materials</text>
+                        </g>
+                        
+                        <g id="flow-cities">
+                            <circle cx="80" cy="200" r="40" fill="#3d3530" stroke="#4A7C59" stroke-width="2"/>
+                            <text x="80" y="205" text-anchor="middle" fill="white" font-size="12" font-weight="600">Cities</text>
+                        </g>
+                        
+                        <!-- Flow arrows -->
+                        <path class="flow-line" d="M 200 120 L 200 140" stroke="#C87533" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+                        <path class="flow-line" d="M 260 200 L 280 200" stroke="#C87533" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+                        <path class="flow-line" d="M 200 260 L 200 280" stroke="#4A7C59" stroke-width="3" fill="none" marker-end="url(#arrowhead-green)"/>
+                        <path class="flow-line" d="M 140 200 L 120 200" stroke="#4A7C59" stroke-width="3" fill="none" marker-end="url(#arrowhead-green)"/>
+                        <path class="flow-line" d="M 100 170 L 180 100" stroke="#4A7C59" stroke-width="3" fill="none" marker-end="url(#arrowhead-green)" stroke-dasharray="5,5"/>
+                        
+                        <defs>
+                            <linearGradient id="center-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#C87533;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#4A7C59;stop-opacity:1" />
+                            </linearGradient>
+                            <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                                <polygon points="0 0, 10 3, 0 6" fill="#C87533" />
+                            </marker>
+                            <marker id="arrowhead-green" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                                <polygon points="0 0, 10 3, 0 6" fill="#4A7C59" />
+                            </marker>
+                        </defs>
+                    </svg>
+                </div>
+
+                <!-- Benefits Grid -->
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="scroll-animate p-6 bg-[#2a2520] rounded-xl border border-gray-800" style="animation-delay: 0.1s;">
+                        <h4 class="text-xl font-bold text-white mb-3 flex items-center gap-3">
+                            <span class="text-2xl">♻️</span>
+                            Waste Management
+                        </h4>
+                        <p class="text-gray-400">Transform liabilities into assets, reducing environmental footprint</p>
+                    </div>
+
+                    <div class="scroll-animate p-6 bg-[#2a2520] rounded-xl border border-gray-800" style="animation-delay: 0.2s;">
+                        <h4 class="text-xl font-bold text-white mb-3 flex items-center gap-3">
+                            <span class="text-2xl">🌱</span>
+                            Environmental Impact
+                        </h4>
+                        <p class="text-gray-400">Dramatically reduce CO₂ emissions from construction materials</p>
+                    </div>
+
+                    <div class="scroll-animate p-6 bg-[#2a2520] rounded-xl border border-gray-800" style="animation-delay: 0.3s;">
+                        <h4 class="text-xl font-bold text-white mb-3 flex items-center gap-3">
+                            <span class="text-2xl">🏘️</span>
+                            Community Value
+                        </h4>
+                        <p class="text-gray-400">Create sustainable infrastructure for growing urban populations</p>
+                    </div>
+
+                    <div class="scroll-animate p-6 bg-[#2a2520] rounded-xl border border-gray-800" style="animation-delay: 0.4s;">
+                        <h4 class="text-xl font-bold text-white mb-3 flex items-center gap-3">
+                            <span class="text-2xl">💼</span>
+                            New Jobs
+                        </h4>
+                        <p class="text-gray-400">Build circular economy workforce in mining and construction regions</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 9: CONTACT CTA -->
+    <section class="relative py-32 bg-[#1a1a1a]" style="z-index: 1;">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-12 scroll-animate">
+                    <h2 class="text-5xl md:text-7xl font-bold text-white mb-6">Ready to Build a <span class="gradient-text">Circular Future?</span></h2>
+                    <p class="text-xl text-gray-400">Whether you're a mining company, a municipality, or an architect, let's collaborate on sustainable solutions</p>
+                </div>
+
+                <form class="scroll-animate space-y-6 bg-gradient-to-br from-[#2a2520] to-[#1a1a1a] p-10 rounded-2xl border border-gray-800" style="animation-delay: 0.2s;">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-gray-400 mb-2 text-sm font-semibold">Name</label>
+                            <input type="text" class="w-full px-4 py-3 bg-[#1a1a1a] border border-gray-700 rounded-lg text-white focus:outline-none focus:border-[#C87533] transition-colors" placeholder="Your name">
+                        </div>
+                        <div>
+                            <label class="block text-gray-400 mb-2 text-sm font-semibold">Email</label>
+                            <input type="email" class="w-full px-4 py-3 bg-[#1a1a1a] border border-gray-700 rounded-lg text-white focus:outline-none focus:border-[#C87533] transition-colors" placeholder="your@email.com">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 mb-2 text-sm font-semibold">Company</label>
+                        <input type="text" class="w-full px-4 py-3 bg-[#1a1a1a] border border-gray-700 rounded-lg text-white focus:outline-none focus:border-[#C87533] transition-colors" placeholder="Company name">
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 mb-2 text-sm font-semibold">Message</label>
+                        <textarea rows="5" class="w-full px-4 py-3 bg-[#1a1a1a] border border-gray-700 rounded-lg text-white focus:outline-none focus:border-[#C87533] transition-colors resize-none" placeholder="Tell us about your project..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary w-full py-4 rounded-lg text-lg font-semibold text-white">
+                        Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 10: FOOTER -->
+    <footer class="relative py-16 bg-[#0f0f0f] border-t border-gray-900" style="z-index: 1;">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div>
+                    <div class="text-3xl font-bold gradient-text mb-2">Kura Materials</div>
+                    <p class="text-gray-500 text-sm">Turning Mining Waste Into Sustainable Infrastructure</p>
+                </div>
+                <div class="flex gap-6">
+                    <a href="#" class="text-gray-500 hover:text-[#C87533] transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                    </a>
+                    <a href="#" class="text-gray-500 hover:text-[#C87533] transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="text-center mt-8 pt-8 border-t border-gray-900">
+                <p class="text-gray-600 text-sm">© 2026 Kura Materials. An IESE MBA Case Study.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Particle background generator
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = window.innerWidth < 768 ? 0 : 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                const size = Math.random() * 4 + 2;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 4 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        // Parallax scrolling
+        function handleParallax() {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('.parallax-layer');
+            
+            parallaxElements.forEach(el => {
+                const speed = el.dataset.speed || 0.5;
+                const yPos = -(scrolled * speed);
+                el.style.transform = `translateY(${yPos}px)`;
+            });
+        }
+
+        // Animated counter
+        function animateCounter(element) {
+            const target = parseInt(element.dataset.target);
+            const duration = 2000;
+            const start = 0;
+            const startTime = performance.now();
+            
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+                const current = Math.floor(start + (target - start) * easeOutQuart);
+                
+                element.textContent = current;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                } else {
+                    element.textContent = target;
+                }
+            }
+            
+            requestAnimationFrame(update);
+        }
+
+        // Circular progress animation
+        function animateCircularProgress() {
+            const circle = document.getElementById('progress-circle');
+            if (!circle) return;
+            
+            const radius = 90;
+            const circumference = 2 * Math.PI * radius;
+            const targetPercent = 95;
+            const offset = circumference - (targetPercent / 100) * circumference;
+            
+            setTimeout(() => {
+                circle.style.strokeDashoffset = offset;
+            }, 500);
+        }
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Trigger counter animation
+                    if (entry.target.querySelector('.counter')) {
+                        entry.target.querySelectorAll('.counter').forEach(counter => {
+                            if (!counter.classList.contains('animated')) {
+                                counter.classList.add('animated');
+                                animateCounter(counter);
+                            }
+                        });
+                    }
+                    
+                    // Trigger circular progress
+                    if (entry.target.querySelector('#progress-circle')) {
+                        animateCircularProgress();
+                    }
+                    
+                    // Trigger flow animation
+                    if (entry.target.querySelector('.flow-line')) {
+                        entry.target.querySelectorAll('.flow-line').forEach((line, index) => {
+                            setTimeout(() => {
+                                line.classList.add('active');
+                            }, index * 300);
+                        });
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Observe all scroll-animate elements
+        document.addEventListener('DOMContentLoaded', () => {
+            // Create particles
+            createParticles();
+            
+            // Observe scroll animations
+            document.querySelectorAll('.scroll-animate').forEach(el => {
+                observer.observe(el);
+            });
+            
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // Parallax on scroll
+            let ticking = false;
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        handleParallax();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+        });
+
+        // Form submission (mock)
+        document.querySelector('form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your interest! This is a demo form.');
+        });
+    </script>
+</body>
+</html>
