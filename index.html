@@ -1653,6 +1653,21 @@
                 });
             });
             
+            // Auto-play stage videos on scroll into view
+            const videoObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const video = entry.target;
+                    if (entry.isIntersecting) {
+                        video.play().catch(() => {});
+                    } else {
+                        video.pause();
+                    }
+                });
+            }, { threshold: 0.3 });
+            document.querySelectorAll('.stage-visual video').forEach(v => {
+                videoObserver.observe(v);
+            });
+
             // Parallax on scroll
             let ticking = false;
             window.addEventListener('scroll', () => {
