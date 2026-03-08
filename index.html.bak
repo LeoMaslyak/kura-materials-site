@@ -232,89 +232,6 @@
             transform: translateY(-2px);
         }
 
-        /* ========== TRANSFORMATION STAGES ========== */
-        .stage-visual {
-            border: 1px solid rgba(200, 117, 51, 0.12);
-            box-shadow: 0 0 60px rgba(200, 117, 51, 0.06);
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease;
-        }
-        .stage-visual:hover {
-            transform: scale(1.015);
-            box-shadow: 0 0 80px rgba(200, 117, 51, 0.12);
-        }
-        .stage-shimmer {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(120deg, transparent 30%, rgba(200, 117, 51, 0.04) 50%, transparent 70%);
-            background-size: 200% 200%;
-            animation: stageShimmer 8s ease-in-out infinite;
-            pointer-events: none;
-            z-index: 1;
-        }
-        @keyframes stageShimmer {
-            0%, 100% { background-position: -100% -100%; }
-            50% { background-position: 200% 200%; }
-        }
-        .stage-bg {
-            transition: transform 10s ease;
-        }
-        .stage-visual:hover .stage-bg {
-            transform: scale(1.05);
-        }
-        .stage-bg-1 {
-            background:
-                radial-gradient(ellipse at 30% 40%, rgba(139, 115, 85, 0.35) 0%, transparent 60%),
-                radial-gradient(ellipse at 70% 60%, rgba(200, 117, 51, 0.12) 0%, transparent 50%),
-                radial-gradient(circle at 50% 80%, rgba(100, 80, 60, 0.2) 0%, transparent 40%),
-                linear-gradient(160deg, #2a1f15 0%, #1f1810 40%, #0f0f0f 100%);
-        }
-        .stage-bg-2 {
-            background:
-                radial-gradient(ellipse at 60% 30%, rgba(100, 110, 120, 0.3) 0%, transparent 55%),
-                radial-gradient(ellipse at 30% 70%, rgba(200, 117, 51, 0.1) 0%, transparent 50%),
-                linear-gradient(160deg, #1a1c22 0%, #151518 40%, #0f0f0f 100%);
-        }
-        .stage-bg-3 {
-            background:
-                radial-gradient(ellipse at 50% 50%, rgba(200, 117, 51, 0.25) 0%, transparent 50%),
-                radial-gradient(ellipse at 30% 30%, rgba(232, 167, 93, 0.15) 0%, transparent 45%),
-                radial-gradient(ellipse at 70% 70%, rgba(200, 100, 30, 0.1) 0%, transparent 45%),
-                linear-gradient(160deg, #2a1800 0%, #1a0f00 40%, #0f0f0f 100%);
-        }
-        .stage-bg-4 {
-            background:
-                radial-gradient(ellipse at 40% 40%, rgba(180, 180, 180, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 60% 60%, rgba(200, 117, 51, 0.08) 0%, transparent 45%),
-                linear-gradient(160deg, #1a1a1a 0%, #141414 40%, #0f0f0f 100%);
-        }
-        .stage-bg-5 {
-            background:
-                radial-gradient(ellipse at 40% 50%, rgba(74, 124, 89, 0.25) 0%, transparent 55%),
-                radial-gradient(ellipse at 70% 30%, rgba(74, 124, 89, 0.1) 0%, transparent 45%),
-                linear-gradient(160deg, #0f1a12 0%, #0d150f 40%, #0f0f0f 100%);
-        }
-        .stage-badge {
-            padding: 6px 16px;
-            border-radius: 9999px;
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: 0.02em;
-            border: 1px solid rgba(200, 117, 51, 0.25);
-            color: rgba(200, 117, 51, 0.85);
-            background: rgba(200, 117, 51, 0.06);
-            font-family: "Inter", sans-serif;
-        }
-        .stage-badge-highlight {
-            border-color: rgba(200, 117, 51, 0.5);
-            background: rgba(200, 117, 51, 0.12);
-            color: #C87533;
-        }
-        .stage-badge-sage {
-            border-color: rgba(74, 124, 89, 0.3);
-            color: rgba(74, 124, 89, 0.9);
-            background: rgba(74, 124, 89, 0.06);
-        }
-
         /* SDG colors */
         .sdg-9 { background: linear-gradient(135deg, #fd6925 0%, #ff8547 100%); }
         .sdg-11 { background: linear-gradient(135deg, #fd9d24 0%, #fdb447 100%); }
@@ -322,6 +239,101 @@
         .sdg-13 { background: linear-gradient(135deg, #3f7e44 0%, #5a9960 100%); }
         .sdg-15 { background: linear-gradient(135deg, #56c02b 0%, #73d34d 100%); }
 
+        /* Supply Chain Mini-Game Styles */
+        .journey-node {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .journey-node:hover circle {
+            filter: brightness(1.3);
+        }
+
+        .journey-node.active circle {
+            fill: var(--copper) !important;
+            filter: drop-shadow(0 0 10px var(--copper));
+        }
+
+        .journey-path {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+        }
+
+        .journey-path.animating {
+            animation: drawPath 2s ease-in-out forwards;
+        }
+
+        @keyframes drawPath {
+            to { stroke-dashoffset: 0; }
+        }
+
+        .journey-particle {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #fff, var(--copper));
+            box-shadow: 0 0 20px var(--copper), 0 0 40px var(--copper);
+            opacity: 0;
+            z-index: 100;
+            animation: glow 1s ease-in-out infinite;
+        }
+
+        .journey-particle.moving {
+            opacity: 1;
+        }
+
+        .info-card {
+            position: absolute;
+            background: rgba(15, 15, 15, 0.95);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--copper);
+            border-radius: 16px;
+            padding: 24px;
+            max-width: 300px;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 200;
+            pointer-events: none;
+        }
+
+        .info-card.show {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: rgba(200, 117, 51, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--copper), #e8a75d);
+            width: 0%;
+            transition: width 0.5s ease-out;
+        }
+
+        .completion-card {
+            background: linear-gradient(135deg, rgba(200, 117, 51, 0.2), rgba(74, 124, 89, 0.2));
+            border: 2px solid var(--copper);
+            border-radius: 20px;
+            padding: 32px;
+            margin-top: 24px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .completion-card.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
         /* Circular progress */
         .circle-progress {
@@ -783,176 +795,39 @@
     </section>
 
 
-    <!-- SECTION 4.6: TRANSFORMATION IN ACTION -->
-    <section id="transformation" class="relative py-24 px-6 overflow-hidden" style="background: linear-gradient(180deg, #0f0f0f 0%, #141210 50%, #0f0f0f 100%);">
+    <!-- SECTION 4.6: PARTICLE TRANSFORMATION ANIMATION -->
+    <section id="particle-transformation" class="relative py-24 px-6 overflow-hidden bg-gradient-to-b from-[#0f0f0f] to-[#1e1e1e]">
         <div class="container mx-auto max-w-7xl">
+            <h2 class="text-5xl md:text-6xl font-bold text-center mb-6 scroll-animate">
+                <span class="gradient-text">Transformation in Action</span>
+            </h2>
+            <p class="text-center text-gray-400 mb-16 max-w-3xl mx-auto scroll-animate stagger-1">
+                Watch waste material become sustainable infrastructure
+            </p>
 
-            <!-- Section Header -->
-            <div class="text-center mb-24 scroll-animate">
-                <h2 class="text-5xl md:text-7xl font-bold mb-6">
-                    <span class="gradient-text">Transformation in Action</span>
-                </h2>
-                <p class="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
-                    A precision-engineered metamorphosis &mdash; from mining waste to city infrastructure
-                </p>
-            </div>
-
-            <!-- Stage 1: Raw Tailings -->
-            <div class="stage-card mb-32 lg:mb-40 scroll-animate" data-stage="1">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-                    <div class="stage-visual relative rounded-2xl overflow-hidden aspect-[16/10]">
-                        <div class="absolute inset-0 stage-bg stage-bg-1"></div>
-                        <img src="https://raw.githack.com/LeoMaslyak/kura-materials-site/main/images/stage1-tailings.png" alt="Copper mining tailings aerial view" class="absolute inset-0 w-full h-full object-cover opacity-90">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#0f0f0f]/60 via-transparent to-transparent"></div>
-                        <div class="stage-shimmer"></div>
-                        <span class="absolute top-6 left-8 text-white/[0.04] text-[140px] font-black leading-none select-none pointer-events-none">01</span>
-                    </div>
-                    <div class="lg:pl-4">
-                        <div class="flex items-center gap-3 mb-5">
-                            <span class="inline-block w-10 h-px" style="background: var(--copper);"></span>
-                            <span style="color: var(--copper); font-family: 'Inter', monospace; font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;">Stage 01</span>
-                        </div>
-                        <h3 class="text-3xl md:text-4xl font-bold text-white mb-5">Raw Tailings</h3>
-                        <p class="text-gray-400 text-lg leading-relaxed mb-8">
-                            Copper mining generates billions of tons of waste tailings annually &mdash; gray-brown mountains of untapped potential, sitting idle across desert landscapes worldwide. What the industry sees as a liability, we see as a resource.
-                        </p>
-                        <div class="flex flex-wrap gap-3">
-                            <span class="stage-badge">8 billion tons/year</span>
-                            <span class="stage-badge">180+ countries</span>
-                            <span class="stage-badge">Untapped resource</span>
-                        </div>
-                    </div>
+            <!-- Particle Animation Canvas -->
+            <div class="relative w-full rounded-2xl overflow-hidden scroll-animate stagger-2" style="height: 700px; background: linear-gradient(135deg, rgba(15,15,15,0.95), rgba(30,30,30,0.9)); border: 1px solid rgba(200,117,51,0.2);">
+                <canvas id="particle-canvas"></canvas>
+                <div class="absolute top-4 right-4 bg-black bg-opacity-50 backdrop-blur-sm px-4 py-2 rounded-lg border border-copper border-opacity-30">
+                    <span class="text-xs text-gray-400 font-semibold" id="phase-indicator">Initializing...</span>
                 </div>
             </div>
 
-            <!-- Stage 2: Collection & Transport -->
-            <div class="stage-card mb-32 lg:mb-40 scroll-animate stagger-1" data-stage="2">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-                    <div class="lg:pr-4 order-2 lg:order-1">
-                        <div class="flex items-center gap-3 mb-5">
-                            <span class="inline-block w-10 h-px" style="background: var(--copper);"></span>
-                            <span style="color: var(--copper); font-family: 'Inter', monospace; font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;">Stage 02</span>
-                        </div>
-                        <h3 class="text-3xl md:text-4xl font-bold text-white mb-5">Collection &amp; Transport</h3>
-                        <p class="text-gray-400 text-lg leading-relaxed mb-8">
-                            Industrial-scale logistics collects and transports tailings from mining sites to our processing facilities. No new mining required &mdash; we transform what already exists, using established infrastructure.
-                        </p>
-                        <div class="flex flex-wrap gap-3">
-                            <span class="stage-badge">24/7 operation</span>
-                            <span class="stage-badge">Zero new mining</span>
-                            <span class="stage-badge">Existing infrastructure</span>
-                        </div>
-                    </div>
-                    <div class="stage-visual relative rounded-2xl overflow-hidden aspect-[16/10] order-1 lg:order-2">
-                        <div class="absolute inset-0 stage-bg stage-bg-2"></div>
-                        <img src="https://raw.githack.com/LeoMaslyak/kura-materials-site/main/images/stage2-transport.png" alt="Industrial conveyor belts transporting mining waste" class="absolute inset-0 w-full h-full object-cover opacity-90">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#0f0f0f]/60 via-transparent to-transparent"></div>
-                        <div class="stage-shimmer"></div>
-                        <span class="absolute top-6 right-8 text-white/[0.04] text-[140px] font-black leading-none select-none pointer-events-none">02</span>
-                    </div>
+            <!-- Stats Counter -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 scroll-animate stagger-3">
+                <div class="glass-card rounded-xl p-6 text-center">
+                    <div class="text-4xl font-bold gradient-text mb-2" id="stat-1">0%</div>
+                    <p class="text-gray-400 font-semibold">Waste Diverted</p>
+                </div>
+                <div class="glass-card rounded-xl p-6 text-center">
+                    <div class="text-4xl font-bold gradient-text mb-2" id="stat-2">0%</div>
+                    <p class="text-gray-400 font-semibold">Less CO₂</p>
+                </div>
+                <div class="glass-card rounded-xl p-6 text-center">
+                    <div class="text-4xl font-bold gradient-text mb-2" id="stat-3">0</div>
+                    <p class="text-gray-400 font-semibold">Products</p>
                 </div>
             </div>
-
-            <!-- Stage 3: Alkali Activation -->
-            <div class="stage-card mb-32 lg:mb-40 scroll-animate stagger-2" data-stage="3">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-                    <div class="stage-visual relative rounded-2xl overflow-hidden aspect-[16/10]">
-                        <div class="absolute inset-0 stage-bg stage-bg-3"></div>
-                        <img src="https://raw.githack.com/LeoMaslyak/kura-materials-site/main/images/stage3-activation.png" alt="Alkali activation process with glowing amber liquid" class="absolute inset-0 w-full h-full object-cover opacity-90">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#0f0f0f]/60 via-transparent to-transparent"></div>
-                        <div class="stage-shimmer"></div>
-                        <span class="absolute top-6 left-8 text-white/[0.04] text-[140px] font-black leading-none select-none pointer-events-none">03</span>
-                    </div>
-                    <div class="lg:pl-4">
-                        <div class="flex items-center gap-3 mb-5">
-                            <span class="inline-block w-10 h-px" style="background: var(--copper);"></span>
-                            <span style="color: var(--copper); font-family: 'Inter', monospace; font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;">Stage 03</span>
-                        </div>
-                        <h3 class="text-3xl md:text-4xl font-bold text-white mb-5">Alkali Activation</h3>
-                        <p class="text-gray-400 text-lg leading-relaxed mb-8">
-                            The transformation moment. Proprietary alkali-activation chemistry converts inert waste into high-performance binding materials &mdash; a controlled reaction that turns gray dust into engineered matter.
-                        </p>
-                        <div class="flex flex-wrap gap-3">
-                            <span class="stage-badge">60% less CO&#8322;</span>
-                            <span class="stage-badge">Proprietary process</span>
-                            <span class="stage-badge stage-badge-highlight">The magic moment</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Stage 4: Product Formation -->
-            <div class="stage-card mb-32 lg:mb-40 scroll-animate stagger-1" data-stage="4">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-                    <div class="lg:pr-4 order-2 lg:order-1">
-                        <div class="flex items-center gap-3 mb-5">
-                            <span class="inline-block w-10 h-px" style="background: linear-gradient(to right, var(--copper), var(--sage));"></span>
-                            <span style="color: var(--sage); font-family: 'Inter', monospace; font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;">Stage 04</span>
-                        </div>
-                        <h3 class="text-3xl md:text-4xl font-bold text-white mb-5">Product Formation</h3>
-                        <p class="text-gray-400 text-lg leading-relaxed mb-8">
-                            Precision molds and industrial curing produce construction-grade materials &mdash; concrete blocks, paving stones, and structural elements with performance matching or exceeding traditional alternatives.
-                        </p>
-                        <div class="flex flex-wrap gap-3">
-                            <span class="stage-badge stage-badge-sage">7 product categories</span>
-                            <span class="stage-badge stage-badge-sage">40% stronger</span>
-                            <span class="stage-badge stage-badge-sage">ISO certified</span>
-                        </div>
-                    </div>
-                    <div class="stage-visual relative rounded-2xl overflow-hidden aspect-[16/10] order-1 lg:order-2">
-                        <div class="absolute inset-0 stage-bg stage-bg-4"></div>
-                        <img src="https://raw.githack.com/LeoMaslyak/kura-materials-site/main/images/stage4-products.png" alt="Concrete paving blocks and bricks in precision arrangement" class="absolute inset-0 w-full h-full object-cover opacity-90">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#0f0f0f]/60 via-transparent to-transparent"></div>
-                        <div class="stage-shimmer"></div>
-                        <span class="absolute top-6 right-8 text-white/[0.04] text-[140px] font-black leading-none select-none pointer-events-none">04</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Stage 5: Built to Last -->
-            <div class="stage-card scroll-animate stagger-2" data-stage="5">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-                    <div class="stage-visual relative rounded-2xl overflow-hidden aspect-[16/10]">
-                        <div class="absolute inset-0 stage-bg stage-bg-5"></div>
-                        <img src="https://raw.githack.com/LeoMaslyak/kura-materials-site/main/images/stage5-inuse.png" alt="Modern sustainable building with exposed concrete facade" class="absolute inset-0 w-full h-full object-cover opacity-90">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#0f0f0f]/60 via-transparent to-transparent"></div>
-                        <div class="stage-shimmer"></div>
-                        <span class="absolute top-6 left-8 text-white/[0.04] text-[140px] font-black leading-none select-none pointer-events-none">05</span>
-                    </div>
-                    <div class="lg:pl-4">
-                        <div class="flex items-center gap-3 mb-5">
-                            <span class="inline-block w-10 h-px" style="background: var(--sage);"></span>
-                            <span style="color: var(--sage); font-family: 'Inter', monospace; font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;">Stage 05</span>
-                        </div>
-                        <h3 class="text-3xl md:text-4xl font-bold text-white mb-5">Built to Last</h3>
-                        <p class="text-gray-400 text-lg leading-relaxed mb-8">
-                            Kura products are deployed in buildings, roads, and public infrastructure across urban landscapes. What was once waste now forms the foundation of sustainable cities &mdash; completing the circular economy.
-                        </p>
-                        <div class="flex flex-wrap gap-3">
-                            <span class="stage-badge stage-badge-sage">50-year lifespan</span>
-                            <span class="stage-badge stage-badge-sage">100% circular</span>
-                            <span class="stage-badge stage-badge-sage">Carbon negative</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Impact Stats -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-32 scroll-animate stagger-3">
-                <div class="glass-card rounded-xl p-8 text-center">
-                    <div class="text-5xl font-bold gradient-text mb-3">95%</div>
-                    <p class="text-gray-400 font-semibold text-sm tracking-wide uppercase">Waste Diverted</p>
-                </div>
-                <div class="glass-card rounded-xl p-8 text-center">
-                    <div class="text-5xl font-bold gradient-text mb-3">60%</div>
-                    <p class="text-gray-400 font-semibold text-sm tracking-wide uppercase">Less CO&#8322; Emissions</p>
-                </div>
-                <div class="glass-card rounded-xl p-8 text-center">
-                    <div class="text-5xl font-bold gradient-text-green mb-3">10+</div>
-                    <p class="text-gray-400 font-semibold text-sm tracking-wide uppercase">Product Categories</p>
-                </div>
-            </div>
-
         </div>
     </section>
 
@@ -1157,6 +1032,131 @@
         </div>
     </section>
 
+    <!-- SECTION 5.5: INTERACTIVE SUPPLY CHAIN JOURNEY (NEW!) -->
+    <section id="journey" class="relative py-16 bg-gradient-to-b from-[#0f0f0f] to-[#1e1e1e]" style="z-index: 1;">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-20 scroll-animate">
+                <h2 class="text-5xl md:text-7xl font-bold text-white mb-6">Trace the <span class="gradient-text">Journey</span></h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">Follow the transformation from mine to city infrastructure</p>
+            </div>
+
+            <div class="max-w-7xl mx-auto">
+                <!-- Journey Container -->
+                <div id="journey-container" class="relative min-h-[600px] mb-12">
+                    <!-- SVG Flow Diagram -->
+                    <svg id="journey-svg" viewBox="0 0 1400 500" class="w-full h-auto">
+                        <defs>
+                            <linearGradient id="path-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#C87533;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#4A7C59;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        
+                        <!-- Connection Paths (edge-to-edge connections) -->
+                        <path id="path-1-2" class="journey-path" d="M 200 100 Q 325 125, 400 150" 
+                              stroke="url(#path-gradient)" stroke-width="4" fill="none" opacity="0.3"/>
+                        <path id="path-2-3" class="journey-path" d="M 500 150 Q 625 200, 700 250" 
+                              stroke="url(#path-gradient)" stroke-width="4" fill="none" opacity="0.3"/>
+                        <path id="path-3-4" class="journey-path" d="M 800 250 Q 925 200, 1000 150" 
+                              stroke="url(#path-gradient)" stroke-width="4" fill="none" opacity="0.3"/>
+                        <path id="path-4-5" class="journey-path" d="M 1100 150 Q 1150 125, 1150 100" 
+                              stroke="url(#path-gradient)" stroke-width="4" fill="none" opacity="0.3"/>
+                        
+                        <!-- Journey Nodes -->
+                        <g class="journey-node" data-node="1" data-x="150" data-y="100">
+                            <circle cx="150" cy="100" r="50" fill="rgba(30,30,30,0.9)" stroke="#C87533" stroke-width="3"/>
+                            <text x="150" y="110" text-anchor="middle" font-size="40">⛏️</text>
+                            <text x="150" y="180" text-anchor="middle" fill="white" font-size="14" font-weight="600">Mining Site</text>
+                        </g>
+                        
+                        <g class="journey-node" data-node="2" data-x="450" data-y="150">
+                            <circle cx="450" cy="150" r="50" fill="rgba(30,30,30,0.9)" stroke="#C87533" stroke-width="3"/>
+                            <text x="450" y="160" text-anchor="middle" font-size="40">🏗️</text>
+                            <text x="450" y="230" text-anchor="middle" fill="white" font-size="14" font-weight="600">Tailings Collection</text>
+                        </g>
+                        
+                        <g class="journey-node" data-node="3" data-x="750" data-y="250">
+                            <circle cx="750" cy="250" r="50" fill="rgba(30,30,30,0.9)" stroke="#C87533" stroke-width="3"/>
+                            <text x="750" y="260" text-anchor="middle" font-size="40">⚗️</text>
+                            <text x="750" y="330" text-anchor="middle" fill="white" font-size="14" font-weight="600">Processing Plant</text>
+                        </g>
+                        
+                        <g class="journey-node" data-node="4" data-x="1050" data-y="150">
+                            <circle cx="1050" cy="150" r="50" fill="rgba(30,30,30,0.9)" stroke="#4A7C59" stroke-width="3"/>
+                            <text x="1050" y="160" text-anchor="middle" font-size="40">📦</text>
+                            <text x="1050" y="230" text-anchor="middle" fill="white" font-size="14" font-weight="600">Products</text>
+                        </g>
+                        
+                        <g class="journey-node" data-node="5" data-x="1200" data-y="100">
+                            <circle cx="1200" cy="100" r="50" fill="rgba(30,30,30,0.9)" stroke="#4A7C59" stroke-width="3"/>
+                            <text x="1200" y="110" text-anchor="middle" font-size="40">🏙️</text>
+                            <text x="1200" y="180" text-anchor="middle" fill="white" font-size="14" font-weight="600">City Infrastructure</text>
+                        </g>
+                    </svg>
+
+                    <!-- Animated Particle -->
+                    <div id="journey-particle" class="journey-particle"></div>
+
+                    <!-- Info Cards (positioned absolutely) -->
+                    <div id="info-card-1" class="info-card" style="left: 20px; top: 200px;">
+                        <h4 class="text-lg font-bold text-white mb-2">⛏️ Mining Site</h4>
+                        <p class="text-gray-300 text-sm">Copper and other metal extraction generates billions of tons of tailings annually.</p>
+                    </div>
+                    
+                    <div id="info-card-2" class="info-card" style="left: 320px; top: 250px;">
+                        <h4 class="text-lg font-bold text-white mb-2">🏗️ Tailings Collection</h4>
+                        <p class="text-gray-300 text-sm">Waste material collected and transported for transformation.</p>
+                    </div>
+                    
+                    <div id="info-card-3" class="info-card" style="left: 620px; top: 350px;">
+                        <h4 class="text-lg font-bold text-white mb-2">⚗️ Processing Plant</h4>
+                        <p class="text-gray-300 text-sm">Alkali activation and treatment converts tailings into high-performance materials.</p>
+                    </div>
+                    
+                    <div id="info-card-4" class="info-card" style="right: 220px; top: 250px;">
+                        <h4 class="text-lg font-bold text-white mb-2">📦 Products</h4>
+                        <p class="text-gray-300 text-sm">Eco-concrete, aggregates, geopolymers, and urban furniture ready for deployment.</p>
+                    </div>
+                    
+                    <div id="info-card-5" class="info-card" style="right: 20px; top: 200px;">
+                        <h4 class="text-lg font-bold text-white mb-2">🏙️ City Infrastructure</h4>
+                        <p class="text-gray-300 text-sm">Sustainable buildings and public spaces built with circular economy materials.</p>
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <div class="text-center mb-8">
+                    <button id="start-journey-btn" class="btn-primary px-12 py-5 rounded-full text-lg font-bold text-white">
+                        Start Journey
+                    </button>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="progress-bar">
+                    <div id="journey-progress" class="progress-fill"></div>
+                </div>
+
+                <!-- Completion Card -->
+                <div id="completion-card" class="completion-card text-center">
+                    <h3 class="text-3xl font-bold text-white mb-6">🎉 Journey Complete!</h3>
+                    <div class="grid md:grid-cols-3 gap-6 text-center">
+                        <div>
+                            <div class="text-4xl font-bold gradient-text mb-2">95%</div>
+                            <p class="text-gray-300">Waste Diverted</p>
+                        </div>
+                        <div>
+                            <div class="text-4xl font-bold gradient-text mb-2">$400B+</div>
+                            <p class="text-gray-300">Market Size</p>
+                        </div>
+                        <div>
+                            <div class="text-4xl font-bold gradient-text-green mb-2">70%</div>
+                            <p class="text-gray-300">Cement Replacement</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- SECTION 6: SCIENCE & RESEARCH -->
     <section class="relative py-16 bg-gradient-to-b from-[#1e1e1e] to-[#0f0f0f]" style="z-index: 1;">
@@ -1510,6 +1510,142 @@
     </div>
 
     <script>
+        // ========== INTERACTIVE SUPPLY CHAIN JOURNEY ==========
+        const journeyState = {
+            currentNode: 0,
+            isRunning: false,
+            completed: false
+        };
+
+        const nodeData = [
+            { id: 1, title: "Mining Site", description: "Copper and other metal extraction generates billions of tons of tailings annually." },
+            { id: 2, title: "Tailings Collection", description: "Waste material collected and transported for transformation." },
+            { id: 3, title: "Processing Plant", description: "Alkali activation and treatment converts tailings into high-performance materials." },
+            { id: 4, title: "Products", description: "Eco-concrete, aggregates, geopolymers, and urban furniture ready for deployment." },
+            { id: 5, title: "City Infrastructure", description: "Sustainable buildings and public spaces built with circular economy materials." }
+        ];
+
+        // Journey button click handler
+        document.getElementById('start-journey-btn').addEventListener('click', startJourney);
+
+        // Node click handlers
+        document.querySelectorAll('.journey-node').forEach(node => {
+            node.addEventListener('click', function() {
+                const nodeId = parseInt(this.dataset.node);
+                showInfoCard(nodeId);
+                highlightNode(nodeId);
+            });
+        });
+
+        function startJourney() {
+            if (journeyState.isRunning) return;
+            
+            journeyState.isRunning = true;
+            journeyState.currentNode = 0;
+            journeyState.completed = false;
+            
+            // Reset
+            document.querySelectorAll('.journey-node').forEach(n => n.classList.remove('active'));
+            document.querySelectorAll('.info-card').forEach(c => c.classList.remove('show'));
+            document.getElementById('completion-card').classList.remove('show');
+            document.getElementById('journey-progress').style.width = '0%';
+            
+            // Animate paths
+            document.querySelectorAll('.journey-path').forEach(path => {
+                path.classList.add('animating');
+            });
+            
+            // Start particle animation
+            animateParticle();
+        }
+
+        function animateParticle() {
+            const particle = document.getElementById('journey-particle');
+            const svg = document.getElementById('journey-svg');
+            const svgRect = svg.getBoundingClientRect();
+            
+            // Path coordinates (approximate pixel positions relative to SVG container)
+            const pathSteps = [
+                { x: 150, y: 100, duration: 0 },
+                { x: 450, y: 150, duration: 2000 },
+                { x: 750, y: 250, duration: 2000 },
+                { x: 1050, y: 150, duration: 2000 },
+                { x: 1200, y: 100, duration: 2000 }
+            ];
+            
+            let stepIndex = 0;
+            
+            function moveToNextNode() {
+                if (stepIndex >= pathSteps.length) {
+                    // Journey complete
+                    particle.classList.remove('moving');
+                    journeyState.isRunning = false;
+                    journeyState.completed = true;
+                    document.getElementById('journey-progress').style.width = '100%';
+                    setTimeout(() => {
+                        document.getElementById('completion-card').classList.add('show');
+                    }, 500);
+                    return;
+                }
+                
+                const step = pathSteps[stepIndex];
+                const nodeId = stepIndex + 1;
+                
+                // Calculate particle position (scale SVG coords to actual container size)
+                const scaleX = svgRect.width / 1200;
+                const scaleY = svgRect.height / 500;
+                const containerRect = document.getElementById('journey-container').getBoundingClientRect();
+                
+                const particleX = step.x * scaleX;
+                const particleY = step.y * scaleY;
+                
+                particle.style.left = particleX + 'px';
+                particle.style.top = particleY + 'px';
+                particle.classList.add('moving');
+                
+                // Highlight node and show info card
+                highlightNode(nodeId);
+                showInfoCard(nodeId);
+                
+                // Update progress
+                const progress = (stepIndex / (pathSteps.length - 1)) * 100;
+                document.getElementById('journey-progress').style.width = progress + '%';
+                
+                stepIndex++;
+                
+                if (stepIndex < pathSteps.length) {
+                    setTimeout(moveToNextNode, pathSteps[stepIndex].duration);
+                } else {
+                    setTimeout(moveToNextNode, 1000);
+                }
+            }
+            
+            moveToNextNode();
+        }
+
+        function highlightNode(nodeId) {
+            document.querySelectorAll('.journey-node').forEach(node => {
+                if (parseInt(node.dataset.node) === nodeId) {
+                    node.classList.add('active');
+                }
+            });
+        }
+
+        function showInfoCard(nodeId) {
+            // Hide all cards first
+            document.querySelectorAll('.info-card').forEach(card => {
+                card.classList.remove('show');
+            });
+            
+            // Show selected card
+            const card = document.getElementById(`info-card-${nodeId}`);
+            if (card) {
+                setTimeout(() => {
+                    card.classList.add('show');
+                }, 100);
+            }
+        }
+
         // ========== SCROLL PROGRESS BAR ==========
         window.addEventListener('scroll', () => {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -1671,6 +1807,314 @@
             e.preventDefault();
             alert('Thank you for your interest! This is a demo form.');
         });
+
+        // ========== PARTICLE TRANSFORMATION ANIMATION ==========
+        function initParticleAnimation() {
+            const canvas = document.getElementById('particle-canvas');
+            if (!canvas) return;
+            
+            const container = canvas.parentElement;
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas size
+            function resizeCanvas() {
+                canvas.width = container.clientWidth;
+                canvas.height = container.clientHeight;
+            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            
+            // Particle system configuration
+            const particleCount = 900;
+            const particles = [];
+            
+            // Animation state
+            let startTime = Date.now();
+            let currentPhase = 1;
+            let mouse = { x: 0, y: 0 };
+            
+            // Track mouse for parallax
+            canvas.addEventListener('mousemove', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                mouse.x = (e.clientX - rect.left - canvas.width / 2) / canvas.width;
+                mouse.y = (e.clientY - rect.top - canvas.height / 2) / canvas.height;
+            });
+            
+            // Color definitions
+            const wasteColors = [
+                { r: 102, g: 102, b: 102 },   // #666
+                { r: 139, g: 115, b: 85 },    // #8B7355
+                { r: 156, g: 139, b: 122 },   // #9C8B7A
+                { r: 85, g: 85, b: 85 }       // #555
+            ];
+            
+            const kuraColors = [
+                { r: 200, g: 117, b: 51 },    // Copper #C87533
+                { r: 74, g: 124, b: 89 },     // Sage #4A7C59
+                { r: 139, g: 115, b: 85 },    // Earth
+                { r: 232, g: 167, b: 93 }     // Light copper
+            ];
+            
+            // Generate waste pile positions (mound shape)
+            function generateWastePile() {
+                const positions = [];
+                const centerX = canvas.width / 2;
+                const baseY = canvas.height * 0.7;
+                const moundWidth = 200;
+                const moundHeight = 120;
+                
+                for (let i = 0; i < particleCount; i++) {
+                    const angle = Math.random() * Math.PI; // Top half of circle
+                    const radius = Math.random() * moundWidth;
+                    const x = centerX + Math.cos(angle) * radius;
+                    const y = baseY - Math.abs(Math.sin(angle)) * moundHeight * (1 - radius / moundWidth);
+                    
+                    positions.push({ 
+                        x: x + (Math.random() - 0.5) * 30, 
+                        y: y + (Math.random() - 0.5) * 20 
+                    });
+                }
+                return positions;
+            }
+            
+            // Generate bench shape positions
+            function generateBenchShape() {
+                const positions = [];
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                const scale = 8;
+                
+                // Seat (flat rectangle)
+                for (let i = 0; i < particleCount * 0.35; i++) {
+                    positions.push({
+                        x: centerX + (Math.random() - 0.5) * scale * 8,
+                        y: centerY + (Math.random() - 0.5) * scale * 0.6
+                    });
+                }
+                
+                // Backrest (vertical rectangle)
+                for (let i = 0; i < particleCount * 0.35; i++) {
+                    positions.push({
+                        x: centerX + (Math.random() - 0.5) * scale * 8,
+                        y: centerY - scale * 2 + (Math.random() - 0.5) * scale * 3
+                    });
+                }
+                
+                // Left leg
+                for (let i = 0; i < particleCount * 0.15; i++) {
+                    positions.push({
+                        x: centerX - scale * 3 + (Math.random() - 0.5) * scale * 0.5,
+                        y: centerY + (Math.random()) * scale * 2
+                    });
+                }
+                
+                // Right leg
+                for (let i = 0; i < particleCount * 0.15; i++) {
+                    positions.push({
+                        x: centerX + scale * 3 + (Math.random() - 0.5) * scale * 0.5,
+                        y: centerY + (Math.random()) * scale * 2
+                    });
+                }
+                
+                return positions;
+            }
+            
+            const wastePositions = generateWastePile();
+            const benchPositions = generateBenchShape();
+            
+            // Initialize particles
+            for (let i = 0; i < particleCount; i++) {
+                const wasteColor = wasteColors[Math.floor(Math.random() * wasteColors.length)];
+                particles.push({
+                    x: wastePositions[i].x,
+                    y: wastePositions[i].y,
+                    vx: 0,
+                    vy: 0,
+                    targetX: wastePositions[i].x,
+                    targetY: wastePositions[i].y,
+                    size: Math.random() * 2.5 + 1.5,
+                    color: { ...wasteColor },
+                    targetColor: { ...wasteColor },
+                    rotation: Math.random() * Math.PI * 2,
+                    rotationSpeed: (Math.random() - 0.5) * 0.1
+                });
+            }
+            
+            // Easing function
+            function easeInOutCubic(t) {
+                return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+            }
+            
+            // Lerp function
+            function lerp(a, b, t) {
+                return a + (b - a) * t;
+            }
+            
+            // Update stats counters
+            function updateStats(progress) {
+                if (progress > 0.4) { // Start animating during reassembly
+                    const statProgress = Math.min((progress - 0.4) / 0.2, 1);
+                    document.getElementById('stat-1').textContent = Math.floor(95 * statProgress) + '%';
+                    document.getElementById('stat-2').textContent = Math.floor(60 * statProgress) + '%';
+                    document.getElementById('stat-3').textContent = Math.floor(10 * statProgress) + '+';
+                }
+            }
+            
+            // Animation loop
+            function animate() {
+                const elapsed = (Date.now() - startTime) / 1000; // seconds
+                const cycleTime = 15; // Total cycle duration
+                const t = (elapsed % cycleTime) / cycleTime;
+                
+                // Determine phase and update indicator
+                let phaseText = '';
+                if (t < 2/15) {
+                    currentPhase = 1;
+                    phaseText = 'Phase 1: Mining Waste';
+                } else if (t < 4/15) {
+                    currentPhase = 2;
+                    phaseText = 'Phase 2: Explosive Separation';
+                } else if (t < 6/15) {
+                    currentPhase = 3;
+                    phaseText = 'Phase 3: Material Transformation';
+                } else if (t < 9/15) {
+                    currentPhase = 4;
+                    phaseText = 'Phase 4: Product Formation';
+                } else if (t < 11/15) {
+                    currentPhase = 5;
+                    phaseText = 'Phase 5: Final Product';
+                } else {
+                    currentPhase = 6;
+                    phaseText = 'Phase 6: Reset';
+                }
+                
+                document.getElementById('phase-indicator').textContent = phaseText;
+                
+                // Clear canvas
+                ctx.fillStyle = 'rgba(15, 15, 15, 0.2)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Add explosion flash effect
+                if (currentPhase === 2 && t >= 2/15 && t < 2.2/15) {
+                    const flashIntensity = Math.sin((t - 2/15) / (0.2/15) * Math.PI);
+                    ctx.fillStyle = `rgba(200, 117, 51, ${flashIntensity * 0.3})`;
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                }
+                
+                particles.forEach((p, i) => {
+                    // Phase 1: Waste pile (0-2s)
+                    if (t < 2/15) {
+                        const progress = t / (2/15);
+                        p.targetX = wastePositions[i].x;
+                        p.targetY = wastePositions[i].y;
+                        const wasteColor = wasteColors[i % wasteColors.length];
+                        p.targetColor = { ...wasteColor };
+                    }
+                    // Phase 2: Explosion (2-4s)
+                    else if (t < 4/15) {
+                        const progress = (t - 2/15) / (2/15);
+                        if (progress < 0.01) { // Just started exploding
+                            const angle = Math.random() * Math.PI * 2;
+                            const speed = Math.random() * 8 + 4;
+                            p.vx = Math.cos(angle) * speed;
+                            p.vy = Math.sin(angle) * speed - 2; // Slight upward bias
+                        }
+                        p.x += p.vx;
+                        p.y += p.vy;
+                        p.vy += 0.15; // Gravity
+                        p.vx *= 0.98; // Air resistance
+                        p.rotation += p.rotationSpeed;
+                    }
+                    // Phase 3: Color shift (4-6s)
+                    else if (t < 6/15) {
+                        const progress = (t - 4/15) / (2/15);
+                        p.x += p.vx;
+                        p.y += p.vy;
+                        p.vx *= 0.95;
+                        p.vy *= 0.95;
+                        
+                        const kuraColor = kuraColors[i % kuraColors.length];
+                        p.targetColor = { ...kuraColor };
+                    }
+                    // Phase 4: Reassembly (6-9s)
+                    else if (t < 9/15) {
+                        const progress = easeInOutCubic((t - 6/15) / (3/15));
+                        p.targetX = benchPositions[i].x;
+                        p.targetY = benchPositions[i].y;
+                        
+                        updateStats(progress);
+                    }
+                    // Phase 5: Glow & settle (9-11s)
+                    else if (t < 11/15) {
+                        const progress = (t - 9/15) / (2/15);
+                        p.targetX = benchPositions[i].x + Math.sin(Date.now() / 1000 + i) * 0.8;
+                        p.targetY = benchPositions[i].y + Math.cos(Date.now() / 1000 + i * 1.3) * 0.8;
+                    }
+                    // Phase 6: Reset (11-15s)
+                    else {
+                        const progress = (t - 11/15) / (4/15);
+                        if (progress < 0.5) {
+                            // Dissolve
+                            p.targetX = wastePositions[i].x;
+                            p.targetY = wastePositions[i].y;
+                            const wasteColor = wasteColors[i % wasteColors.length];
+                            p.targetColor = { ...wasteColor };
+                        }
+                    }
+                    
+                    // Smooth movement to target position
+                    if (currentPhase !== 2) {
+                        p.x = lerp(p.x, p.targetX + mouse.x * 15, 0.1);
+                        p.y = lerp(p.y, p.targetY + mouse.y * 15, 0.1);
+                    }
+                    
+                    // Smooth color transition
+                    p.color.r = lerp(p.color.r, p.targetColor.r, 0.05);
+                    p.color.g = lerp(p.color.g, p.targetColor.g, 0.05);
+                    p.color.b = lerp(p.color.b, p.targetColor.b, 0.05);
+                    
+                    // Draw particle
+                    ctx.save();
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate(p.rotation);
+                    
+                    // Glow effect in phase 5
+                    if (currentPhase === 5) {
+                        const glowSize = p.size + Math.sin(Date.now() / 200 + i) * 1.5;
+                        ctx.shadowBlur = 10;
+                        ctx.shadowColor = `rgba(${p.color.r}, ${p.color.g}, ${p.color.b}, 0.6)`;
+                    }
+                    
+                    ctx.fillStyle = `rgba(${Math.floor(p.color.r)}, ${Math.floor(p.color.g)}, ${Math.floor(p.color.b)}, 0.9)`;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+                });
+                
+                requestAnimationFrame(animate);
+            }
+            
+            animate();
+        }
+        
+        // Initialize particle animation when container is visible
+        const particleObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !entry.target.dataset.particleInit) {
+                    entry.target.dataset.particleInit = 'true';
+                    initParticleAnimation();
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const particleCanvas = document.getElementById('particle-canvas');
+            if (particleCanvas) {
+                particleObserver.observe(particleCanvas);
+            }
+        });
+
 
         // ========== THREE.JS 3D PRODUCT SHOWCASE ==========
         function initThreeJS() {
