@@ -783,7 +783,7 @@
                     class="absolute inset-0 w-full h-full object-cover"
                     style="filter: brightness(0.7);"
                 >
-                    <source src="https://raw.githack.com/LeoMaslyak/kura-materials-site/main/Industrial_Waste_to_Sustainable_City.mp4" type="video/mp4">
+                    <source src="https://raw.githack.com/LeoMaslyak/kura-materials-site/main/Industrial_Waste_to_Sustainable_City_web.mp4" type="video/mp4">
                 </video>
                 <div class="absolute inset-0 bg-gradient-to-t from-[#0f0f0f] via-transparent to-transparent"></div>
                 <div class="absolute bottom-8 left-8 right-8 text-center">
@@ -793,6 +793,44 @@
             </div>
         </div>
     </section>
+
+
+    <!-- SECTION 4.6: PARTICLE TRANSFORMATION ANIMATION -->
+    <section id="particle-transformation" class="relative py-24 px-6 overflow-hidden bg-gradient-to-b from-[#0f0f0f] to-[#1e1e1e]">
+        <div class="container mx-auto max-w-7xl">
+            <h2 class="text-5xl md:text-6xl font-bold text-center mb-6 scroll-animate">
+                <span class="gradient-text">Transformation in Action</span>
+            </h2>
+            <p class="text-center text-gray-400 mb-16 max-w-3xl mx-auto scroll-animate stagger-1">
+                Watch waste material become sustainable infrastructure
+            </p>
+
+            <!-- Particle Animation Canvas -->
+            <div class="relative w-full rounded-2xl overflow-hidden scroll-animate stagger-2" style="height: 700px; background: linear-gradient(135deg, rgba(15,15,15,0.95), rgba(30,30,30,0.9)); border: 1px solid rgba(200,117,51,0.2);">
+                <canvas id="particle-canvas"></canvas>
+                <div class="absolute top-4 right-4 bg-black bg-opacity-50 backdrop-blur-sm px-4 py-2 rounded-lg border border-copper border-opacity-30">
+                    <span class="text-xs text-gray-400 font-semibold" id="phase-indicator">Initializing...</span>
+                </div>
+            </div>
+
+            <!-- Stats Counter -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 scroll-animate stagger-3">
+                <div class="glass-card rounded-xl p-6 text-center">
+                    <div class="text-4xl font-bold gradient-text mb-2" id="stat-1">0%</div>
+                    <p class="text-gray-400 font-semibold">Waste Diverted</p>
+                </div>
+                <div class="glass-card rounded-xl p-6 text-center">
+                    <div class="text-4xl font-bold gradient-text mb-2" id="stat-2">0%</div>
+                    <p class="text-gray-400 font-semibold">Less CO₂</p>
+                </div>
+                <div class="glass-card rounded-xl p-6 text-center">
+                    <div class="text-4xl font-bold gradient-text mb-2" id="stat-3">0</div>
+                    <p class="text-gray-400 font-semibold">Products</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
 
     <!-- SECTION 5: PRODUCTS -->
     <section id="products" class="relative py-24 px-6">
@@ -808,7 +846,21 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Product 1: Eco-Concrete -->
                 <div class="glass-card rounded-2xl p-8 scroll-animate stagger-1">
-                    <div class="text-5xl mb-4">🏗️</div>
+                    <div class="mb-4 flex items-center justify-center w-14 h-14 rounded-full border-2" style="border-color: rgba(200, 117, 51, 0.5); box-shadow: 0 0 20px rgba(200, 117, 51, 0.3);">
+                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="concrete-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#C87533" />
+                                    <stop offset="100%" style="stop-color:#4A7C59" />
+                                </linearGradient>
+                            </defs>
+                            <rect x="8" y="10" width="24" height="8" stroke="url(#concrete-grad)" stroke-width="2" fill="none" rx="1"/>
+                            <rect x="8" y="20" width="24" height="8" stroke="url(#concrete-grad)" stroke-width="2" fill="none" rx="1"/>
+                            <line x1="14" y1="10" x2="14" y2="28" stroke="url(#concrete-grad)" stroke-width="1.5"/>
+                            <line x1="20" y1="10" x2="20" y2="28" stroke="url(#concrete-grad)" stroke-width="1.5"/>
+                            <line x1="26" y1="10" x2="26" y2="28" stroke="url(#concrete-grad)" stroke-width="1.5"/>
+                        </svg>
+                    </div>
                     <h3 class="text-2xl font-bold mb-3 gradient-text">Eco-Concrete</h3>
                     <p class="text-gray-400 leading-relaxed">
                         High-strength concrete made from processed mine tailings, reducing CO₂ emissions by up to 60% compared to traditional concrete.
@@ -817,7 +869,20 @@
 
                 <!-- Product 2: Artificial Aggregates -->
                 <div class="glass-card rounded-2xl p-8 scroll-animate stagger-2">
-                    <div class="text-5xl mb-4">⚙️</div>
+                    <div class="mb-4 flex items-center justify-center w-14 h-14 rounded-full border-2" style="border-color: rgba(200, 117, 51, 0.5); box-shadow: 0 0 20px rgba(200, 117, 51, 0.3);">
+                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="aggregate-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#C87533" />
+                                    <stop offset="100%" style="stop-color:#4A7C59" />
+                                </linearGradient>
+                            </defs>
+                            <circle cx="14" cy="16" r="6" stroke="url(#aggregate-grad)" stroke-width="2" fill="none"/>
+                            <circle cx="26" cy="15" r="5" stroke="url(#aggregate-grad)" stroke-width="2" fill="none"/>
+                            <circle cx="20" cy="26" r="5.5" stroke="url(#aggregate-grad)" stroke-width="2" fill="none"/>
+                            <circle cx="12" cy="28" r="3" stroke="url(#aggregate-grad)" stroke-width="1.5" fill="none"/>
+                        </svg>
+                    </div>
                     <h3 class="text-2xl font-bold mb-3 gradient-text">Artificial Aggregates</h3>
                     <p class="text-gray-400 leading-relaxed">
                         Sustainable aggregates for construction, manufactured through thermal processing of tailings.
@@ -826,7 +891,21 @@
 
                 <!-- Product 3: Geopolymers -->
                 <div class="glass-card rounded-2xl p-8 scroll-animate stagger-3">
-                    <div class="text-5xl mb-4">🧪</div>
+                    <div class="mb-4 flex items-center justify-center w-14 h-14 rounded-full border-2" style="border-color: rgba(200, 117, 51, 0.5); box-shadow: 0 0 20px rgba(200, 117, 51, 0.3);">
+                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="flask-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#C87533" />
+                                    <stop offset="100%" style="stop-color:#4A7C59" />
+                                </linearGradient>
+                            </defs>
+                            <path d="M16 8 L16 16 L10 28 L30 28 L24 16 L24 8" stroke="url(#flask-grad)" stroke-width="2" fill="none" stroke-linejoin="round"/>
+                            <line x1="16" y1="8" x2="24" y2="8" stroke="url(#flask-grad)" stroke-width="2"/>
+                            <line x1="10" y1="28" x2="30" y2="28" stroke="url(#flask-grad)" stroke-width="2.5" stroke-linecap="round"/>
+                            <circle cx="15" cy="22" r="1.5" fill="#C87533" opacity="0.6"/>
+                            <circle cx="22" cy="24" r="1.2" fill="#4A7C59" opacity="0.6"/>
+                        </svg>
+                    </div>
                     <h3 class="text-2xl font-bold mb-3 gradient-text">Geopolymers</h3>
                     <p class="text-gray-400 leading-relaxed">
                         Advanced binding materials with superior chemical resistance and fire protection capabilities.
@@ -835,7 +914,22 @@
 
                 <!-- Product 4: Urban Furniture -->
                 <div class="glass-card rounded-2xl p-8 scroll-animate stagger-4">
-                    <div class="text-5xl mb-4">🪑</div>
+                    <div class="mb-4 flex items-center justify-center w-14 h-14 rounded-full border-2" style="border-color: rgba(200, 117, 51, 0.5); box-shadow: 0 0 20px rgba(200, 117, 51, 0.3);">
+                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="bench-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#C87533" />
+                                    <stop offset="100%" style="stop-color:#4A7C59" />
+                                </linearGradient>
+                            </defs>
+                            <rect x="8" y="16" width="24" height="3" stroke="url(#bench-grad)" stroke-width="2" fill="none" rx="1"/>
+                            <line x1="10" y1="19" x2="10" y2="30" stroke="url(#bench-grad)" stroke-width="2"/>
+                            <line x1="30" y1="19" x2="30" y2="30" stroke="url(#bench-grad)" stroke-width="2"/>
+                            <path d="M8 10 L8 16" stroke="url(#bench-grad)" stroke-width="2"/>
+                            <path d="M32 10 L32 16" stroke="url(#bench-grad)" stroke-width="2"/>
+                            <line x1="7" y1="10" x2="33" y2="10" stroke="url(#bench-grad)" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
                     <h3 class="text-2xl font-bold mb-3 gradient-text">Urban Furniture</h3>
                     <p class="text-gray-400 leading-relaxed">
                         Durable benches, planters, and street furniture crafted from recycled tailings.
@@ -844,7 +938,21 @@
 
                 <!-- Product 5: Concrete Base/Foundation Material (NEW) -->
                 <div class="glass-card rounded-2xl p-8 scroll-animate stagger-1">
-                    <div class="text-5xl mb-4">🏛️</div>
+                    <div class="mb-4 flex items-center justify-center w-14 h-14 rounded-full border-2" style="border-color: rgba(200, 117, 51, 0.5); box-shadow: 0 0 20px rgba(200, 117, 51, 0.3);">
+                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="foundation-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#C87533" />
+                                    <stop offset="100%" style="stop-color:#4A7C59" />
+                                </linearGradient>
+                            </defs>
+                            <rect x="14" y="12" width="12" height="18" stroke="url(#foundation-grad)" stroke-width="2" fill="none" rx="1"/>
+                            <line x1="10" y1="8" x2="30" y2="8" stroke="url(#foundation-grad)" stroke-width="2.5" stroke-linecap="round"/>
+                            <line x1="10" y1="30" x2="30" y2="30" stroke="url(#foundation-grad)" stroke-width="2.5" stroke-linecap="round"/>
+                            <line x1="14" y1="17" x2="26" y2="17" stroke="url(#foundation-grad)" stroke-width="1.5"/>
+                            <line x1="14" y1="22" x2="26" y2="22" stroke="url(#foundation-grad)" stroke-width="1.5"/>
+                        </svg>
+                    </div>
                     <h3 class="text-2xl font-bold mb-3 gradient-text">Foundation Materials</h3>
                     <p class="text-gray-400 leading-relaxed">
                         High-performance structural foundations using tailings-derived concrete for superior load-bearing capacity.
@@ -853,7 +961,22 @@
 
                 <!-- Product 6: Paving/Pavement Blocks (NEW) -->
                 <div class="glass-card rounded-2xl p-8 scroll-animate stagger-2">
-                    <div class="text-5xl mb-4">🧱</div>
+                    <div class="mb-4 flex items-center justify-center w-14 h-14 rounded-full border-2" style="border-color: rgba(200, 117, 51, 0.5); box-shadow: 0 0 20px rgba(200, 117, 51, 0.3);">
+                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="brick-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#C87533" />
+                                    <stop offset="100%" style="stop-color:#4A7C59" />
+                                </linearGradient>
+                            </defs>
+                            <rect x="8" y="10" width="10" height="6" stroke="url(#brick-grad)" stroke-width="1.8" fill="none" rx="0.5"/>
+                            <rect x="20" y="10" width="12" height="6" stroke="url(#brick-grad)" stroke-width="1.8" fill="none" rx="0.5"/>
+                            <rect x="8" y="18" width="12" height="6" stroke="url(#brick-grad)" stroke-width="1.8" fill="none" rx="0.5"/>
+                            <rect x="22" y="18" width="10" height="6" stroke="url(#brick-grad)" stroke-width="1.8" fill="none" rx="0.5"/>
+                            <rect x="8" y="26" width="10" height="6" stroke="url(#brick-grad)" stroke-width="1.8" fill="none" rx="0.5"/>
+                            <rect x="20" y="26" width="12" height="6" stroke="url(#brick-grad)" stroke-width="1.8" fill="none" rx="0.5"/>
+                        </svg>
+                    </div>
                     <h3 class="text-2xl font-bold mb-3 gradient-text">Paving Blocks</h3>
                     <p class="text-gray-400 leading-relaxed">
                         Interlocking paving stones for sidewalks, plazas, and parking areas with exceptional durability.
@@ -862,7 +985,21 @@
 
                 <!-- Product 7: Road Construction Materials (NEW) -->
                 <div class="glass-card rounded-2xl p-8 scroll-animate stagger-3">
-                    <div class="text-5xl mb-4">🛣️</div>
+                    <div class="mb-4 flex items-center justify-center w-14 h-14 rounded-full border-2" style="border-color: rgba(200, 117, 51, 0.5); box-shadow: 0 0 20px rgba(200, 117, 51, 0.3);">
+                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="road-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#C87533" />
+                                    <stop offset="100%" style="stop-color:#4A7C59" />
+                                </linearGradient>
+                            </defs>
+                            <path d="M6 30 Q10 10, 20 12 T34 30" stroke="url(#road-grad)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                            <path d="M6 25 Q10 8, 20 10 T34 25" stroke="url(#road-grad)" stroke-width="2" fill="none" stroke-linecap="round"/>
+                            <line x1="20" y1="14" x2="20" y2="18" stroke="#C87533" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+                            <line x1="16" y1="20" x2="16" y2="24" stroke="#C87533" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+                            <line x1="24" y1="20" x2="24" y2="24" stroke="#C87533" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+                        </svg>
+                    </div>
                     <h3 class="text-2xl font-bold mb-3 gradient-text">Road Materials</h3>
                     <p class="text-gray-400 leading-relaxed">
                         Sub-base and surface materials for road infrastructure, engineered for long-term performance.
@@ -1631,6 +1768,314 @@
             e.preventDefault();
             alert('Thank you for your interest! This is a demo form.');
         });
+
+        // ========== PARTICLE TRANSFORMATION ANIMATION ==========
+        function initParticleAnimation() {
+            const canvas = document.getElementById('particle-canvas');
+            if (!canvas) return;
+            
+            const container = canvas.parentElement;
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas size
+            function resizeCanvas() {
+                canvas.width = container.clientWidth;
+                canvas.height = container.clientHeight;
+            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            
+            // Particle system configuration
+            const particleCount = 900;
+            const particles = [];
+            
+            // Animation state
+            let startTime = Date.now();
+            let currentPhase = 1;
+            let mouse = { x: 0, y: 0 };
+            
+            // Track mouse for parallax
+            canvas.addEventListener('mousemove', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                mouse.x = (e.clientX - rect.left - canvas.width / 2) / canvas.width;
+                mouse.y = (e.clientY - rect.top - canvas.height / 2) / canvas.height;
+            });
+            
+            // Color definitions
+            const wasteColors = [
+                { r: 102, g: 102, b: 102 },   // #666
+                { r: 139, g: 115, b: 85 },    // #8B7355
+                { r: 156, g: 139, b: 122 },   // #9C8B7A
+                { r: 85, g: 85, b: 85 }       // #555
+            ];
+            
+            const kuraColors = [
+                { r: 200, g: 117, b: 51 },    // Copper #C87533
+                { r: 74, g: 124, b: 89 },     // Sage #4A7C59
+                { r: 139, g: 115, b: 85 },    // Earth
+                { r: 232, g: 167, b: 93 }     // Light copper
+            ];
+            
+            // Generate waste pile positions (mound shape)
+            function generateWastePile() {
+                const positions = [];
+                const centerX = canvas.width / 2;
+                const baseY = canvas.height * 0.7;
+                const moundWidth = 200;
+                const moundHeight = 120;
+                
+                for (let i = 0; i < particleCount; i++) {
+                    const angle = Math.random() * Math.PI; // Top half of circle
+                    const radius = Math.random() * moundWidth;
+                    const x = centerX + Math.cos(angle) * radius;
+                    const y = baseY - Math.abs(Math.sin(angle)) * moundHeight * (1 - radius / moundWidth);
+                    
+                    positions.push({ 
+                        x: x + (Math.random() - 0.5) * 30, 
+                        y: y + (Math.random() - 0.5) * 20 
+                    });
+                }
+                return positions;
+            }
+            
+            // Generate bench shape positions
+            function generateBenchShape() {
+                const positions = [];
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                const scale = 8;
+                
+                // Seat (flat rectangle)
+                for (let i = 0; i < particleCount * 0.35; i++) {
+                    positions.push({
+                        x: centerX + (Math.random() - 0.5) * scale * 8,
+                        y: centerY + (Math.random() - 0.5) * scale * 0.6
+                    });
+                }
+                
+                // Backrest (vertical rectangle)
+                for (let i = 0; i < particleCount * 0.35; i++) {
+                    positions.push({
+                        x: centerX + (Math.random() - 0.5) * scale * 8,
+                        y: centerY - scale * 2 + (Math.random() - 0.5) * scale * 3
+                    });
+                }
+                
+                // Left leg
+                for (let i = 0; i < particleCount * 0.15; i++) {
+                    positions.push({
+                        x: centerX - scale * 3 + (Math.random() - 0.5) * scale * 0.5,
+                        y: centerY + (Math.random()) * scale * 2
+                    });
+                }
+                
+                // Right leg
+                for (let i = 0; i < particleCount * 0.15; i++) {
+                    positions.push({
+                        x: centerX + scale * 3 + (Math.random() - 0.5) * scale * 0.5,
+                        y: centerY + (Math.random()) * scale * 2
+                    });
+                }
+                
+                return positions;
+            }
+            
+            const wastePositions = generateWastePile();
+            const benchPositions = generateBenchShape();
+            
+            // Initialize particles
+            for (let i = 0; i < particleCount; i++) {
+                const wasteColor = wasteColors[Math.floor(Math.random() * wasteColors.length)];
+                particles.push({
+                    x: wastePositions[i].x,
+                    y: wastePositions[i].y,
+                    vx: 0,
+                    vy: 0,
+                    targetX: wastePositions[i].x,
+                    targetY: wastePositions[i].y,
+                    size: Math.random() * 2.5 + 1.5,
+                    color: { ...wasteColor },
+                    targetColor: { ...wasteColor },
+                    rotation: Math.random() * Math.PI * 2,
+                    rotationSpeed: (Math.random() - 0.5) * 0.1
+                });
+            }
+            
+            // Easing function
+            function easeInOutCubic(t) {
+                return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+            }
+            
+            // Lerp function
+            function lerp(a, b, t) {
+                return a + (b - a) * t;
+            }
+            
+            // Update stats counters
+            function updateStats(progress) {
+                if (progress > 0.4) { // Start animating during reassembly
+                    const statProgress = Math.min((progress - 0.4) / 0.2, 1);
+                    document.getElementById('stat-1').textContent = Math.floor(95 * statProgress) + '%';
+                    document.getElementById('stat-2').textContent = Math.floor(60 * statProgress) + '%';
+                    document.getElementById('stat-3').textContent = Math.floor(10 * statProgress) + '+';
+                }
+            }
+            
+            // Animation loop
+            function animate() {
+                const elapsed = (Date.now() - startTime) / 1000; // seconds
+                const cycleTime = 15; // Total cycle duration
+                const t = (elapsed % cycleTime) / cycleTime;
+                
+                // Determine phase and update indicator
+                let phaseText = '';
+                if (t < 2/15) {
+                    currentPhase = 1;
+                    phaseText = 'Phase 1: Mining Waste';
+                } else if (t < 4/15) {
+                    currentPhase = 2;
+                    phaseText = 'Phase 2: Explosive Separation';
+                } else if (t < 6/15) {
+                    currentPhase = 3;
+                    phaseText = 'Phase 3: Material Transformation';
+                } else if (t < 9/15) {
+                    currentPhase = 4;
+                    phaseText = 'Phase 4: Product Formation';
+                } else if (t < 11/15) {
+                    currentPhase = 5;
+                    phaseText = 'Phase 5: Final Product';
+                } else {
+                    currentPhase = 6;
+                    phaseText = 'Phase 6: Reset';
+                }
+                
+                document.getElementById('phase-indicator').textContent = phaseText;
+                
+                // Clear canvas
+                ctx.fillStyle = 'rgba(15, 15, 15, 0.2)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Add explosion flash effect
+                if (currentPhase === 2 && t >= 2/15 && t < 2.2/15) {
+                    const flashIntensity = Math.sin((t - 2/15) / (0.2/15) * Math.PI);
+                    ctx.fillStyle = `rgba(200, 117, 51, ${flashIntensity * 0.3})`;
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                }
+                
+                particles.forEach((p, i) => {
+                    // Phase 1: Waste pile (0-2s)
+                    if (t < 2/15) {
+                        const progress = t / (2/15);
+                        p.targetX = wastePositions[i].x;
+                        p.targetY = wastePositions[i].y;
+                        const wasteColor = wasteColors[i % wasteColors.length];
+                        p.targetColor = { ...wasteColor };
+                    }
+                    // Phase 2: Explosion (2-4s)
+                    else if (t < 4/15) {
+                        const progress = (t - 2/15) / (2/15);
+                        if (progress < 0.01) { // Just started exploding
+                            const angle = Math.random() * Math.PI * 2;
+                            const speed = Math.random() * 8 + 4;
+                            p.vx = Math.cos(angle) * speed;
+                            p.vy = Math.sin(angle) * speed - 2; // Slight upward bias
+                        }
+                        p.x += p.vx;
+                        p.y += p.vy;
+                        p.vy += 0.15; // Gravity
+                        p.vx *= 0.98; // Air resistance
+                        p.rotation += p.rotationSpeed;
+                    }
+                    // Phase 3: Color shift (4-6s)
+                    else if (t < 6/15) {
+                        const progress = (t - 4/15) / (2/15);
+                        p.x += p.vx;
+                        p.y += p.vy;
+                        p.vx *= 0.95;
+                        p.vy *= 0.95;
+                        
+                        const kuraColor = kuraColors[i % kuraColors.length];
+                        p.targetColor = { ...kuraColor };
+                    }
+                    // Phase 4: Reassembly (6-9s)
+                    else if (t < 9/15) {
+                        const progress = easeInOutCubic((t - 6/15) / (3/15));
+                        p.targetX = benchPositions[i].x;
+                        p.targetY = benchPositions[i].y;
+                        
+                        updateStats(progress);
+                    }
+                    // Phase 5: Glow & settle (9-11s)
+                    else if (t < 11/15) {
+                        const progress = (t - 9/15) / (2/15);
+                        p.targetX = benchPositions[i].x + Math.sin(Date.now() / 1000 + i) * 0.8;
+                        p.targetY = benchPositions[i].y + Math.cos(Date.now() / 1000 + i * 1.3) * 0.8;
+                    }
+                    // Phase 6: Reset (11-15s)
+                    else {
+                        const progress = (t - 11/15) / (4/15);
+                        if (progress < 0.5) {
+                            // Dissolve
+                            p.targetX = wastePositions[i].x;
+                            p.targetY = wastePositions[i].y;
+                            const wasteColor = wasteColors[i % wasteColors.length];
+                            p.targetColor = { ...wasteColor };
+                        }
+                    }
+                    
+                    // Smooth movement to target position
+                    if (currentPhase !== 2) {
+                        p.x = lerp(p.x, p.targetX + mouse.x * 15, 0.1);
+                        p.y = lerp(p.y, p.targetY + mouse.y * 15, 0.1);
+                    }
+                    
+                    // Smooth color transition
+                    p.color.r = lerp(p.color.r, p.targetColor.r, 0.05);
+                    p.color.g = lerp(p.color.g, p.targetColor.g, 0.05);
+                    p.color.b = lerp(p.color.b, p.targetColor.b, 0.05);
+                    
+                    // Draw particle
+                    ctx.save();
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate(p.rotation);
+                    
+                    // Glow effect in phase 5
+                    if (currentPhase === 5) {
+                        const glowSize = p.size + Math.sin(Date.now() / 200 + i) * 1.5;
+                        ctx.shadowBlur = 10;
+                        ctx.shadowColor = `rgba(${p.color.r}, ${p.color.g}, ${p.color.b}, 0.6)`;
+                    }
+                    
+                    ctx.fillStyle = `rgba(${Math.floor(p.color.r)}, ${Math.floor(p.color.g)}, ${Math.floor(p.color.b)}, 0.9)`;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+                });
+                
+                requestAnimationFrame(animate);
+            }
+            
+            animate();
+        }
+        
+        // Initialize particle animation when container is visible
+        const particleObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !entry.target.dataset.particleInit) {
+                    entry.target.dataset.particleInit = 'true';
+                    initParticleAnimation();
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const particleCanvas = document.getElementById('particle-canvas');
+            if (particleCanvas) {
+                particleObserver.observe(particleCanvas);
+            }
+        });
+
 
         // ========== THREE.JS 3D PRODUCT SHOWCASE ==========
         function initThreeJS() {
