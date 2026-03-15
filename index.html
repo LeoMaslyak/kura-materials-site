@@ -761,12 +761,20 @@
                 id="journey-video"
                 muted
                 playsinline
-                preload="none"
+                preload="auto"
                 class="absolute inset-0 w-full h-full object-cover"
                 style="filter: brightness(0.8);"
-                data-src="journey-combined.mp4"
+                src="journey-combined.mp4"
             >
             </video>
+
+            <!-- Loading indicator -->
+            <div id="journey-loading" class="absolute inset-0 z-30 flex items-center justify-center bg-[#0f0f0f]/90 transition-opacity duration-700">
+                <div class="text-center">
+                    <div class="w-10 h-10 border-2 border-white/20 border-t-[#C87533] rounded-full animate-spin mx-auto mb-4"></div>
+                    <p class="text-gray-500 text-sm">Loading journey...</p>
+                </div>
+            </div>
 
             <!-- Gradient overlays -->
             <div class="absolute inset-0 bg-gradient-to-t from-[#0f0f0f]/80 via-transparent to-[#0f0f0f]/40 pointer-events-none"></div>
@@ -2443,22 +2451,16 @@
         var progressPct = document.getElementById('journey-progress-pct');
         var titleEl = document.getElementById('journey-title');
         var nodes = document.querySelectorAll('.journey-node');
-        var loaded = false;
+        var loadingEl = document.getElementById('journey-loading');
 
-        function initScrollVideo() {
-            if (loaded) return;
-            loaded = true;
-
-            // Load video src from data-src
-            var src = video.dataset.src;
-            if (src && !video.querySelector('source')) {
-                var source = document.createElement('source');
-                source.src = src;
-                source.type = 'video/mp4';
-                video.appendChild(source);
-                video.load();
+        function hideLoading() {
+            if (loadingEl) {
+                loadingEl.style.opacity = '0';
+                setTimeout(function() { loadingEl.style.display = 'none'; }, 700);
             }
+        }
 
+        function startScrubbing() {
             ScrollVideo.init({
                 element: '#journey-video',
                 mode: 'video',
@@ -2466,7 +2468,7 @@
                 endOffset: 0,
                 offsetMode: 'viewport',
                 easing: 'smooth',
-                smoothing: 0.08,
+                smoothing: 0.15,
                 debug: false,
                 onProgress: function(progress) {
                     if (progressBar) progressBar.style.width = (progress * 100) + '%';
@@ -2495,21 +2497,31 @@
                     inst.opts.endOffset = section.offsetHeight - window.innerHeight;
                     inst.opts.offsetMode = 'viewport';
                     inst._recalc();
+                    hideLoading();
                 }
             });
         }
 
-        // Lazy-load: start loading when section is 300px from viewport
-        var observer = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
-                if (entry.isIntersecting) {
-                    initScrollVideo();
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { rootMargin: '300px' });
+        // Wait for video to be fully seekable before enabling scroll scrubbing
+        function checkReady() {
+            // canplaythrough means browser estimates it can play through without buffering
+            if (video.readyState >= 4) {
+                startScrubbing();
+            } else {
+                video.addEventListener('canplaythrough', function() {
+                    startScrubbing();
+                }, { once: true });
+            }
+        }
 
-        observer.observe(section);
+        // Video has preload=auto + src set — just wait for it to buffer
+        if (video.readyState >= 1) {
+            checkReady();
+        } else {
+            video.addEventListener('loadedmetadata', function() {
+                checkReady();
+            }, { once: true });
+        }
     })();
     </script>
 </body>
