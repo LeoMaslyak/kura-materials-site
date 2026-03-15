@@ -475,37 +475,7 @@
             box-shadow: 0 8px 25px rgba(200, 117, 51, 0.6);
         }
 
-        /* Process Video Animation */
-        .process-animation {
-            position: relative;
-            width: 100%;
-            height: 500px;
-            background: linear-gradient(135deg, rgba(30, 30, 30, 0.8), rgba(15, 15, 15, 0.9));
-            border-radius: 20px;
-            overflow: hidden;
-        }
-
-        .process-stage {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            opacity: 0;
-            transition: opacity 1s ease;
-        }
-
-        .process-stage.active {
-            opacity: 1;
-        }
-
-        .stage-icon {
-            font-size: 120px;
-            margin-bottom: 20px;
-            animation: float 3s ease-in-out infinite;
-        }
+        
 
         /* 3D Canvas Container */
         #threejs-container {
@@ -539,7 +509,6 @@
     </div>
     <div class="mobile-menu" id="mobile-menu">
         <a href="#process">Process</a>
-        <a href="#process-video">Video</a>
         <a href="#products">Products</a>
         <a href="#journey">Journey</a>
         <a href="#impact">Impact</a>
@@ -574,7 +543,6 @@
                 <span></span>
             </div>
             <div class="hidden md:flex gap-8 text-sm font-semibold">
-                <a href="#process-video" class="text-gray-400 hover:text-white transition-colors">Video</a>
                 <a href="#process" class="text-gray-400 hover:text-white transition-colors">Process</a>
                 <a href="#products" class="text-gray-400 hover:text-white transition-colors">Products</a>
                 <a href="#journey" class="text-gray-400 hover:text-white transition-colors">Journey</a>
@@ -752,88 +720,6 @@
     </section>
 
     <!-- SECTION 4.5: SCROLL-DRIVEN VIDEO JOURNEY -->
-    <script src="scroll-video.js"></script>
-    <section id="process-video" class="relative overflow-hidden" style="height: 300vh;">
-        <!-- Sticky container: pinned to viewport while scrolling through 400vh -->
-        <div class="sticky top-0 w-full h-screen flex items-center justify-center overflow-hidden">
-            <!-- Frame image — scroll-driven src swaps from preloaded cache -->
-            <img
-                id="journey-frame"
-                class="absolute inset-0 w-full h-full object-cover"
-                style="filter: brightness(0.85);"
-                alt=""
-                src="frames/frame-001.jpg"
-            />
-
-            <!-- Loading indicator -->
-            <div id="journey-loading" class="absolute inset-0 z-30 flex items-center justify-center bg-[#0f0f0f]/90 transition-opacity duration-700">
-                <div class="text-center">
-                    <div class="w-10 h-10 border-2 border-white/20 border-t-[#C87533] rounded-full animate-spin mx-auto mb-4"></div>
-                    <p id="journey-load-pct" class="text-gray-500 text-sm">Loading journey... 0%</p>
-                </div>
-            </div>
-
-            <!-- Gradient overlays -->
-            <div class="absolute inset-0 bg-gradient-to-t from-[#0f0f0f]/80 via-transparent to-[#0f0f0f]/40 pointer-events-none"></div>
-
-            <!-- Section title -->
-            <div id="journey-title" class="absolute top-12 left-0 right-0 text-center z-20 transition-opacity duration-500">
-                <h2 class="text-4xl md:text-6xl font-bold">
-                    <span class="gradient-text">Journey to Transformation</span>
-                </h2>
-                <p class="text-gray-400 text-lg mt-3 max-w-2xl mx-auto">
-                    Scroll to watch mining waste become sustainable building materials
-                </p>
-            </div>
-
-            <!-- Journey overlay nodes — glass-morphism cards at progress milestones -->
-            <div id="journey-overlays" class="absolute inset-0 z-10 pointer-events-none">
-                <div class="journey-node absolute bottom-20 left-8 md:left-16 max-w-xs opacity-0 transition-all duration-700 translate-y-8 pointer-events-auto" data-start="0.02" data-end="0.22">
-                    <div class="backdrop-blur-xl bg-white/[0.06] border border-white/[0.08] rounded-2xl p-6 shadow-2xl">
-                        <div class="flex items-center gap-3 mb-3"><span class="inline-block w-8 h-px" style="background:var(--copper);"></span><span style="color:var(--copper);font-family:'Inter',monospace;font-size:10px;letter-spacing:0.3em;text-transform:uppercase;">01 &middot; Mine</span></div>
-                        <h3 class="text-xl font-bold text-white mb-2">Raw Tailings</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed">Billions of tons of mining waste &mdash; an untapped resource sitting idle across desert landscapes.</p>
-                    </div>
-                </div>
-                <div class="journey-node absolute bottom-20 right-8 md:right-16 max-w-xs opacity-0 transition-all duration-700 translate-y-8 pointer-events-auto" data-start="0.20" data-end="0.42">
-                    <div class="backdrop-blur-xl bg-white/[0.06] border border-white/[0.08] rounded-2xl p-6 shadow-2xl">
-                        <div class="flex items-center gap-3 mb-3"><span class="inline-block w-8 h-px" style="background:var(--copper);"></span><span style="color:var(--copper);font-family:'Inter',monospace;font-size:10px;letter-spacing:0.3em;text-transform:uppercase;">02 &middot; Collection</span></div>
-                        <h3 class="text-xl font-bold text-white mb-2">Gather &amp; Transport</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed">Industrial-scale logistics moves tailings to processing facilities. No new mining required.</p>
-                    </div>
-                </div>
-                <div class="journey-node absolute bottom-20 left-8 md:left-16 max-w-xs opacity-0 transition-all duration-700 translate-y-8 pointer-events-auto" data-start="0.38" data-end="0.62">
-                    <div class="backdrop-blur-xl bg-white/[0.06] border border-white/[0.08] rounded-2xl p-6 shadow-2xl">
-                        <div class="flex items-center gap-3 mb-3"><span class="inline-block w-8 h-px" style="background:var(--copper);"></span><span style="color:var(--copper);font-family:'Inter',monospace;font-size:10px;letter-spacing:0.3em;text-transform:uppercase;">03 &middot; Processing</span></div>
-                        <h3 class="text-xl font-bold text-white mb-2">Alkali Activation</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed">Proprietary geopolymer chemistry transforms raw tailings into durable binding compounds.</p>
-                    </div>
-                </div>
-                <div class="journey-node absolute bottom-20 right-8 md:right-16 max-w-xs opacity-0 transition-all duration-700 translate-y-8 pointer-events-auto" data-start="0.58" data-end="0.82">
-                    <div class="backdrop-blur-xl bg-white/[0.06] border border-white/[0.08] rounded-2xl p-6 shadow-2xl">
-                        <div class="flex items-center gap-3 mb-3"><span class="inline-block w-8 h-px" style="background:var(--copper);"></span><span style="color:var(--copper);font-family:'Inter',monospace;font-size:10px;letter-spacing:0.3em;text-transform:uppercase;">04 &middot; Products</span></div>
-                        <h3 class="text-xl font-bold text-white mb-2">Building Materials</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed">Bricks, pavers, tiles and panels &mdash; certified, beautiful, and carbon-negative.</p>
-                    </div>
-                </div>
-                <div class="journey-node absolute bottom-20 left-1/2 -translate-x-1/2 max-w-sm opacity-0 transition-all duration-700 translate-y-8 pointer-events-auto" data-start="0.78" data-end="1.0">
-                    <div class="backdrop-blur-xl bg-white/[0.06] border border-white/[0.08] rounded-2xl p-6 shadow-2xl text-center">
-                        <div class="flex items-center justify-center gap-3 mb-3"><span class="inline-block w-8 h-px" style="background:var(--copper);"></span><span style="color:var(--copper);font-family:'Inter',monospace;font-size:10px;letter-spacing:0.3em;text-transform:uppercase;">05 &middot; City</span><span class="inline-block w-8 h-px" style="background:var(--copper);"></span></div>
-                        <h3 class="text-xl font-bold text-white mb-2">Sustainable Future</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed">Complete the circle &mdash; waste becomes infrastructure, mining becomes regenerative.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Scroll progress indicator -->
-            <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3">
-                <div class="w-32 h-1 bg-white/10 rounded-full overflow-hidden">
-                    <div id="journey-progress-bar" class="h-full rounded-full transition-all duration-100" style="width:0%;background:var(--copper);"></div>
-                </div>
-                <span id="journey-progress-pct" class="text-xs text-gray-500 font-mono w-8">0%</span>
-            </div>
-        </div>
-    </section>
 
 
     <!-- SECTION 4.6: TRANSFORMATION IN ACTION -->
@@ -2437,90 +2323,5 @@
         }, 3000);
     </script>
 
-    <!-- ScrollVideo: simplest possible frame scrubber -->
-    <script>
-    (function() {
-        var img = document.getElementById('journey-frame');
-        var section = document.getElementById('process-video');
-        var progressBar = document.getElementById('journey-progress-bar');
-        var progressPct = document.getElementById('journey-progress-pct');
-        var titleEl = document.getElementById('journey-title');
-        var nodes = document.querySelectorAll('.journey-node');
-        var loadingEl = document.getElementById('journey-loading');
-        var loadPctEl = document.getElementById('journey-load-pct');
-
-        if (!img || !section) return;
-
-        var TOTAL = 80;
-        var frameSrcs = [];
-        for (var i = 1; i <= TOTAL; i++) {
-            frameSrcs.push('frames/frame-' + String(i).padStart(3, '0') + '.jpg');
-        }
-
-        // Preload all frames into browser cache
-        var loaded = 0;
-        var cache = [];
-        frameSrcs.forEach(function(src, i) {
-            var preImg = new Image();
-            preImg.onload = preImg.onerror = function() {
-                loaded++;
-                if (loadPctEl) loadPctEl.textContent = 'Loading journey... ' + Math.round(loaded / TOTAL * 100) + '%';
-                if (loaded >= TOTAL) onAllLoaded();
-            };
-            preImg.src = src;
-            cache[i] = preImg;
-        });
-
-        function onAllLoaded() {
-            // Hide loader
-            if (loadingEl) {
-                loadingEl.style.opacity = '0';
-                setTimeout(function() { loadingEl.style.display = 'none'; }, 500);
-            }
-
-            var lastFrame = -1;
-            var endPx = section.offsetHeight - window.innerHeight;
-
-            window.addEventListener('resize', function() {
-                endPx = section.offsetHeight - window.innerHeight;
-            }, { passive: true });
-
-            function tick() {
-                var top = section.getBoundingClientRect().top;
-                var scrolled = Math.max(0, -top);
-                var progress = endPx > 0 ? Math.min(1, scrolled / endPx) : 0;
-                var idx = Math.min(Math.floor(progress * TOTAL), TOTAL - 1);
-
-                // Swap image src (instant from cache)
-                if (idx !== lastFrame) {
-                    img.src = cache[idx].src;
-                    lastFrame = idx;
-                }
-
-                // Progress bar
-                if (progressBar) progressBar.style.width = (progress * 100) + '%';
-                if (progressPct) progressPct.textContent = Math.round(progress * 100) + '%';
-
-                // Fade title
-                if (titleEl) {
-                    titleEl.style.opacity = progress < 0.1 ? 1 : Math.max(0, 1 - (progress - 0.1) * 5);
-                }
-
-                // Overlay nodes
-                nodes.forEach(function(node) {
-                    var s = parseFloat(node.dataset.start);
-                    var e = parseFloat(node.dataset.end);
-                    var vis = progress >= s && progress <= e;
-                    node.style.opacity = vis ? '1' : '0';
-                    node.style.transform = vis ? 'translateY(0)' : 'translateY(2rem)';
-                });
-
-                requestAnimationFrame(tick);
-            }
-
-            requestAnimationFrame(tick);
-        }
-    })();
-    </script>
 </body>
 </html>
