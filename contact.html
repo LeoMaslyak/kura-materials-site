@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kura Materials — Contact Us</title>
+    <meta name="description" content="Get in touch with Kura Materials. Whether you're an investor, buyer, or partner — let's build a sustainable future together.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- HERO -->
+    <section class="relative pt-40 pb-20 overflow-hidden hero-gradient" style="z-index: 1;">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0f0f0f]" style="z-index: 1;"></div>
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <div class="max-w-4xl mx-auto">
+                <span class="text-sm text-[#C87533] tracking-widest uppercase font-semibold animate-fade-in-up" style="animation-delay: 0.1s; opacity: 0;">Contact</span>
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 mt-4 animate-fade-in-up" style="animation-delay: 0.2s; opacity: 0;">
+                    Talk to a <span class="gradient-text">Sales Professional</span>
+                </h1>
+                <p class="text-xl text-gray-400 mb-8 font-light max-w-2xl mx-auto animate-fade-in-up" style="animation-delay: 0.4s; opacity: 0;">
+                    Whether you're a mining company, a municipality, or an architect — let's turn waste into wonder together.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- AUDIENCE SEGMENTATION -->
+    <section class="relative py-16 bg-gradient-to-b from-[#0f0f0f] to-[#1e1e1e]" style="z-index: 1;">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12 scroll-animate">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">How Can We Help?</h2>
+                <p class="text-gray-400">Select your profile for the most relevant information</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="scroll-animate stagger-1">
+                    <button onclick="selectAudience('investor')" class="audience-card w-full glass-card rounded-2xl p-8 text-center cursor-pointer border-2 border-transparent hover:border-[#C87533] transition-all" data-audience="investor">
+                        <div class="w-16 h-16 rounded-full bg-gradient-to-br from-[#C87533] to-[#e8a75d] mx-auto mb-4 flex items-center justify-center">
+                            <span class="text-3xl">📊</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">I am an Investor</h3>
+                        <p class="text-gray-400 text-sm">Looking for pitch deck, financials, or to schedule a meeting</p>
+                    </button>
+                </div>
+
+                <div class="scroll-animate stagger-2">
+                    <button onclick="selectAudience('buyer')" class="audience-card w-full glass-card rounded-2xl p-8 text-center cursor-pointer border-2 border-transparent hover:border-[#4A7C59] transition-all" data-audience="buyer">
+                        <div class="w-16 h-16 rounded-full bg-gradient-to-br from-[#4A7C59] to-[#6fa87d] mx-auto mb-4 flex items-center justify-center">
+                            <span class="text-3xl">🏗️</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">I am a Buyer / Contractor</h3>
+                        <p class="text-gray-400 text-sm">Interested in product specs, pricing, or bulk orders</p>
+                    </button>
+                </div>
+
+                <div class="scroll-animate stagger-3">
+                    <button onclick="selectAudience('partner')" class="audience-card w-full glass-card rounded-2xl p-8 text-center cursor-pointer border-2 border-transparent hover:border-[#C87533] transition-all" data-audience="partner">
+                        <div class="w-16 h-16 rounded-full bg-gradient-to-br from-[#C87533] to-[#4A7C59] mx-auto mb-4 flex items-center justify-center">
+                            <span class="text-3xl">🤝</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">I am a Partner</h3>
+                        <p class="text-gray-400 text-sm">Mining company, research institution, or municipality</p>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT FORM -->
+    <section class="relative py-16 bg-[#1e1e1e]" style="z-index: 1;">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
+                <!-- Form -->
+                <div class="scroll-animate">
+                    <h2 class="text-3xl font-bold text-white mb-8">Send Us a Message</h2>
+                    <form id="contact-form" class="space-y-6">
+                        <div class="grid grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-gray-400 mb-2 text-sm font-semibold">Name *</label>
+                                <input type="text" required class="w-full px-4 py-3 bg-[#0f0f0f] border border-gray-700 rounded-lg text-white focus:outline-none focus:border-[#C87533] transition-colors" placeholder="Your name">
+                            </div>
+                            <div>
+                                <label class="block text-gray-400 mb-2 text-sm font-semibold">Email *</label>
+                                <input type="email" required class="w-full px-4 py-3 bg-[#0f0f0f] border border-gray-700 rounded-lg text-white focus:outline-none focus:border-[#C87533] transition-colors" placeholder="your@email.com">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-gray-400 mb-2 text-sm font-semibold">Company</label>
+                                <input type="text" class="w-full px-4 py-3 bg-[#0f0f0f] border border-gray-700 rounded-lg text-white focus:outline-none focus:border-[#C87533] transition-colors" placeholder="Company name">
+                            </div>
+                            <div>
+                                <label class="block text-gray-400 mb-2 text-sm font-semibold">Role</label>
+                                <select id="role-select" class="w-full px-4 py-3 bg-[#0f0f0f] border border-gray-700 rounded-lg text-white focus:outline-none focus:border-[#C87533] transition-colors">
+                                    <option value="">Select your role</option>
+                                    <option value="investor">Investor / VC</option>
+                                    <option value="buyer">Buyer / Contractor</option>
+                                    <option value="partner">Mining Company</option>
+                                    <option value="architect">Architect / Designer</option>
+                                    <option value="municipality">Municipality / Government</option>
+                                    <option value="researcher">Research Institution</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-gray-400 mb-2 text-sm font-semibold">Message *</label>
+                            <textarea required rows="5" class="w-full px-4 py-3 bg-[#0f0f0f] border border-gray-700 rounded-lg text-white focus:outline-none focus:border-[#C87533] transition-colors resize-none" placeholder="Tell us about your project or inquiry..."></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary w-full py-4 rounded-lg text-lg font-semibold text-white">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="scroll-animate stagger-2">
+                    <h2 class="text-3xl font-bold text-white mb-8">Get in Touch</h2>
+
+                    <div class="space-y-6">
+                        <div class="glass-card rounded-2xl p-6">
+                            <h3 class="text-lg font-bold text-white mb-2 flex items-center gap-3">
+                                <span class="text-xl">📧</span> Email
+                            </h3>
+                            <p class="text-gray-400">info@kuramaterials.com</p>
+                        </div>
+
+                        <div class="glass-card rounded-2xl p-6">
+                            <h3 class="text-lg font-bold text-white mb-2 flex items-center gap-3">
+                                <span class="text-xl">📱</span> Phone
+                            </h3>
+                            <p class="text-gray-400">+34 600 000 000</p>
+                        </div>
+
+                        <div class="glass-card rounded-2xl p-6">
+                            <h3 class="text-lg font-bold text-white mb-2 flex items-center gap-3">
+                                <span class="text-xl">📍</span> Location
+                            </h3>
+                            <p class="text-gray-400">Barcelona, Spain</p>
+                            <p class="text-gray-500 text-sm mt-1">IESE Business School</p>
+                        </div>
+
+                        <div class="glass-card rounded-2xl p-6">
+                            <h3 class="text-lg font-bold text-white mb-3 flex items-center gap-3">
+                                <span class="text-xl">🔗</span> Quick Links
+                            </h3>
+                            <div class="space-y-2">
+                                <a href="investor.html" class="block text-[#C87533] hover:text-[#e8a75d] transition-colors" style="text-decoration:none;">→ Investor Information</a>
+                                <a href="products.html" class="block text-[#4A7C59] hover:text-[#6fa87d] transition-colors" style="text-decoration:none;">→ Product Catalog</a>
+                                <a href="index.html" class="block text-gray-400 hover:text-white transition-colors" style="text-decoration:none;">→ About Kura Materials</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="relative py-16 bg-[#0a0a0a] border-t border-gray-900" style="z-index: 1;">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div>
+                    <a href="index.html" class="text-3xl font-bold gradient-text" style="text-decoration:none;">Kura Materials</a>
+                    <p class="text-gray-500 text-sm mt-1">Turning Mining Waste Into Sustainable Infrastructure</p>
+                </div>
+                <div class="flex gap-6">
+                    <a href="index.html" class="text-gray-500 hover:text-[#C87533] transition-colors" style="text-decoration:none;">Home</a>
+                    <a href="products.html" class="text-gray-500 hover:text-[#C87533] transition-colors" style="text-decoration:none;">Products</a>
+                    <a href="investor.html" class="text-gray-500 hover:text-[#C87533] transition-colors" style="text-decoration:none;">Investors</a>
+                    <a href="contact.html" class="text-gray-500 hover:text-[#C87533] transition-colors" style="text-decoration:none;">Contact</a>
+                </div>
+            </div>
+            <div class="text-center mt-8 pt-8 border-t border-gray-900">
+                <p class="text-gray-600 text-sm">© 2026 Kura Materials. An IESE MBA Case Study.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Audience segmentation
+        function selectAudience(type) {
+            document.querySelectorAll('.audience-card').forEach(function(card) {
+                card.classList.remove('border-[#C87533]', 'border-[#4A7C59]');
+                card.classList.add('border-transparent');
+            });
+
+            var selected = document.querySelector('[data-audience="' + type + '"]');
+            if (selected) {
+                selected.classList.remove('border-transparent');
+                if (type === 'buyer') {
+                    selected.classList.add('border-[#4A7C59]');
+                } else {
+                    selected.classList.add('border-[#C87533]');
+                }
+            }
+
+            var roleSelect = document.getElementById('role-select');
+            if (roleSelect) {
+                if (type === 'investor') roleSelect.value = 'investor';
+                else if (type === 'buyer') roleSelect.value = 'buyer';
+                else if (type === 'partner') roleSelect.value = 'partner';
+            }
+
+            document.getElementById('contact-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Check URL params for pre-selection
+        var params = new URLSearchParams(window.location.search);
+        var typeParam = params.get('type');
+        if (typeParam) {
+            selectAudience(typeParam);
+        }
+
+        // Form submission
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your interest! Our team will be in touch within 24 hours.');
+            this.reset();
+        });
+    </script>
+    <script src="nav.js"></script>
+</body>
+</html>
