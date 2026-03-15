@@ -751,33 +751,81 @@
         </div>
     </section>
 
-    <!-- SECTION 4.5: PROCESS VIDEO ANIMATION -->
-    <section id="process-video" class="relative py-24 px-6 overflow-hidden">
-        <div class="container mx-auto max-w-6xl">
-            <h2 class="text-5xl md:text-6xl font-bold text-center mb-6 scroll-animate">
-                <span class="gradient-text">Journey to Transformation</span>
-            </h2>
-            <p class="text-center text-gray-400 mb-16 max-w-3xl mx-auto scroll-animate stagger-1">
-                Watch mining waste transform into sustainable building materials
-            </p>
+    <!-- SECTION 4.5: SCROLL-DRIVEN VIDEO JOURNEY -->
+    <script src="scroll-video.js"></script>
+    <section id="process-video" class="relative overflow-hidden" style="height: 400vh;">
+        <!-- Sticky container: pinned to viewport while scrolling through 400vh -->
+        <div class="sticky top-0 w-full h-screen flex items-center justify-center overflow-hidden">
+            <!-- Video element — scroll-scrubbed by ScrollVideo module -->
+            <video
+                id="journey-video"
+                muted
+                playsinline
+                preload="none"
+                class="absolute inset-0 w-full h-full object-cover"
+                style="filter: brightness(0.6);"
+                data-src="journey-combined.mp4"
+            >
+            </video>
 
-            <!-- Veo Video Background -->
-            <div class="relative w-full rounded-2xl overflow-hidden scroll-animate stagger-2" style="height: 600px;">
-                <video 
-                    autoplay 
-                    muted 
-                    loop 
-                    playsinline 
-                    class="absolute inset-0 w-full h-full object-cover"
-                    style="filter: brightness(0.7);"
-                >
-                    <source src="https://raw.githack.com/LeoMaslyak/kura-materials-site/main/Industrial_Waste_to_Sustainable_City_web.mp4" type="video/mp4">
-                </video>
-                <div class="absolute inset-0 bg-gradient-to-t from-[#0f0f0f] via-transparent to-transparent"></div>
-                <div class="absolute bottom-8 left-8 right-8 text-center">
-                    <h3 class="text-3xl md:text-4xl font-bold text-white mb-2">From Waste to Sustainability</h3>
-                    <p class="text-gray-300 text-lg">AI-generated visualization of our transformation process</p>
+            <!-- Gradient overlays -->
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0f0f0f]/80 via-transparent to-[#0f0f0f]/40 pointer-events-none"></div>
+
+            <!-- Section title -->
+            <div id="journey-title" class="absolute top-12 left-0 right-0 text-center z-20 transition-opacity duration-500">
+                <h2 class="text-4xl md:text-6xl font-bold">
+                    <span class="gradient-text">Journey to Transformation</span>
+                </h2>
+                <p class="text-gray-400 text-lg mt-3 max-w-2xl mx-auto">
+                    Scroll to watch mining waste become sustainable building materials
+                </p>
+            </div>
+
+            <!-- Journey overlay nodes — glass-morphism cards at progress milestones -->
+            <div id="journey-overlays" class="absolute inset-0 z-10 pointer-events-none">
+                <div class="journey-node absolute bottom-20 left-8 md:left-16 max-w-xs opacity-0 transition-all duration-700 translate-y-8 pointer-events-auto" data-start="0.02" data-end="0.22">
+                    <div class="backdrop-blur-xl bg-white/[0.06] border border-white/[0.08] rounded-2xl p-6 shadow-2xl">
+                        <div class="flex items-center gap-3 mb-3"><span class="inline-block w-8 h-px" style="background:var(--copper);"></span><span style="color:var(--copper);font-family:'Inter',monospace;font-size:10px;letter-spacing:0.3em;text-transform:uppercase;">01 &middot; Mine</span></div>
+                        <h3 class="text-xl font-bold text-white mb-2">Raw Tailings</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Billions of tons of mining waste &mdash; an untapped resource sitting idle across desert landscapes.</p>
+                    </div>
                 </div>
+                <div class="journey-node absolute bottom-20 right-8 md:right-16 max-w-xs opacity-0 transition-all duration-700 translate-y-8 pointer-events-auto" data-start="0.20" data-end="0.42">
+                    <div class="backdrop-blur-xl bg-white/[0.06] border border-white/[0.08] rounded-2xl p-6 shadow-2xl">
+                        <div class="flex items-center gap-3 mb-3"><span class="inline-block w-8 h-px" style="background:var(--copper);"></span><span style="color:var(--copper);font-family:'Inter',monospace;font-size:10px;letter-spacing:0.3em;text-transform:uppercase;">02 &middot; Collection</span></div>
+                        <h3 class="text-xl font-bold text-white mb-2">Gather &amp; Transport</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Industrial-scale logistics moves tailings to processing facilities. No new mining required.</p>
+                    </div>
+                </div>
+                <div class="journey-node absolute bottom-20 left-8 md:left-16 max-w-xs opacity-0 transition-all duration-700 translate-y-8 pointer-events-auto" data-start="0.38" data-end="0.62">
+                    <div class="backdrop-blur-xl bg-white/[0.06] border border-white/[0.08] rounded-2xl p-6 shadow-2xl">
+                        <div class="flex items-center gap-3 mb-3"><span class="inline-block w-8 h-px" style="background:var(--copper);"></span><span style="color:var(--copper);font-family:'Inter',monospace;font-size:10px;letter-spacing:0.3em;text-transform:uppercase;">03 &middot; Processing</span></div>
+                        <h3 class="text-xl font-bold text-white mb-2">Alkali Activation</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Proprietary geopolymer chemistry transforms raw tailings into durable binding compounds.</p>
+                    </div>
+                </div>
+                <div class="journey-node absolute bottom-20 right-8 md:right-16 max-w-xs opacity-0 transition-all duration-700 translate-y-8 pointer-events-auto" data-start="0.58" data-end="0.82">
+                    <div class="backdrop-blur-xl bg-white/[0.06] border border-white/[0.08] rounded-2xl p-6 shadow-2xl">
+                        <div class="flex items-center gap-3 mb-3"><span class="inline-block w-8 h-px" style="background:var(--copper);"></span><span style="color:var(--copper);font-family:'Inter',monospace;font-size:10px;letter-spacing:0.3em;text-transform:uppercase;">04 &middot; Products</span></div>
+                        <h3 class="text-xl font-bold text-white mb-2">Building Materials</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Bricks, pavers, tiles and panels &mdash; certified, beautiful, and carbon-negative.</p>
+                    </div>
+                </div>
+                <div class="journey-node absolute bottom-20 left-1/2 -translate-x-1/2 max-w-sm opacity-0 transition-all duration-700 translate-y-8 pointer-events-auto" data-start="0.78" data-end="1.0">
+                    <div class="backdrop-blur-xl bg-white/[0.06] border border-white/[0.08] rounded-2xl p-6 shadow-2xl text-center">
+                        <div class="flex items-center justify-center gap-3 mb-3"><span class="inline-block w-8 h-px" style="background:var(--copper);"></span><span style="color:var(--copper);font-family:'Inter',monospace;font-size:10px;letter-spacing:0.3em;text-transform:uppercase;">05 &middot; City</span><span class="inline-block w-8 h-px" style="background:var(--copper);"></span></div>
+                        <h3 class="text-xl font-bold text-white mb-2">Sustainable Future</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Complete the circle &mdash; waste becomes infrastructure, mining becomes regenerative.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scroll progress indicator -->
+            <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3">
+                <div class="w-32 h-1 bg-white/10 rounded-full overflow-hidden">
+                    <div id="journey-progress-bar" class="h-full rounded-full transition-all duration-100" style="width:0%;background:var(--copper);"></div>
+                </div>
+                <span id="journey-progress-pct" class="text-xs text-gray-500 font-mono w-8">0%</span>
             </div>
         </div>
     </section>
@@ -2382,6 +2430,87 @@
                             loadingScreen.classList.add('hidden');
         }
         }, 3000);
+    </script>
+
+    <!-- ScrollVideo Journey Init -->
+    <script>
+    (function() {
+        var video = document.getElementById('journey-video');
+        if (!video) return;
+
+        var section = document.getElementById('process-video');
+        var progressBar = document.getElementById('journey-progress-bar');
+        var progressPct = document.getElementById('journey-progress-pct');
+        var titleEl = document.getElementById('journey-title');
+        var nodes = document.querySelectorAll('.journey-node');
+        var loaded = false;
+
+        function initScrollVideo() {
+            if (loaded) return;
+            loaded = true;
+
+            // Load video src from data-src
+            var src = video.dataset.src;
+            if (src && !video.querySelector('source')) {
+                var source = document.createElement('source');
+                source.src = src;
+                source.type = 'video/mp4';
+                video.appendChild(source);
+                video.load();
+            }
+
+            ScrollVideo.init({
+                element: '#journey-video',
+                mode: 'video',
+                startOffset: 0,
+                endOffset: 0,
+                offsetMode: 'viewport',
+                easing: 'smooth',
+                smoothing: 0.08,
+                debug: false,
+                onProgress: function(progress) {
+                    if (progressBar) progressBar.style.width = (progress * 100) + '%';
+                    if (progressPct) progressPct.textContent = Math.round(progress * 100) + '%';
+
+                    // Fade title after 10%
+                    if (titleEl) {
+                        titleEl.style.opacity = progress < 0.1 ? 1 : Math.max(0, 1 - (progress - 0.1) * 5);
+                    }
+
+                    // Show/hide journey nodes with smooth transitions
+                    nodes.forEach(function(node) {
+                        var start = parseFloat(node.dataset.start);
+                        var end = parseFloat(node.dataset.end);
+                        var visible = progress >= start && progress <= end;
+                        if (visible) {
+                            node.style.opacity = '1';
+                            node.style.transform = 'translateY(0)';
+                        } else {
+                            node.style.opacity = '0';
+                            node.style.transform = 'translateY(2rem)';
+                        }
+                    });
+                },
+                onReady: function(inst) {
+                    inst.opts.endOffset = section.offsetHeight - window.innerHeight;
+                    inst.opts.offsetMode = 'viewport';
+                    inst._recalc();
+                }
+            });
+        }
+
+        // Lazy-load: start loading when section is 300px from viewport
+        var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    initScrollVideo();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { rootMargin: '300px' });
+
+        observer.observe(section);
+    })();
     </script>
 </body>
 </html>
