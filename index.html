@@ -756,12 +756,14 @@
     <section id="process-video" class="relative overflow-hidden" style="height: 300vh;">
         <!-- Sticky container: pinned to viewport while scrolling through 400vh -->
         <div class="sticky top-0 w-full h-screen flex items-center justify-center overflow-hidden">
-            <!-- Canvas element — frame-sequence scroll scrubbing (Apple-style) -->
-            <canvas
-                id="journey-canvas"
+            <!-- Frame image — scroll-driven src swaps from preloaded cache -->
+            <img
+                id="journey-frame"
                 class="absolute inset-0 w-full h-full object-cover"
                 style="filter: brightness(0.85);"
-            ></canvas>
+                alt=""
+                src="frames/frame-001.jpg"
+            />
 
             <!-- Loading indicator -->
             <div id="journey-loading" class="absolute inset-0 z-30 flex items-center justify-center bg-[#0f0f0f]/90 transition-opacity duration-700">
@@ -2435,12 +2437,10 @@
         }, 3000);
     </script>
 
-    <!-- ScrollVideo Journey Init (Frame Sequence Mode) -->
+    <!-- ScrollVideo: simplest possible frame scrubber -->
     <script>
     (function() {
-        var canvas = document.getElementById('journey-canvas');
-        if (!canvas) return;
-
+        var img = document.getElementById('journey-frame');
         var section = document.getElementById('process-video');
         var progressBar = document.getElementById('journey-progress-bar');
         var progressPct = document.getElementById('journey-progress-pct');
@@ -2449,89 +2449,55 @@
         var loadingEl = document.getElementById('journey-loading');
         var loadPctEl = document.getElementById('journey-load-pct');
 
-        // Generate frame URLs
-        var TOTAL_FRAMES = 80;
-        var frames = [];
-        for (var i = 1; i <= TOTAL_FRAMES; i++) {
-            var num = String(i).padStart(3, '0');
-            frames.push('frames/frame-' + num + '.jpg');
+        if (!img || !section) return;
+
+        var TOTAL = 80;
+        var frameSrcs = [];
+        for (var i = 1; i <= TOTAL; i++) {
+            frameSrcs.push('frames/frame-' + String(i).padStart(3, '0') + '.jpg');
         }
 
-        function hideLoading() {
+        // Preload all frames into browser cache
+        var loaded = 0;
+        var cache = [];
+        frameSrcs.forEach(function(src, i) {
+            var preImg = new Image();
+            preImg.onload = preImg.onerror = function() {
+                loaded++;
+                if (loadPctEl) loadPctEl.textContent = 'Loading journey... ' + Math.round(loaded / TOTAL * 100) + '%';
+                if (loaded >= TOTAL) onAllLoaded();
+            };
+            preImg.src = src;
+            cache[i] = preImg;
+        });
+
+        function onAllLoaded() {
+            // Hide loader
             if (loadingEl) {
                 loadingEl.style.opacity = '0';
-                setTimeout(function() { loadingEl.style.display = 'none'; }, 700);
+                setTimeout(function() { loadingEl.style.display = 'none'; }, 500);
             }
-        }
 
-        // Preload all frames, then init scrubbing
-        var loadedCount = 0;
-        var images = [];
+            var lastFrame = -1;
+            var endPx = section.offsetHeight - window.innerHeight;
 
-        function onFrameLoad() {
-            loadedCount++;
-            var pct = Math.round((loadedCount / TOTAL_FRAMES) * 100);
-            if (loadPctEl) loadPctEl.textContent = 'Loading journey... ' + pct + '%';
+            window.addEventListener('resize', function() {
+                endPx = section.offsetHeight - window.innerHeight;
+            }, { passive: true });
 
-            if (loadedCount >= TOTAL_FRAMES) {
-                startScrubbing();
-            }
-        }
+            function tick() {
+                var top = section.getBoundingClientRect().top;
+                var scrolled = Math.max(0, -top);
+                var progress = endPx > 0 ? Math.min(1, scrolled / endPx) : 0;
+                var idx = Math.min(Math.floor(progress * TOTAL), TOTAL - 1);
 
-        // Load frames in batches to avoid connection overload
-        var BATCH_SIZE = 10;
-        var batchIdx = 0;
-
-        function loadBatch() {
-            var end = Math.min(batchIdx + BATCH_SIZE, TOTAL_FRAMES);
-            for (var i = batchIdx; i < end; i++) {
-                var img = new Image();
-                img.onload = function() {
-                    onFrameLoad();
-                    // Start next batch when this batch is done
-                    if (loadedCount >= end && end < TOTAL_FRAMES) {
-                        batchIdx = end;
-                        loadBatch();
-                    }
-                };
-                img.onerror = onFrameLoad; // count errors too
-                img.src = frames[i];
-                images[i] = img;
-            }
-        }
-
-        loadBatch();
-
-        function startScrubbing() {
-            // Size canvas to match first frame
-            var firstImg = images[0];
-            canvas.width = firstImg.naturalWidth;
-            canvas.height = firstImg.naturalHeight;
-
-            var ctx = canvas.getContext('2d');
-            var currentFrame = -1;
-
-            // Draw initial frame
-            ctx.drawImage(firstImg, 0, 0, canvas.width, canvas.height);
-
-            // Track scroll position directly (no lerp needed — instant frame switching)
-            var scrolling = false;
-            var endOffset = section.offsetHeight - window.innerHeight;
-
-            function updateFrame() {
-                var sectionRect = section.getBoundingClientRect();
-                var scrollIntoSection = -sectionRect.top;
-                var progress = Math.max(0, Math.min(1, scrollIntoSection / endOffset));
-
-                // Map progress to frame index
-                var frameIdx = Math.min(Math.floor(progress * TOTAL_FRAMES), TOTAL_FRAMES - 1);
-
-                if (frameIdx !== currentFrame && images[frameIdx] && images[frameIdx].complete) {
-                    ctx.drawImage(images[frameIdx], 0, 0, canvas.width, canvas.height);
-                    currentFrame = frameIdx;
+                // Swap image src (instant from cache)
+                if (idx !== lastFrame) {
+                    img.src = cache[idx].src;
+                    lastFrame = idx;
                 }
 
-                // Update progress bar
+                // Progress bar
                 if (progressBar) progressBar.style.width = (progress * 100) + '%';
                 if (progressPct) progressPct.textContent = Math.round(progress * 100) + '%';
 
@@ -2540,25 +2506,19 @@
                     titleEl.style.opacity = progress < 0.1 ? 1 : Math.max(0, 1 - (progress - 0.1) * 5);
                 }
 
-                // Show/hide overlay nodes
+                // Overlay nodes
                 nodes.forEach(function(node) {
-                    var start = parseFloat(node.dataset.start);
-                    var end = parseFloat(node.dataset.end);
-                    var visible = progress >= start && progress <= end;
-                    node.style.opacity = visible ? '1' : '0';
-                    node.style.transform = visible ? 'translateY(0)' : 'translateY(2rem)';
+                    var s = parseFloat(node.dataset.start);
+                    var e = parseFloat(node.dataset.end);
+                    var vis = progress >= s && progress <= e;
+                    node.style.opacity = vis ? '1' : '0';
+                    node.style.transform = vis ? 'translateY(0)' : 'translateY(2rem)';
                 });
 
-                requestAnimationFrame(updateFrame);
+                requestAnimationFrame(tick);
             }
 
-            hideLoading();
-            requestAnimationFrame(updateFrame);
-
-            // Recalc on resize
-            window.addEventListener('resize', function() {
-                endOffset = section.offsetHeight - window.innerHeight;
-            }, { passive: true });
+            requestAnimationFrame(tick);
         }
     })();
     </script>
