@@ -756,23 +756,18 @@
     <section id="process-video" class="relative overflow-hidden" style="height: 300vh;">
         <!-- Sticky container: pinned to viewport while scrolling through 400vh -->
         <div class="sticky top-0 w-full h-screen flex items-center justify-center overflow-hidden">
-            <!-- Video element — scroll-scrubbed by ScrollVideo module -->
-            <video
-                id="journey-video"
-                muted
-                playsinline
-                preload="auto"
+            <!-- Canvas element — frame-sequence scroll scrubbing (Apple-style) -->
+            <canvas
+                id="journey-canvas"
                 class="absolute inset-0 w-full h-full object-cover"
-                style="filter: brightness(0.8);"
-                src="journey-combined.mp4"
-            >
-            </video>
+                style="filter: brightness(0.85);"
+            ></canvas>
 
             <!-- Loading indicator -->
             <div id="journey-loading" class="absolute inset-0 z-30 flex items-center justify-center bg-[#0f0f0f]/90 transition-opacity duration-700">
                 <div class="text-center">
                     <div class="w-10 h-10 border-2 border-white/20 border-t-[#C87533] rounded-full animate-spin mx-auto mb-4"></div>
-                    <p class="text-gray-500 text-sm">Loading journey...</p>
+                    <p id="journey-load-pct" class="text-gray-500 text-sm">Loading journey... 0%</p>
                 </div>
             </div>
 
@@ -2440,11 +2435,11 @@
         }, 3000);
     </script>
 
-    <!-- ScrollVideo Journey Init -->
+    <!-- ScrollVideo Journey Init (Frame Sequence Mode) -->
     <script>
     (function() {
-        var video = document.getElementById('journey-video');
-        if (!video) return;
+        var canvas = document.getElementById('journey-canvas');
+        if (!canvas) return;
 
         var section = document.getElementById('process-video');
         var progressBar = document.getElementById('journey-progress-bar');
@@ -2452,6 +2447,15 @@
         var titleEl = document.getElementById('journey-title');
         var nodes = document.querySelectorAll('.journey-node');
         var loadingEl = document.getElementById('journey-loading');
+        var loadPctEl = document.getElementById('journey-load-pct');
+
+        // Generate frame URLs
+        var TOTAL_FRAMES = 80;
+        var frames = [];
+        for (var i = 1; i <= TOTAL_FRAMES; i++) {
+            var num = String(i).padStart(3, '0');
+            frames.push('frames/frame-' + num + '.jpg');
+        }
 
         function hideLoading() {
             if (loadingEl) {
@@ -2460,67 +2464,101 @@
             }
         }
 
-        function startScrubbing() {
-            ScrollVideo.init({
-                element: '#journey-video',
-                mode: 'video',
-                startOffset: 0,
-                endOffset: 0,
-                offsetMode: 'viewport',
-                easing: 'smooth',
-                smoothing: 0.15,
-                debug: false,
-                onProgress: function(progress) {
-                    if (progressBar) progressBar.style.width = (progress * 100) + '%';
-                    if (progressPct) progressPct.textContent = Math.round(progress * 100) + '%';
+        // Preload all frames, then init scrubbing
+        var loadedCount = 0;
+        var images = [];
 
-                    // Fade title after 10%
-                    if (titleEl) {
-                        titleEl.style.opacity = progress < 0.1 ? 1 : Math.max(0, 1 - (progress - 0.1) * 5);
-                    }
+        function onFrameLoad() {
+            loadedCount++;
+            var pct = Math.round((loadedCount / TOTAL_FRAMES) * 100);
+            if (loadPctEl) loadPctEl.textContent = 'Loading journey... ' + pct + '%';
 
-                    // Show/hide journey nodes with smooth transitions
-                    nodes.forEach(function(node) {
-                        var start = parseFloat(node.dataset.start);
-                        var end = parseFloat(node.dataset.end);
-                        var visible = progress >= start && progress <= end;
-                        if (visible) {
-                            node.style.opacity = '1';
-                            node.style.transform = 'translateY(0)';
-                        } else {
-                            node.style.opacity = '0';
-                            node.style.transform = 'translateY(2rem)';
-                        }
-                    });
-                },
-                onReady: function(inst) {
-                    inst.opts.endOffset = section.offsetHeight - window.innerHeight;
-                    inst.opts.offsetMode = 'viewport';
-                    inst._recalc();
-                    hideLoading();
-                }
-            });
-        }
-
-        // Wait for video to be fully seekable before enabling scroll scrubbing
-        function checkReady() {
-            // canplaythrough means browser estimates it can play through without buffering
-            if (video.readyState >= 4) {
+            if (loadedCount >= TOTAL_FRAMES) {
                 startScrubbing();
-            } else {
-                video.addEventListener('canplaythrough', function() {
-                    startScrubbing();
-                }, { once: true });
             }
         }
 
-        // Video has preload=auto + src set — just wait for it to buffer
-        if (video.readyState >= 1) {
-            checkReady();
-        } else {
-            video.addEventListener('loadedmetadata', function() {
-                checkReady();
-            }, { once: true });
+        // Load frames in batches to avoid connection overload
+        var BATCH_SIZE = 10;
+        var batchIdx = 0;
+
+        function loadBatch() {
+            var end = Math.min(batchIdx + BATCH_SIZE, TOTAL_FRAMES);
+            for (var i = batchIdx; i < end; i++) {
+                var img = new Image();
+                img.onload = function() {
+                    onFrameLoad();
+                    // Start next batch when this batch is done
+                    if (loadedCount >= end && end < TOTAL_FRAMES) {
+                        batchIdx = end;
+                        loadBatch();
+                    }
+                };
+                img.onerror = onFrameLoad; // count errors too
+                img.src = frames[i];
+                images[i] = img;
+            }
+        }
+
+        loadBatch();
+
+        function startScrubbing() {
+            // Size canvas to match first frame
+            var firstImg = images[0];
+            canvas.width = firstImg.naturalWidth;
+            canvas.height = firstImg.naturalHeight;
+
+            var ctx = canvas.getContext('2d');
+            var currentFrame = -1;
+
+            // Draw initial frame
+            ctx.drawImage(firstImg, 0, 0, canvas.width, canvas.height);
+
+            // Track scroll position directly (no lerp needed — instant frame switching)
+            var scrolling = false;
+            var endOffset = section.offsetHeight - window.innerHeight;
+
+            function updateFrame() {
+                var sectionRect = section.getBoundingClientRect();
+                var scrollIntoSection = -sectionRect.top;
+                var progress = Math.max(0, Math.min(1, scrollIntoSection / endOffset));
+
+                // Map progress to frame index
+                var frameIdx = Math.min(Math.floor(progress * TOTAL_FRAMES), TOTAL_FRAMES - 1);
+
+                if (frameIdx !== currentFrame && images[frameIdx] && images[frameIdx].complete) {
+                    ctx.drawImage(images[frameIdx], 0, 0, canvas.width, canvas.height);
+                    currentFrame = frameIdx;
+                }
+
+                // Update progress bar
+                if (progressBar) progressBar.style.width = (progress * 100) + '%';
+                if (progressPct) progressPct.textContent = Math.round(progress * 100) + '%';
+
+                // Fade title
+                if (titleEl) {
+                    titleEl.style.opacity = progress < 0.1 ? 1 : Math.max(0, 1 - (progress - 0.1) * 5);
+                }
+
+                // Show/hide overlay nodes
+                nodes.forEach(function(node) {
+                    var start = parseFloat(node.dataset.start);
+                    var end = parseFloat(node.dataset.end);
+                    var visible = progress >= start && progress <= end;
+                    node.style.opacity = visible ? '1' : '0';
+                    node.style.transform = visible ? 'translateY(0)' : 'translateY(2rem)';
+                });
+
+                requestAnimationFrame(updateFrame);
+            }
+
+            hideLoading();
+            requestAnimationFrame(updateFrame);
+
+            // Recalc on resize
+            window.addEventListener('resize', function() {
+                endOffset = section.offsetHeight - window.innerHeight;
+            }, { passive: true });
         }
     })();
     </script>
