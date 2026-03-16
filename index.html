@@ -614,6 +614,37 @@
             });
         });
     </script>
+
+    <script>
+        // Apple-style scroll-driven animations
+        (function() {
+            // Parallax on product images
+            var showcaseImages = document.querySelectorAll('.product-render-card img');
+            var lastScrollY = 0;
+            var ticking = false;
+
+            function updateParallax() {
+                var scrollY = window.pageYOffset;
+                showcaseImages.forEach(function(img) {
+                    var rect = img.getBoundingClientRect();
+                    var viewportCenter = window.innerHeight / 2;
+                    var elementCenter = rect.top + rect.height / 2;
+                    var offset = (elementCenter - viewportCenter) * 0.04;
+                    if (rect.top < window.innerHeight && rect.bottom > 0) {
+                        img.style.transform = 'translateY(' + offset + 'px) scale(1)';
+                    }
+                });
+                ticking = false;
+            }
+
+            window.addEventListener('scroll', function() {
+                if (!ticking) {
+                    requestAnimationFrame(updateParallax);
+                    ticking = true;
+                }
+            }, { passive: true });
+        })();
+    </script>
     <script src="nav.js"></script>
 </body>
 </html>

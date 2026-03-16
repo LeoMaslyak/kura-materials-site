@@ -693,3 +693,117 @@ a.glass-card:hover,
     /* Reduce section heading sizes */
     h2 { font-size: clamp(1.8rem, 8vw, 3rem) !important; }
 }
+
+
+/* ========== APPLE-STYLE PRODUCT SHOWCASE ========== */
+.product-showcase {
+    position: relative;
+    overflow: hidden;
+}
+
+.product-showcase .showcase-image {
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
+    will-change: transform;
+}
+
+.product-showcase:hover .showcase-image {
+    transform: scale(1.03);
+}
+
+/* Sticky scroll section */
+.sticky-product-section {
+    position: relative;
+    min-height: 200vh;
+}
+
+.sticky-product-inner {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Product float animation */
+@keyframes product-float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-12px); }
+}
+
+.product-float {
+    animation: product-float 6s ease-in-out infinite;
+}
+
+/* Apple-style text reveal on scroll */
+.text-reveal {
+    overflow: hidden;
+}
+
+.text-reveal > * {
+    transform: translateY(100%);
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.text-reveal.visible > * {
+    transform: translateY(0);
+}
+
+/* Parallax depth layers */
+.parallax-slow { will-change: transform; }
+.parallax-fast { will-change: transform; }
+
+/* Product grid with hover depth */
+.product-render-card {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    background: #0a0a0a;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease;
+}
+
+.product-render-card:hover {
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 32px 64px rgba(200, 117, 51, 0.12), 0 0 0 1px rgba(200, 117, 51, 0.08);
+}
+
+.product-render-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.product-render-card:hover img {
+    transform: scale(1.05);
+}
+
+.product-render-card .card-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 32px;
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);
+    transform: translateY(20px);
+    opacity: 0;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+}
+
+.product-render-card:hover .card-overlay {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Scroll-driven scale (JS-powered) */
+.scroll-scale {
+    transform: scale(0.85);
+    opacity: 0.6;
+    transition: transform 0.1s linear, opacity 0.3s ease;
+}
+
+.scroll-scale.in-view {
+    transform: scale(1);
+    opacity: 1;
+}
