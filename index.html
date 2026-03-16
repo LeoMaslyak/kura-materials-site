@@ -217,72 +217,6 @@
     <!-- SECTION 4.5: SCROLL-DRIVEN VIDEO JOURNEY -->
 
 
-
-    <!-- SECTION: APPLE-STYLE PRODUCT SHOWCASE -->
-    <section class="relative py-32 px-6 bg-[#0a0a0a] overflow-hidden" style="z-index: 1;">
-        <div class="container mx-auto max-w-6xl">
-            <div class="text-center mb-6 scroll-animate blur-in">
-                <span class="text-sm text-[#C87533] tracking-widest uppercase font-semibold">What We Build</span>
-            </div>
-            <h2 class="text-5xl md:text-7xl font-bold text-center mb-6 scroll-animate blur-in">
-                Engineered From <span class="gradient-text">Waste</span>
-            </h2>
-            <p class="text-center text-gray-500 text-lg max-w-2xl mx-auto mb-20 scroll-animate stagger-1">
-                Seven product categories. One material revolution.
-            </p>
-
-            <!-- Hero product image - full width -->
-            <div class="scroll-animate scale-in mb-20">
-                <div class="product-render-card" style="max-height: 500px;">
-                    <img src="images/render-pavers.webp" alt="Hexagonal sustainable paving stones in various earth tones" loading="lazy" style="width: 100%; object-fit: cover; max-height: 500px;">
-                    <div class="card-overlay">
-                        <span class="text-xs text-[#C87533] tracking-widest uppercase font-semibold">Featured Product</span>
-                        <h3 class="text-2xl font-bold text-white mt-2">Sustainable Paving Stones</h3>
-                        <p class="text-gray-400 text-sm mt-2">Hexagonal pavers in 12 natural tones. 70% lower carbon footprint than traditional alternatives.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Product grid - 2x2 -->
-            <div class="grid md:grid-cols-2 gap-6">
-                <div class="scroll-animate from-left stagger-1">
-                    <div class="product-render-card" style="height: 340px;">
-                        <img src="images/render-blocks.webp" alt="Eco-concrete building blocks with studio lighting" loading="lazy" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div class="card-overlay">
-                            <h3 class="text-xl font-bold text-white">Eco-Concrete Blocks</h3>
-                            <p class="text-gray-400 text-sm mt-1">Up to 70% recycled content. 6-26.1 MPa compressive strength.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="scroll-animate from-right stagger-2">
-                    <div class="product-render-card" style="height: 340px;">
-                        <img src="images/render-bench.webp" alt="Minimalist concrete bench made from recycled materials" loading="lazy" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div class="card-overlay">
-                            <h3 class="text-xl font-bold text-white">Urban Furniture</h3>
-                            <p class="text-gray-400 text-sm mt-1">50+ year lifespan. Custom designs for public spaces.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="scroll-animate from-left stagger-3 md:col-span-2">
-                    <div class="product-render-card" style="height: 360px;">
-                        <img src="images/render-transformation.webp" alt="Raw tailings transforming into finished concrete product" loading="lazy" style="width: 100%; height: 100%; object-fit: cover;">
-                        <div class="card-overlay">
-                            <span class="text-xs text-[#4A7C59] tracking-widest uppercase font-semibold">The Process</span>
-                            <h3 class="text-xl font-bold text-white mt-2">From Tailings to Product</h3>
-                            <p class="text-gray-400 text-sm mt-1">Proprietary alkali-activation converts mining waste into construction-grade materials.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="text-center mt-12 scroll-animate stagger-4">
-                <a href="products.html" class="btn-primary px-10 py-4 rounded-full text-lg font-semibold text-white inline-block" style="text-decoration:none;">
-                    Explore All Products
-                </a>
-            </div>
-        </div>
-    </section>
-
     <!-- SECTION 4.6: TRANSFORMATION IN ACTION -->
     <section id="transformation" class="relative py-24 px-6 overflow-hidden" style="background: linear-gradient(180deg, #0f0f0f 0%, #141210 50%, #0f0f0f 100%);">
         <div class="container mx-auto max-w-7xl">
@@ -679,37 +613,6 @@
                 }
             });
         });
-    </script>
-
-    <script>
-        // Apple-style scroll-driven animations
-        (function() {
-            // Parallax on product images
-            var showcaseImages = document.querySelectorAll('.product-render-card img');
-            var lastScrollY = 0;
-            var ticking = false;
-
-            function updateParallax() {
-                var scrollY = window.pageYOffset;
-                showcaseImages.forEach(function(img) {
-                    var rect = img.getBoundingClientRect();
-                    var viewportCenter = window.innerHeight / 2;
-                    var elementCenter = rect.top + rect.height / 2;
-                    var offset = (elementCenter - viewportCenter) * 0.04;
-                    if (rect.top < window.innerHeight && rect.bottom > 0) {
-                        img.style.transform = 'translateY(' + offset + 'px) scale(1)';
-                    }
-                });
-                ticking = false;
-            }
-
-            window.addEventListener('scroll', function() {
-                if (!ticking) {
-                    requestAnimationFrame(updateParallax);
-                    ticking = true;
-                }
-            }, { passive: true });
-        })();
     </script>
     <script src="nav.js"></script>
 </body>
