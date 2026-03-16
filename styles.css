@@ -693,3 +693,73 @@ a.glass-card:hover,
     /* Reduce section heading sizes */
     h2 { font-size: clamp(1.8rem, 8vw, 3rem) !important; }
 }
+
+
+/* ========== SCROLL-DRIVEN 3D PRODUCT ========== */
+.scroll-canvas-section {
+    position: relative;
+    height: 300vh;
+}
+
+.scroll-canvas-sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #0a0a0a;
+}
+
+.scroll-canvas-sticky canvas {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.scroll-canvas-overlay {
+    position: absolute;
+    z-index: 10;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+.scroll-canvas-overlay.top-left {
+    top: 15%;
+    left: 8%;
+    max-width: 360px;
+}
+
+.scroll-canvas-overlay.bottom-right {
+    bottom: 15%;
+    right: 8%;
+    max-width: 360px;
+    text-align: right;
+}
+
+.scroll-progress-bar {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 3px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 2px;
+    overflow: hidden;
+    z-index: 10;
+}
+
+.scroll-progress-bar .fill {
+    height: 100%;
+    background: linear-gradient(90deg, #C87533, #4A7C59);
+    border-radius: 2px;
+    transition: width 0.05s linear;
+}
+
+@media (max-width: 768px) {
+    .scroll-canvas-section { height: 250vh; }
+    .scroll-canvas-overlay.top-left { top: 10%; left: 5%; max-width: 260px; }
+    .scroll-canvas-overlay.bottom-right { bottom: 10%; right: 5%; max-width: 260px; }
+}

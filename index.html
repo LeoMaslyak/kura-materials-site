@@ -217,6 +217,238 @@
     <!-- SECTION 4.5: SCROLL-DRIVEN VIDEO JOURNEY -->
 
 
+
+    <!-- SECTION: SCROLL-DRIVEN 3D PRODUCT -->
+    <section class="scroll-canvas-section" style="z-index: 1;">
+        <div class="scroll-canvas-sticky" id="product-scroll-section">
+            <canvas id="scroll-3d-canvas"></canvas>
+
+            <!-- Text overlays that fade in/out based on scroll progress -->
+            <div class="scroll-canvas-overlay top-left" id="scroll-text-1" style="opacity: 0;">
+                <span class="text-xs text-[#C87533] tracking-widest uppercase font-semibold">Scroll to Explore</span>
+                <h3 class="text-3xl md:text-4xl font-bold text-white mt-2 leading-tight">Built From<br><span class="gradient-text">Mining Waste</span></h3>
+                <p class="text-gray-500 text-sm mt-3">70% recycled tailings content. 60% lower CO₂ than traditional concrete.</p>
+            </div>
+
+            <div class="scroll-canvas-overlay bottom-right" id="scroll-text-2" style="opacity: 0;">
+                <h3 class="text-3xl md:text-4xl font-bold text-white leading-tight"><span class="gradient-text-green">7 Product</span><br>Categories</h3>
+                <p class="text-gray-500 text-sm mt-3">From eco-concrete to urban furniture. Every piece starts as waste.</p>
+            </div>
+
+            <div class="scroll-canvas-overlay bottom-right" id="scroll-text-3" style="opacity: 0;">
+                <h3 class="text-3xl md:text-4xl font-bold text-white leading-tight">Strength Meets<br><span class="gradient-text">Sustainability</span></h3>
+                <p class="text-gray-500 text-sm mt-3">6–26.1 MPa compressive strength. 50+ year lifespan. Zero compromise.</p>
+                <a href="products.html" class="inline-block mt-4 btn-primary px-6 py-3 rounded-full text-sm font-semibold text-white pointer-events-auto" style="text-decoration:none;">View All Products →</a>
+            </div>
+
+            <div class="scroll-progress-bar">
+                <div class="fill" id="scroll-progress-fill" style="width: 0%;"></div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+    (function() {
+        var section = document.getElementById('product-scroll-section');
+        if (!section) return;
+        var canvas = document.getElementById('scroll-3d-canvas');
+        var ctx = canvas.getContext('2d');
+
+        // Canvas sizing
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Text overlays
+        var text1 = document.getElementById('scroll-text-1');
+        var text2 = document.getElementById('scroll-text-2');
+        var text3 = document.getElementById('scroll-text-3');
+        var progressFill = document.getElementById('scroll-progress-fill');
+
+        // 3D product parameters
+        var currentRotation = 0;
+        var currentElevation = 0;
+        var currentScale = 1;
+        var currentExplode = 0;
+
+        function drawProduct(progress) {
+            var w = canvas.width, h = canvas.height;
+            ctx.clearRect(0, 0, w, h);
+
+            // Background gradient
+            var bgGrad = ctx.createRadialGradient(w*0.5, h*0.5, 0, w*0.5, h*0.5, w*0.6);
+            bgGrad.addColorStop(0, 'rgba(30,25,20,0.3)');
+            bgGrad.addColorStop(1, 'rgba(10,10,10,1)');
+            ctx.fillStyle = bgGrad;
+            ctx.fillRect(0, 0, w, h);
+
+            // Map progress to animation phases
+            currentRotation = progress * Math.PI * 2.5;
+            currentElevation = Math.sin(progress * Math.PI) * 0.3;
+            currentScale = 0.7 + Math.sin(progress * Math.PI) * 0.35;
+            currentExplode = progress > 0.7 ? (progress - 0.7) / 0.3 : 0;
+
+            var cx = w * 0.5;
+            var cy = h * 0.5;
+            var baseSize = Math.min(w, h) * 0.18 * currentScale;
+
+            // Draw a stack of hexagonal pavers that rotate and separate
+            var layers = 5;
+            for (var i = 0; i < layers; i++) {
+                var layerProgress = i / layers;
+                var explodeOffset = currentExplode * (i - layers/2) * baseSize * 0.8;
+                var yOff = (i - layers/2) * baseSize * 0.35 + explodeOffset + currentElevation * baseSize * 2;
+                var rotOff = currentRotation + i * 0.15;
+                var depth = Math.sin(rotOff) * 0.15;
+
+                // Shadow
+                ctx.save();
+                ctx.globalAlpha = 0.15 - depth * 0.3;
+                ctx.beginPath();
+                ctx.ellipse(cx + depth * baseSize * 2, cy + yOff + baseSize * 0.6, baseSize * 1.1, baseSize * 0.25, 0, 0, Math.PI * 2);
+                ctx.fillStyle = '#000';
+                ctx.fill();
+                ctx.restore();
+
+                // Hexagonal paver
+                ctx.save();
+                ctx.translate(cx + depth * baseSize * 2, cy + yOff);
+
+                // Determine face visibility for 3D effect
+                var faceAngle = (rotOff % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
+                var showRight = faceAngle < Math.PI;
+                var sideDepth = Math.abs(Math.sin(rotOff)) * baseSize * 0.5;
+
+                // Top face (hexagon)
+                var hex = [];
+                for (var j = 0; j < 6; j++) {
+                    var angle = (Math.PI / 3) * j - Math.PI / 6;
+                    hex.push({
+                        x: Math.cos(angle) * baseSize,
+                        y: Math.sin(angle) * baseSize * 0.5
+                    });
+                }
+
+                // Side face
+                ctx.beginPath();
+                if (showRight) {
+                    ctx.moveTo(hex[0].x, hex[0].y);
+                    ctx.lineTo(hex[0].x, hex[0].y + sideDepth);
+                    ctx.lineTo(hex[5].x, hex[5].y + sideDepth);
+                    ctx.lineTo(hex[5].x, hex[5].y);
+                    ctx.lineTo(hex[4].x, hex[4].y);
+                    ctx.lineTo(hex[4].x, hex[4].y + sideDepth);
+                    ctx.lineTo(hex[3].x, hex[3].y + sideDepth);
+                    ctx.lineTo(hex[3].x, hex[3].y);
+                } else {
+                    ctx.moveTo(hex[0].x, hex[0].y);
+                    ctx.lineTo(hex[0].x, hex[0].y + sideDepth);
+                    ctx.lineTo(hex[1].x, hex[1].y + sideDepth);
+                    ctx.lineTo(hex[1].x, hex[1].y);
+                    ctx.lineTo(hex[2].x, hex[2].y);
+                    ctx.lineTo(hex[2].x, hex[2].y + sideDepth);
+                    ctx.lineTo(hex[3].x, hex[3].y + sideDepth);
+                    ctx.lineTo(hex[3].x, hex[3].y);
+                }
+                ctx.closePath();
+
+                // Side color - darker
+                var sideHue = 25 + layerProgress * 10;
+                var sideLum = 22 + layerProgress * 8;
+                ctx.fillStyle = 'hsl(' + sideHue + ', 35%, ' + sideLum + '%)';
+                ctx.fill();
+                ctx.strokeStyle = 'rgba(200,117,51,0.15)';
+                ctx.lineWidth = 0.5;
+                ctx.stroke();
+
+                // Top face
+                ctx.beginPath();
+                ctx.moveTo(hex[0].x, hex[0].y);
+                for (var j = 1; j < 6; j++) ctx.lineTo(hex[j].x, hex[j].y);
+                ctx.closePath();
+
+                // Color varies per layer (earth tones)
+                var colors = [
+                    'hsl(25, 40%, 32%)',   // warm brown
+                    'hsl(35, 35%, 28%)',   // dark amber
+                    'hsl(140, 20%, 28%)',  // sage
+                    'hsl(20, 45%, 35%)',   // copper
+                    'hsl(30, 30%, 25%)'    // dark earth
+                ];
+                ctx.fillStyle = colors[i % colors.length];
+                ctx.fill();
+
+                // Subtle texture noise
+                ctx.globalAlpha = 0.08;
+                for (var k = 0; k < 30; k++) {
+                    var nx = (Math.random() - 0.5) * baseSize * 1.6;
+                    var ny = (Math.random() - 0.5) * baseSize * 0.8;
+                    ctx.fillStyle = Math.random() > 0.5 ? '#fff' : '#000';
+                    ctx.fillRect(nx, ny, 2, 2);
+                }
+                ctx.globalAlpha = 1;
+
+                // Edge highlight
+                ctx.strokeStyle = 'rgba(200,117,51,0.25)';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+
+                // Rim light on top edge
+                ctx.beginPath();
+                ctx.moveTo(hex[4].x, hex[4].y);
+                ctx.lineTo(hex[5].x, hex[5].y);
+                ctx.lineTo(hex[0].x, hex[0].y);
+                ctx.strokeStyle = 'rgba(200,117,51,0.4)';
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+
+                ctx.restore();
+            }
+
+            // Copper glow behind product
+            ctx.save();
+            ctx.globalAlpha = 0.06 + Math.sin(progress * Math.PI * 2) * 0.03;
+            var glow = ctx.createRadialGradient(cx, cy, 0, cx, cy, baseSize * 3);
+            glow.addColorStop(0, 'rgba(200,117,51,0.3)');
+            glow.addColorStop(0.5, 'rgba(200,117,51,0.05)');
+            glow.addColorStop(1, 'transparent');
+            ctx.fillStyle = glow;
+            ctx.fillRect(0, 0, w, h);
+            ctx.restore();
+
+            // Update text overlays based on scroll progress
+            text1.style.opacity = progress < 0.15 ? progress / 0.15 : progress < 0.35 ? 1 : Math.max(0, 1 - (progress - 0.35) / 0.1);
+            text2.style.opacity = progress > 0.35 && progress < 0.45 ? (progress - 0.35) / 0.1 : progress >= 0.45 && progress < 0.65 ? 1 : progress >= 0.65 ? Math.max(0, 1 - (progress - 0.65) / 0.1) : 0;
+            text3.style.opacity = progress > 0.7 ? Math.min(1, (progress - 0.7) / 0.1) : 0;
+
+            // Progress bar
+            progressFill.style.width = (progress * 100) + '%';
+        }
+
+        // Scroll handler
+        var ticking = false;
+        function onScroll() {
+            if (!ticking) {
+                requestAnimationFrame(function() {
+                    var sectionParent = section.closest('.scroll-canvas-section');
+                    var rect = sectionParent.getBoundingClientRect();
+                    var sectionHeight = sectionParent.offsetHeight - window.innerHeight;
+                    var progress = Math.max(0, Math.min(1, -rect.top / sectionHeight));
+                    drawProduct(progress);
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        drawProduct(0); // Initial render
+    })();
+    </script>
+
     <!-- SECTION 4.6: TRANSFORMATION IN ACTION -->
     <section id="transformation" class="relative py-24 px-6 overflow-hidden" style="background: linear-gradient(180deg, #0f0f0f 0%, #141210 50%, #0f0f0f 100%);">
         <div class="container mx-auto max-w-7xl">
