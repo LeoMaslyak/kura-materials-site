@@ -169,11 +169,7 @@ a.glass-card:hover,
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Staggered animation delay */
-.stagger-1 { animation-delay: 0.1s; }
-.stagger-2 { animation-delay: 0.2s; }
-.stagger-3 { animation-delay: 0.3s; }
-.stagger-4 { animation-delay: 0.4s; }
+/* Stagger classes moved to Revolut-style animation section */
 
 .parallax-layer {
     transition: transform 0.1s ease-out;
@@ -348,16 +344,129 @@ a.glass-card:hover,
     transition: stroke-dashoffset 2s ease-out;
 }
 
-/* Hidden by default for scroll animations */
+/* ========== REVOLUT-STYLE SCROLL ANIMATIONS ========== */
+
+/* Default: fade up */
 .scroll-animate {
     opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    transform: translateY(40px);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .scroll-animate.visible {
     opacity: 1 !important;
-    transform: translateY(0) !important;
+    transform: none !important;
+}
+
+/* Slide from left */
+.scroll-animate.from-left {
+    transform: translateX(-60px);
+}
+
+/* Slide from right */
+.scroll-animate.from-right {
+    transform: translateX(60px);
+}
+
+/* Scale in */
+.scroll-animate.scale-in {
+    transform: scale(0.92);
+}
+
+/* Blur in */
+.scroll-animate.blur-in {
+    transform: translateY(20px);
+    filter: blur(8px);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), filter 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scroll-animate.blur-in.visible {
+    filter: blur(0px) !important;
+}
+
+/* Clip reveal (text wipe) */
+.scroll-animate.clip-reveal {
+    clip-path: inset(0 100% 0 0);
+    transform: none;
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), clip-path 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scroll-animate.clip-reveal.visible {
+    clip-path: inset(0 0% 0 0) !important;
+}
+
+/* Enhanced stagger timing */
+.stagger-1 { transition-delay: 0.08s !important; }
+.stagger-2 { transition-delay: 0.16s !important; }
+.stagger-3 { transition-delay: 0.24s !important; }
+.stagger-4 { transition-delay: 0.32s !important; }
+.stagger-5 { transition-delay: 0.40s !important; }
+.stagger-6 { transition-delay: 0.48s !important; }
+
+/* ========== CASE STUDIES ========== */
+.case-study-card {
+    background: rgba(30, 30, 30, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease;
+}
+
+.case-study-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 48px rgba(200, 117, 51, 0.1);
+}
+
+.case-study-card .case-image {
+    height: 220px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.case-study-card .case-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(15, 15, 15, 0.9) 0%, transparent 60%);
+}
+
+.case-study-card .case-image .case-tag {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    z-index: 2;
+    padding: 5px 14px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.case-stat {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.case-stat:last-child {
+    border-bottom: none;
+}
+
+.case-stat-value {
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.case-stat-label {
+    font-size: 13px;
+    color: #888;
 }
 
 /* Mobile Hamburger Menu */
@@ -514,4 +623,73 @@ a.glass-card:hover,
     .particle { display: none; }
     .info-card { max-width: 250px; font-size: 14px; }
     #journey-container { overflow-x: auto; }
+}
+
+
+/* ========== ENHANCED MOBILE RESPONSIVENESS ========== */
+@media (max-width: 640px) {
+    /* Hero typography */
+    .hero-gradient h1 {
+        font-size: clamp(2.5rem, 12vw, 4rem) !important;
+        line-height: 1.1;
+    }
+
+    /* Tighter section padding on mobile */
+    section { padding-top: 3rem; padding-bottom: 3rem; }
+
+    /* Stage cards full-width */
+    .stage-card .grid { gap: 1.5rem; }
+    .stage-visual { aspect-ratio: 16/10; }
+
+    /* Case study cards */
+    .case-study-card .case-image { height: 180px; }
+    .case-stat-value { font-size: 22px; }
+
+    /* Glass cards breathing room */
+    .glass-card, .glass-card-static { padding: 1.25rem; }
+
+    /* Footer compact */
+    footer .flex { flex-direction: column; text-align: center; gap: 1rem; }
+
+    /* Counter text smaller on mobile */
+    .counter { font-size: inherit; }
+
+    /* Process steps tighter */
+    .circle-progress { width: 140px; height: 140px; }
+
+    /* Stage badges wrap better */
+    .stage-badge { font-size: 11px; padding: 4px 12px; }
+
+    /* Scroll animations: reduce distances for mobile */
+    .scroll-animate { transform: translateY(24px); }
+    .scroll-animate.from-left { transform: translateX(-30px); }
+    .scroll-animate.from-right { transform: translateX(30px); }
+}
+
+@media (max-width: 768px) {
+    /* 3D container smaller on tablet/mobile */
+    #threejs-container { height: 600px; }
+
+    /* Hide scroll indicator on smaller screens */
+    .scroll-indicator { display: none; }
+
+    /* Two-column product grid on tablet */
+    .grid.lg\:grid-cols-3 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 480px) {
+    /* Single column on small phones */
+    .grid.md\:grid-cols-2, .grid.md\:grid-cols-3, .grid.md\:grid-cols-4 {
+        grid-template-columns: 1fr;
+    }
+
+    /* Buttons full width */
+    .btn-primary, .btn-secondary, .btn-sage {
+        display: block;
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Reduce section heading sizes */
+    h2 { font-size: clamp(1.8rem, 8vw, 3rem) !important; }
 }
