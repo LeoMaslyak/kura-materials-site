@@ -86,25 +86,25 @@
                 <!-- Form -->
                 <div class="scroll-animate">
                     <h2 class="text-3xl font-bold text-white mb-8">Send Us a Message</h2>
-                    <form id="contact-form" class="space-y-6">
+                    <form id="contact-form" class="space-y-6" onsubmit="return handleSubmit(event)">
                         <div class="grid grid-cols-2 gap-6">
                             <div>
                                 <label class="block text-gray-400 mb-2 text-sm font-semibold">Name *</label>
-                                <input type="text" required class="w-full px-4 py-3 bg-[#0f0f0f] border border-gray-700 rounded-lg text-white focus:outline-none focus:border-[#C87533] transition-colors" placeholder="Your name">
+                                <input type="text" name="name" required class="w-full px-4 py-3 bg-[#0f0f0f] border border-gray-700 rounded-lg text-white focus:outline-none focus:border-[#C87533] transition-colors" placeholder="Your name">
                             </div>
                             <div>
                                 <label class="block text-gray-400 mb-2 text-sm font-semibold">Email *</label>
-                                <input type="email" required class="w-full px-4 py-3 bg-[#0f0f0f] border border-gray-700 rounded-lg text-white focus:outline-none focus:border-[#C87533] transition-colors" placeholder="your@email.com">
+                                <input type="email" name="email" required class="w-full px-4 py-3 bg-[#0f0f0f] border border-gray-700 rounded-lg text-white focus:outline-none focus:border-[#C87533] transition-colors" placeholder="your@email.com">
                             </div>
                         </div>
                         <div class="grid grid-cols-2 gap-6">
                             <div>
                                 <label class="block text-gray-400 mb-2 text-sm font-semibold">Company</label>
-                                <input type="text" class="w-full px-4 py-3 bg-[#0f0f0f] border border-gray-700 rounded-lg text-white focus:outline-none focus:border-[#C87533] transition-colors" placeholder="Company name">
+                                <input type="text" name="company" class="w-full px-4 py-3 bg-[#0f0f0f] border border-gray-700 rounded-lg text-white focus:outline-none focus:border-[#C87533] transition-colors" placeholder="Company name">
                             </div>
                             <div>
                                 <label class="block text-gray-400 mb-2 text-sm font-semibold">Role</label>
-                                <select id="role-select" class="w-full px-4 py-3 bg-[#0f0f0f] border border-gray-700 rounded-lg text-white focus:outline-none focus:border-[#C87533] transition-colors">
+                                <select id="role-select" name="role" class="w-full px-4 py-3 bg-[#0f0f0f] border border-gray-700 rounded-lg text-white focus:outline-none focus:border-[#C87533] transition-colors">
                                     <option value="">Select your role</option>
                                     <option value="investor">Investor / VC</option>
                                     <option value="buyer">Buyer / Contractor</option>
@@ -118,11 +118,12 @@
                         </div>
                         <div>
                             <label class="block text-gray-400 mb-2 text-sm font-semibold">Message *</label>
-                            <textarea required rows="5" class="w-full px-4 py-3 bg-[#0f0f0f] border border-gray-700 rounded-lg text-white focus:outline-none focus:border-[#C87533] transition-colors resize-none" placeholder="Tell us about your project or inquiry..."></textarea>
+                            <textarea name="message" required rows="5" class="w-full px-4 py-3 bg-[#0f0f0f] border border-gray-700 rounded-lg text-white focus:outline-none focus:border-[#C87533] transition-colors resize-none" placeholder="Tell us about your project or inquiry..."></textarea>
                         </div>
-                        <button type="submit" class="btn-primary w-full py-4 rounded-lg text-lg font-semibold text-white">
+                        <button type="submit" id="submit-btn" class="btn-primary w-full py-4 rounded-lg text-lg font-semibold text-white">
                             Send Message
                         </button>
+                        <p id="form-status" class="text-center text-sm hidden"></p>
                     </form>
                 </div>
 
@@ -225,12 +226,41 @@
             selectAudience(typeParam);
         }
 
-        // Form submission
-        document.getElementById('contact-form').addEventListener('submit', function(e) {
+        // Form submission via mailto
+        function handleSubmit(e) {
             e.preventDefault();
-            alert('Thank you for your interest! Our team will be in touch within 24 hours.');
-            this.reset();
-        });
+            var form = document.getElementById('contact-form');
+            var data = new FormData(form);
+            var name = data.get('name') || '';
+            var email = data.get('email') || '';
+            var company = data.get('company') || '';
+            var role = data.get('role') || '';
+            var message = data.get('message') || '';
+
+            var subject = encodeURIComponent('Kura Materials Inquiry — ' + name);
+            var body = encodeURIComponent(
+                'Name: ' + name + '\n' +
+                'Email: ' + email + '\n' +
+                'Company: ' + company + '\n' +
+                'Role: ' + role + '\n\n' +
+                'Message:\n' + message
+            );
+
+            window.location.href = 'mailto:info@kuramaterials.com?subject=' + subject + '&body=' + body;
+
+            var btn = document.getElementById('submit-btn');
+            var status = document.getElementById('form-status');
+            btn.textContent = 'Opening Email Client...';
+            status.textContent = 'Your default email client should open. If not, email us directly at info@kuramaterials.com';
+            status.className = 'text-center text-sm text-gray-400 mt-4';
+            status.classList.remove('hidden');
+
+            setTimeout(function() {
+                btn.textContent = 'Send Message';
+            }, 3000);
+
+            return false;
+        }
     </script>
     <script src="nav.js"></script>
 </body>
