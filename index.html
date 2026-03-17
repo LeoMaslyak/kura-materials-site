@@ -268,165 +268,67 @@
         var text3 = document.getElementById('scroll-text-3');
         var progressFill = document.getElementById('scroll-progress-fill');
 
-        // 3D product parameters
-        var currentRotation = 0;
-        var currentElevation = 0;
-        var currentScale = 1;
-        var currentExplode = 0;
+        // ── FRAME SEQUENCE PLAYER (Apple-style scroll-bound image sequence) ─────
+        var FRAME_COUNT = 192;
+        var frames = new Array(FRAME_COUNT);
+        var loadedCount = 0;
+        var lastDrawnIdx = -1;
 
-        function drawProduct(progress) {
+        // Cover-fit: scale frame to fill canvas (like object-fit: cover), centered
+        function drawFrame(img) {
+            if (!img) return;
             var w = canvas.width, h = canvas.height;
             ctx.clearRect(0, 0, w, h);
-
-            // Background gradient
-            var bgGrad = ctx.createRadialGradient(w*0.5, h*0.5, 0, w*0.5, h*0.5, w*0.6);
-            bgGrad.addColorStop(0, 'rgba(30,25,20,0.3)');
-            bgGrad.addColorStop(1, 'rgba(10,10,10,1)');
-            ctx.fillStyle = bgGrad;
+            ctx.fillStyle = '#0a0a0a';
             ctx.fillRect(0, 0, w, h);
+            var iw = img.naturalWidth, ih = img.naturalHeight;
+            var scale = Math.max(w / iw, h / ih);
+            var sw = iw * scale, sh = ih * scale;
+            var sx = (w - sw) / 2, sy = (h - sh) / 2;
+            ctx.drawImage(img, sx, sy, sw, sh);
+        }
 
-            // Map progress to animation phases
-            currentRotation = progress * Math.PI * 2.5;
-            currentElevation = Math.sin(progress * Math.PI) * 0.3;
-            currentScale = 0.7 + Math.sin(progress * Math.PI) * 0.35;
-            currentExplode = progress > 0.7 ? (progress - 0.7) / 0.3 : 0;
-
-            var cx = w * 0.5;
-            var cy = h * 0.5;
-            var baseSize = Math.min(w, h) * 0.18 * currentScale;
-
-            // Draw a stack of hexagonal pavers that rotate and separate
-            var layers = 5;
-            for (var i = 0; i < layers; i++) {
-                var layerProgress = i / layers;
-                var explodeOffset = currentExplode * (i - layers/2) * baseSize * 0.8;
-                var yOff = (i - layers/2) * baseSize * 0.35 + explodeOffset + currentElevation * baseSize * 2;
-                var rotOff = currentRotation + i * 0.15;
-                var depth = Math.sin(rotOff) * 0.15;
-
-                // Shadow
-                ctx.save();
-                ctx.globalAlpha = 0.15 - depth * 0.3;
-                ctx.beginPath();
-                ctx.ellipse(cx + depth * baseSize * 2, cy + yOff + baseSize * 0.6, baseSize * 1.1, baseSize * 0.25, 0, 0, Math.PI * 2);
-                ctx.fillStyle = '#000';
-                ctx.fill();
-                ctx.restore();
-
-                // Hexagonal paver
-                ctx.save();
-                ctx.translate(cx + depth * baseSize * 2, cy + yOff);
-
-                // Determine face visibility for 3D effect
-                var faceAngle = (rotOff % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
-                var showRight = faceAngle < Math.PI;
-                var sideDepth = Math.abs(Math.sin(rotOff)) * baseSize * 0.5;
-
-                // Top face (hexagon)
-                var hex = [];
-                for (var j = 0; j < 6; j++) {
-                    var angle = (Math.PI / 3) * j - Math.PI / 6;
-                    hex.push({
-                        x: Math.cos(angle) * baseSize,
-                        y: Math.sin(angle) * baseSize * 0.5
-                    });
-                }
-
-                // Side face
-                ctx.beginPath();
-                if (showRight) {
-                    ctx.moveTo(hex[0].x, hex[0].y);
-                    ctx.lineTo(hex[0].x, hex[0].y + sideDepth);
-                    ctx.lineTo(hex[5].x, hex[5].y + sideDepth);
-                    ctx.lineTo(hex[5].x, hex[5].y);
-                    ctx.lineTo(hex[4].x, hex[4].y);
-                    ctx.lineTo(hex[4].x, hex[4].y + sideDepth);
-                    ctx.lineTo(hex[3].x, hex[3].y + sideDepth);
-                    ctx.lineTo(hex[3].x, hex[3].y);
-                } else {
-                    ctx.moveTo(hex[0].x, hex[0].y);
-                    ctx.lineTo(hex[0].x, hex[0].y + sideDepth);
-                    ctx.lineTo(hex[1].x, hex[1].y + sideDepth);
-                    ctx.lineTo(hex[1].x, hex[1].y);
-                    ctx.lineTo(hex[2].x, hex[2].y);
-                    ctx.lineTo(hex[2].x, hex[2].y + sideDepth);
-                    ctx.lineTo(hex[3].x, hex[3].y + sideDepth);
-                    ctx.lineTo(hex[3].x, hex[3].y);
-                }
-                ctx.closePath();
-
-                // Side color - darker
-                var sideHue = 25 + layerProgress * 10;
-                var sideLum = 22 + layerProgress * 8;
-                ctx.fillStyle = 'hsl(' + sideHue + ', 35%, ' + sideLum + '%)';
-                ctx.fill();
-                ctx.strokeStyle = 'rgba(200,117,51,0.15)';
-                ctx.lineWidth = 0.5;
-                ctx.stroke();
-
-                // Top face
-                ctx.beginPath();
-                ctx.moveTo(hex[0].x, hex[0].y);
-                for (var j = 1; j < 6; j++) ctx.lineTo(hex[j].x, hex[j].y);
-                ctx.closePath();
-
-                // Color varies per layer (earth tones)
-                var colors = [
-                    'hsl(25, 40%, 32%)',   // warm brown
-                    'hsl(35, 35%, 28%)',   // dark amber
-                    'hsl(140, 20%, 28%)',  // sage
-                    'hsl(20, 45%, 35%)',   // copper
-                    'hsl(30, 30%, 25%)'    // dark earth
-                ];
-                ctx.fillStyle = colors[i % colors.length];
-                ctx.fill();
-
-                // Subtle texture noise
-                ctx.globalAlpha = 0.08;
-                for (var k = 0; k < 30; k++) {
-                    var nx = (Math.random() - 0.5) * baseSize * 1.6;
-                    var ny = (Math.random() - 0.5) * baseSize * 0.8;
-                    ctx.fillStyle = Math.random() > 0.5 ? '#fff' : '#000';
-                    ctx.fillRect(nx, ny, 2, 2);
-                }
-                ctx.globalAlpha = 1;
-
-                // Edge highlight
-                ctx.strokeStyle = 'rgba(200,117,51,0.25)';
-                ctx.lineWidth = 1;
-                ctx.stroke();
-
-                // Rim light on top edge
-                ctx.beginPath();
-                ctx.moveTo(hex[4].x, hex[4].y);
-                ctx.lineTo(hex[5].x, hex[5].y);
-                ctx.lineTo(hex[0].x, hex[0].y);
-                ctx.strokeStyle = 'rgba(200,117,51,0.4)';
-                ctx.lineWidth = 1.5;
-                ctx.stroke();
-
-                ctx.restore();
+        // Nearest-available fallback: scan outward for closest loaded frame
+        function getBestFrame(idx) {
+            if (frames[idx]) return frames[idx];
+            for (var d = 1; d < FRAME_COUNT; d++) {
+                if (idx - d >= 0 && frames[idx - d]) return frames[idx - d];
+                if (idx + d < FRAME_COUNT && frames[idx + d]) return frames[idx + d];
             }
+            return null;
+        }
 
-            // Copper glow behind product
-            ctx.save();
-            ctx.globalAlpha = 0.06 + Math.sin(progress * Math.PI * 2) * 0.03;
-            var glow = ctx.createRadialGradient(cx, cy, 0, cx, cy, baseSize * 3);
-            glow.addColorStop(0, 'rgba(200,117,51,0.3)');
-            glow.addColorStop(0.5, 'rgba(200,117,51,0.05)');
-            glow.addColorStop(1, 'transparent');
-            ctx.fillStyle = glow;
-            ctx.fillRect(0, 0, w, h);
-            ctx.restore();
+        // Preload all frames; frame 0 shows immediately when ready
+        function preload() {
+            for (var i = 0; i < FRAME_COUNT; i++) {
+                (function(idx) {
+                    var img = new Image();
+                    img.onload = function() {
+                        frames[idx] = img;
+                        loadedCount++;
+                        if (idx === 0) { drawFrame(img); lastDrawnIdx = 0; }
+                    };
+                    var num = String(idx + 1).padStart(4, '0');
+                    img.src = 'frames/frame_' + num + '.jpg';
+                })(i);
+            }
+        }
 
-            // Update text overlays based on scroll progress
+        function onProgress(progress) {
+            var idx = Math.round(progress * (FRAME_COUNT - 1));
+            idx = Math.max(0, Math.min(FRAME_COUNT - 1, idx));
+            if (idx !== lastDrawnIdx) {
+                var img = getBestFrame(idx);
+                if (img) { drawFrame(img); lastDrawnIdx = idx; }
+            }
+            // Text overlays
             text1.style.opacity = progress < 0.15 ? progress / 0.15 : progress < 0.35 ? 1 : Math.max(0, 1 - (progress - 0.35) / 0.1);
             text2.style.opacity = progress > 0.35 && progress < 0.45 ? (progress - 0.35) / 0.1 : progress >= 0.45 && progress < 0.65 ? 1 : progress >= 0.65 ? Math.max(0, 1 - (progress - 0.65) / 0.1) : 0;
             text3.style.opacity = progress > 0.7 ? Math.min(1, (progress - 0.7) / 0.1) : 0;
-
             // Progress bar
             progressFill.style.width = (progress * 100) + '%';
         }
+        // ─────────────────────────────────────────────────────────────────────
 
         // Scroll handler
         var ticking = false;
@@ -437,7 +339,7 @@
                     var rect = sectionParent.getBoundingClientRect();
                     var sectionHeight = sectionParent.offsetHeight - window.innerHeight;
                     var progress = Math.max(0, Math.min(1, -rect.top / sectionHeight));
-                    drawProduct(progress);
+                    onProgress(progress);
                     ticking = false;
                 });
                 ticking = true;
@@ -445,7 +347,8 @@
         }
 
         window.addEventListener('scroll', onScroll, { passive: true });
-        drawProduct(0); // Initial render
+        preload();
+        onProgress(0); // draw black bg immediately; frame 0 appears on load
     })();
     </script>
 
