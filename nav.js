@@ -21,6 +21,7 @@
     <div class="mobile-menu" id="mobile-menu">
         <a href="index.html">Home</a>
         <a href="products.html">Products</a>
+        <a href="customers.html">Customers</a>
         <a href="investor.html">Investors</a>
         <a href="contact.html">Contact</a>
     </div>
@@ -59,6 +60,7 @@
             <div class="desktop-nav hidden md:flex gap-8 items-center">
                 <a href="index.html" class="${navLinkClass('index.html')}">Home</a>
                 <a href="products.html" class="${navLinkClass('products.html')}">Products</a>
+                <a href="customers.html" class="${navLinkClass('customers.html')}">Customers</a>
                 <a href="investor.html" class="${navLinkClass('investor.html')}">Investors</a>
                 <a href="contact.html" class="btn-primary px-6 py-2 rounded-full text-sm font-semibold text-white inline-block" style="text-decoration:none;">Talk to Sales</a>
             </div>

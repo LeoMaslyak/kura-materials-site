@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kura Materials — For Buyers & Specifiers</title>
+    <meta name="description" content="Specify sustainable construction materials that perform. Eco-Concrete, Urban Furniture, and Paving Blocks made from 70% recycled mining tailings. For municipalities, architects, and developers.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230f0f0f'/%3E%3Ctext x='50%25' y='55%25' text-anchor='middle' dominant-baseline='middle' font-family='Arial,sans-serif' font-weight='800' font-size='20' fill='%23C87533'%3EK%3C/text%3E%3C/svg%3E">
+    <link rel="canonical" href="https://leomaslyak.github.io/kura-materials-site/customers.html">
+    <meta property="og:title" content="Kura Materials — Sustainable Building Materials for Buyers">
+    <meta property="og:description" content="High-performance construction materials made from recycled mining tailings. Specify green, build strong.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://leomaslyak.github.io/kura-materials-site/customers.html">
+    <meta property="og:image" content="https://leomaslyak.github.io/kura-materials-site/images/hero-mine.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .product-card { cursor: pointer; }
+        .product-detail { display: none; }
+        .product-detail.open { display: block; }
+        .chevron { transition: transform 0.3s ease; }
+        .chevron.open { transform: rotate(180deg); }
+        .spec-row { border-bottom: 1px solid rgba(255,255,255,0.06); }
+        .spec-row:last-child { border-bottom: none; }
+        .use-case-card { transition: transform 0.2s, border-color 0.2s; }
+        .use-case-card:hover { transform: translateY(-4px); border-color: rgba(200,117,51,0.6) !important; }
+        .faq-answer { display: none; max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+        .faq-answer.open { display: block; max-height: 600px; }
+        .cert-badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 9999px; border: 1px solid rgba(200,117,51,0.4); background: rgba(200,117,51,0.08); font-size: 12px; color: #C87533; font-weight: 600; }
+        .process-step { position: relative; }
+        .process-step:not(:last-child)::after {
+            content: '→';
+            position: absolute;
+            right: -24px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #C87533;
+            font-size: 20px;
+            display: none;
+        }
+        @media (min-width: 768px) { .process-step:not(:last-child)::after { display: block; } }
+    </style>
+</head>
+<body>
+
+    <script src="nav.js"></script>
+
+    <!-- HERO -->
+    <section class="relative pt-40 pb-24 overflow-hidden hero-gradient" style="z-index: 1;">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0f0f0f]" style="z-index: 1;"></div>
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <div class="max-w-4xl mx-auto">
+                <span class="text-sm text-[#C87533] tracking-widest uppercase font-semibold animate-fade-in-up" style="animation-delay: 0.1s; opacity: 0;">For Buyers & Specifiers</span>
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 mt-4 animate-fade-in-up" style="animation-delay: 0.2s; opacity: 0;">
+                    Specify Green.<br><span class="gradient-text">Build Strong.</span>
+                </h1>
+                <p class="text-xl text-gray-400 mb-10 font-light max-w-3xl mx-auto animate-fade-in-up" style="animation-delay: 0.4s; opacity: 0;">
+                    High-performance construction materials — Eco-Concrete, Paving Blocks, Urban Furniture — made from 70% recycled mining tailings. Certifiable. Deliverable. Better for the planet.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up" style="animation-delay: 0.6s; opacity: 0;">
+                    <a href="contact.html?type=buyer" class="btn-primary px-8 py-4 rounded-full text-lg font-semibold text-white inline-block" style="text-decoration:none;">
+                        Request Specs &amp; Pricing
+                    </a>
+                    <a href="#products" class="btn-secondary px-8 py-4 rounded-full text-lg font-semibold text-white inline-block" style="text-decoration:none;">
+                        See Products ↓
+                    </a>
+                </div>
+                <!-- Trust badges -->
+                <div class="mt-12 flex flex-wrap gap-3 justify-center animate-fade-in-up" style="animation-delay: 0.8s; opacity: 0;">
+                    <span class="cert-badge">✓ EN 206 Compliant</span>
+                    <span class="cert-badge">✓ ISO 14001</span>
+                    <span class="cert-badge\">✓ LEED Eligible</span>
+                    <span class="cert-badge">✓ 60% Lower CO₂</span>
+                    <span class="cert-badge">✓ Lab Tested 6–26 MPa</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHO WE SERVE -->
+    <section class="relative py-24 px-6 bg-[#0f0f0f]" style="z-index: 1;">
+        <div class="container mx-auto max-w-6xl">
+            <div class="text-center mb-14 scroll-animate blur-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 text-white">Built for Your Industry</h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">Whether you're procuring for public infrastructure or specifying materials for a private development, Kura has a solution.</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Municipalities -->
+                <div class="use-case-card glass-card rounded-2xl p-7 border border-gray-700/40 scroll-animate stagger-1">
+                    <div class="text-4xl mb-4">🏙️</div>
+                    <h3 class="text-xl font-bold text-white mb-2">Municipalities</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Meet sustainability procurement mandates with certified eco-materials. Paving blocks, urban furniture, and road base materials that qualify for green public spending.</p>
+                    <div class="mt-4 text-[#C87533] text-xs font-semibold">Public infrastructure · Green procurement · ESG reporting</div>
+                </div>
+                <!-- Construction Companies -->
+                <div class="use-case-card glass-card rounded-2xl p-7 border border-gray-700/40 scroll-animate stagger-2">
+                    <div class="text-4xl mb-4">🏗️</div>
+                    <h3 class="text-xl font-bold text-white mb-2">Construction</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Drop-in aggregate replacement for your concrete mix. Same workability, higher sustainability credentials, competitive pricing — without redesigning your process.</p>
+                    <div class="mt-4 text-[#C87533] text-xs font-semibold">Structural use · Mix design support · Bulk supply</div>
+                </div>
+                <!-- Architects & Designers -->
+                <div class="use-case-card glass-card rounded-2xl p-7 border border-gray-700/40 scroll-animate stagger-3">
+                    <div class="text-4xl mb-4">📐</div>
+                    <h3 class="text-xl font-bold text-white mb-2">Architects</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Specify exposed-finish concrete and custom urban furniture with authentic sustainable provenance. Material samples, LEED documentation, and BIM object library available.</p>
+                    <div class="mt-4 text-[#C87533] text-xs font-semibold">Custom finishes · Samples · LEED docs</div>
+                </div>
+                <!-- Developers -->
+                <div class="use-case-card glass-card rounded-2xl p-7 border border-gray-700/40 scroll-animate stagger-4">
+                    <div class="text-4xl mb-4">🏢</div>
+                    <h3 class="text-xl font-bold text-white mb-2">Developers</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Enhance your project's green credentials and ESG story with verified low-carbon materials. Quantified CO₂ savings included in every delivery certificate.</p>
+                    <div class="mt-4 text-[#C87533] text-xs font-semibold">ESG reporting · CO₂ certificates · Verified sourcing</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS (Customer Process) -->
+    <section class="relative py-24 px-6 bg-gradient-to-b from-[#0f0f0f] to-[#1a1a1a]" style="z-index: 1;">
+        <div class="container mx-auto max-w-5xl">
+            <div class="text-center mb-14 scroll-animate blur-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 text-white">What You Buy, <span class="gradient-text">How It's Made</span></h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">The simple answer to the most-asked question: we replace aggregates (not cement) with processed mining tailings — verified, safe, and structurally sound.</p>
+            </div>
+
+            <!-- Technical explanation box -->
+            <div class="bg-[#1e1e1e] border border-[rgba(200,117,51,0.3)] rounded-2xl p-8 mb-12 scroll-animate">
+                <h3 class="text-lg font-bold text-[#C87533] mb-4">📋 The Material Question — Answered</h3>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-white font-semibold mb-2">What's in the concrete?</h4>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-4">Our Eco-Concrete <strong class="text-white">replaces up to 70% of the fine and coarse aggregates</strong> (sand, gravel) with processed mining tailings. The cement binder remains standard OPC or blended cement.</p>
+                        <p class="text-gray-400 text-sm leading-relaxed">Tailings are the finely ground rock left after ore extraction. After processing (removing heavy metals via bioleaching), they behave like high-quality silica-rich aggregates.</p>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-semibold mb-2">Do we replace cement?</h4>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-4">In our standard Eco-Concrete: <strong class="text-white">No — cement stays standard.</strong> The savings come from replacing virgin aggregate.</p>
+                        <p class="text-gray-400 text-sm leading-relaxed">In our Geopolymer Binder products: <strong class="text-white">Yes</strong> — we also replace Portland cement with an alkali-activated slag binder, cutting cement use by 50–80% and CO₂ by up to 80%.</p>
+                        <div class="mt-3 p-3 rounded-lg bg-[rgba(200,117,51,0.1)] text-xs text-[#C87533]">
+                            Aggregate replacement → 60% CO₂ reduction | Cement replacement → up to 80% CO₂ reduction
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Process steps -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 relative">
+                <div class="process-step glass-card rounded-2xl p-6 text-center scroll-animate stagger-1">
+                    <div class="text-3xl mb-3">⛏️</div>
+                    <h4 class="font-bold text-white mb-2">1. Source</h4>
+                    <p class="text-gray-400 text-sm">Mining tailings collected from partner mines. Tested for heavy metal levels.</p>
+                </div>
+                <div class="process-step glass-card rounded-2xl p-6 text-center scroll-animate stagger-2">
+                    <div class="text-3xl mb-3">🧪</div>
+                    <h4 class="font-bold text-white mb-2">2. Process</h4>
+                    <p class="text-gray-400 text-sm">Bioleaching removes heavy metals. Material classified to aggregate specs.</p>
+                </div>
+                <div class="process-step glass-card rounded-2xl p-6 text-center scroll-animate stagger-3">
+                    <div class="text-3xl mb-3">🏭</div>
+                    <h4 class="font-bold text-white mb-2">3. Manufacture</h4>
+                    <p class="text-gray-400 text-sm">Mixed with cement, formed into product to your specification and certified.</p>
+                </div>
+                <div class="process-step glass-card rounded-2xl p-6 text-center scroll-animate stagger-4">
+                    <div class="text-3xl mb-3">🚚</div>
+                    <h4 class="font-bold text-white mb-2">4. Deliver</h4>
+                    <p class="text-gray-400 text-sm">Delivered with test certificates, CO₂ savings report, and EPD documentation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCTS — EXPANDABLE CARDS -->
+    <section id="products" class="relative py-24 px-6 bg-[#1a1a1a]" style="z-index: 1;">
+        <div class="container mx-auto max-w-4xl">
+            <div class="text-center mb-14 scroll-animate blur-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">
+                    <span class="gradient-text">Products & Specs</span>
+                </h2>
+                <p class="text-gray-400 text-lg">Click any product for full technical specifications and pricing enquiry.</p>
+            </div>
+
+            <div class="space-y-4" id="products-accordion">
+
+                <!-- Eco-Concrete -->
+                <div class="glass-card rounded-2xl border border-gray-700/40 overflow-hidden scroll-animate">
+                    <button class="product-card w-full p-7 flex items-center justify-between text-left" onclick="toggleProduct(this)">
+                        <div class="flex items-center gap-5">
+                            <span class="text-3xl">🧱</span>
+                            <div>
+                                <h3 class="text-xl font-bold text-white">Eco-Concrete</h3>
+                                <p class="text-gray-400 text-sm mt-0.5">Structural &amp; decorative concrete · 70% recycled aggregates · 6–26 MPa</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="hidden sm:block text-xs font-semibold text-[#C87533] bg-[rgba(200,117,51,0.1)] px-3 py-1 rounded-full">Most Ordered</span>
+                            <svg class="chevron w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </div>
+                    </button>
+                    <div class="product-detail px-7 pb-7">
+                        <div class="border-t border-gray-700/40 pt-6 grid md:grid-cols-2 gap-8">
+                            <div>
+                                <h4 class="text-sm font-semibold text-[#C87533] uppercase tracking-wider mb-4">Technical Specifications</h4>
+                                <div class="space-y-2">
+                                    <div class="spec-row flex justify-between py-2 text-sm"><span class="text-gray-500">Compressive Strength</span><span class="text-white font-medium">6 – 26.1 MPa</span></div>
+                                    <div class="spec-row flex justify-between py-2 text-sm"><span class="text-gray-500">Recycled Content</span><span class="text-white font-medium">Up to 70% aggregate</span></div>
+                                    <div class="spec-row flex justify-between py-2 text-sm"><span class="text-gray-500">CO₂ vs. Conventional</span><span class="text-green-400 font-medium">−60%</span></div>
+                                    <div class="spec-row flex justify-between py-2 text-sm"><span class="text-gray-500">Workability (Slump)</span><span class="text-white font-medium">80–120 mm (S3)</span></div>
+                                    <div class="spec-row flex justify-between py-2 text-sm"><span class="text-gray-500">Water Absorption</span><span class="text-white font-medium">&lt; 5%</span></div>
+                                    <div class="spec-row flex justify-between py-2 text-sm"><span class="text-gray-500">Standard</span><span class="text-white font-medium">EN 206 / EN 12350</span></div>
+                                    <div class="spec-row flex justify-between py-2 text-sm"><span class="text-gray-500">Minimum Order</span><span class="text-white font-medium">20 m³</span></div>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-[#C87533] uppercase tracking-wider mb-4">Use Cases</h4>
+                                <ul class="space-y-1.5 text-sm text-gray-400">
+                                    <li>✓ Foundations and footings</li>
+                                    <li>✓ Structural frames and columns</li>
+                                    <li>✓ Retaining walls</li>
+                                    <li>✓ Industrial floors and hardstands</li>
+                                    <li>✓ Exposed decorative finish</li>
+                                    <li>✓ Precast elements</li>
+                                </ul>
+                                <div class="mt-5 p-4 rounded-xl bg-[rgba(200,117,51,0.08)] border border-[rgba(200,117,51,0.2)]">
+                                    <p class="text-xs text-gray-400"><strong class="text-white">How the tailings work:</strong> Processed mining tailings replace sand and gravel (aggregate fraction). Cement type and dosage remain your choice — we supply custom mix designs on request.</p>
+                                </div>
+                                <a href="contact.html?product=eco-concrete&type=buyer" class="mt-5 w-full btn-primary py-3 px-6 rounded-xl text-sm font-semibold text-white text-center block" style="text-decoration:none;">Request Datasheet &amp; Quote</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Urban Furniture -->
+                <div class="glass-card rounded-2xl border border-gray-700/40 overflow-hidden scroll-animate stagger-1">
+                    <button class="product-card w-full p-7 flex items-center justify-between text-left" onclick="toggleProduct(this)">
+                        <div class="flex items-center gap-5">
+                            <span class="text-3xl">🪑</span>
+                            <div>
+                                <h3 class="text-xl font-bold text-white">Urban Furniture</h3>
+                                <p class="text-gray-400 text-sm mt-0.5">Benches, planters, bollards · Custom designs · Municipalities &amp; public spaces</p>
+                            </div>
+                        </div>
+                        <svg class="chevron w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="product-detail px-7 pb-7">
+                        <div class="border-t border-gray-700/40 pt-6 grid md:grid-cols-2 gap-8">
+                            <div>
+                                <h4 class="text-sm font-semibold text-[#C87533] uppercase tracking-wider mb-4">Technical Specifications</h4>
+                                <div class="space-y-2">
+                                    <div class="spec-row flex justify-between py-2 text-sm"><span class="text-gray-500">Material</span><span class="text-white font-medium">Eco-Concrete + steel rebar</span></div>
+                                    <div class="spec-row flex justify-between py-2 text-sm"><span class="text-gray-500">Surface Finish</span><span class="text-white font-medium">Smooth / brushed / exposed</span></div>
+                                    <div class="spec-row flex justify-between py-2 text-sm"><span class="text-gray-500">Frost Resistance</span><span class="text-white font-medium">F200 (20 cycles)</span></div>
+                                    <div class="spec-row flex justify-between py-2 text-sm"><span class="text-gray-500">Recycled Content</span><span class="text-white font-medium">Up to 70%</span></div>
+                                    <div class="spec-row flex justify-between py-2 text-sm"><span class="text-gray-500">Customisation</span><span class="text-white font-medium">RAL colours, logo engraving</span></div>
+                                    <div class="spec-row flex justify-between py-2 text-sm"><span class="text-gray-500">Lead time</span><span class="text-white font-medium">4–6 weeks</span></div>
+                                    <div class="spec-row flex justify-between py-2 text-sm"><span class="text-gray-500">Min. Order</span><span class="text-white font-medium">10 units per type</span></div>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-[#C87533] uppercase tracking-wider mb-4">Available Products</h4>
+                                <ul class="space-y-1.5 text-sm text-gray-400">
+                                    <li>✓ Park benches (1.2m / 1.8m / 2.4m)</li>
+                                    <li>✓ Planters (round, rectangular, custom)</li>
+                                    <li>✓ Security bollards (fixed &amp; removable)</li>
+                                    <li>✓ Cycle stands</li>
+                                    <li>✓ Litter bins</li>
+                                    <li>✓ Low boundary walls</li>
+                                </ul>
+                                <div class="mt-5 p-4 rounded-xl bg-[rgba(200,117,51,0.08)] border border-[rgba(200,117,51,0.2)]">
+                                    <p class="text-xs text-gray-400"><strong class="text-white">ESG use case:</strong> Every piece delivered with a CO₂ savings certificate — perfect for sustainability reports and green procurement documentation.</p>
+                                </div>
+                                <a href="contact.html?product=urban-furniture&type=buyer" class="mt-5 w-full btn-primary py-3 px-6 rounded-xl text-sm font-semibold text-white text-center block" style="text-decoration:none;">Request Catalogue &amp; Quote</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paving Blocks -->
+                <div class="glass-card rounded-2xl border border-gray-700/40 overflow-hidden scroll-animate stagger-2">
+                    <button class="product-card w-full p-7 flex items-center justify-between text-left" onclick="toggleProduct(this)">
+                        <div class="flex items-center gap-5">
+                            <span class="text-3xl">⬜</span>
+                            <div>
+                                <h3 class="text-xl font-bold text-white">Paving Blocks</h3>
+                                <p class="text-gray-400 text-sm mt-0.5">Interlocking &amp; slab formats · Public plazas, paths &amp; driveways · BS EN 1338</p>
+                            </div>
+                        </div>
+                        <svg class="chevron w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="product-detail px-7 pb-7">
+                        <div class="border-t border-gray-700/40 pt-6 grid md:grid-cols-2 gap-8">
+                            <div>
+                                <h4 class="text-sm font-semibold text-[#C87533] uppercase tracking-wider mb-4">Technical Specifications</h4>
+                                <div class="space-y-2">
+                                    <div class="spec-row flex justify-between py-2 text-sm"><span class="text-gray-500">Compressive Strength</span><span class="text-white font-medium">≥ 50 MPa</span></div>
+                                    <div class="spec-row flex justify-between py-2 text-sm"><span class="text-gray-500">Tensile Splitting</span><span class="text-white font-medium">≥ 3.6 MPa</span></div>
+                                    <div class="spec-row flex justify-between py-2 text-sm"><span class="text-gray-500">Slip Resistance</span><span class="text-white font-medium">USRV ≥ 60</span></div>
+                                    <div class="spec-row flex justify-between py-2 text-sm"><span class="text-gray-500">Standard</span><span class="text-white font-medium">BS EN 1338 / EN 1340</span></div>
+                                    <div class="spec-row flex justify-between py-2 text-sm"><span class="text-gray-500">Thickness</span><span class="text-white font-medium">60 mm / 80 mm / 100 mm</span></div>
+                                    <div class="spec-row flex justify-between py-2 text-sm"><span class="text-gray-500">Recycled Content</span><span class="text-white font-medium">Up to 60%</span></div>
+                                    <div class="spec-row flex justify-between py-2 text-sm"><span class="text-gray-500">Min. Order</span><span class="text-white font-medium">200 m²</span></div>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-[#C87533] uppercase tracking-wider mb-4">Use Cases</h4>
+                                <ul class="space-y-1.5 text-sm text-gray-400">
+                                    <li>✓ Public plazas and pedestrianised streets</li>
+                                    <li>✓ Cycle paths and footways</li>
+                                    <li>✓ Car parks (light vehicle)</li>
+                                    <li>✓ Residential driveways</li>
+                                    <li>✓ Port and industrial yard surfacing</li>
+                                </ul>
+                                <a href="contact.html?product=paving&type=buyer" class="mt-6 w-full btn-primary py-3 px-6 rounded-xl text-sm font-semibold text-white text-center block" style="text-decoration:none;">Request Samples &amp; Quote</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recycled Aggregates -->
+                <div class="glass-card rounded-2xl border border-gray-700/40 overflow-hidden scroll-animate stagger-3">
+                    <button class="product-card w-full p-7 flex items-center justify-between text-left" onclick="toggleProduct(this)">
+                        <div class="flex items-center gap-5">
+                            <span class="text-3xl">🪨</span>
+                            <div>
+                                <h3 class="text-xl font-bold text-white">Recycled Aggregates</h3>
+                                <p class="text-gray-400 text-sm mt-0.5">Processed tailings as aggregate · Bulk supply to concrete plants &amp; builders</p>
+                            </div>
+                        </div>
+                        <svg class="chevron w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="product-detail px-7 pb-7">
+                        <div class="border-t border-gray-700/40 pt-6 grid md:grid-cols-2 gap-8">
+                            <div>
+                                <h4 class="text-sm font-semibold text-[#C87533] uppercase tracking-wider mb-4">Technical Specifications</h4>
+                                <div class="space-y-2">
+                                    <div class="spec-row flex justify-between py-2 text-sm"><span class="text-gray-500">Particle Size</span><span class="text-white font-medium">0–4 mm / 4–10 mm / 10–20 mm</span></div>
+                                    <div class="spec-row flex justify-between py-2 text-sm"><span class="text-gray-500">Los Angeles Abrasion</span><span class="text-white font-medium">LA25 class</span></div>
+                                    <div class="spec-row flex justify-between py-2 text-sm"><span class="text-gray-500">Heavy Metals</span><span class="text-white font-medium">Below EU limit values</span></div>
+                                    <div class="spec-row flex justify-between py-2 text-sm"><span class="text-gray-500">Standard</span><span class="text-white font-medium">EN 12620 (concrete aggregate)</span></div>
+                                    <div class="spec-row flex justify-between py-2 text-sm"><span class="text-gray-500">Supply Format</span><span class="text-white font-medium">Bulk tipper / 1-tonne bags</span></div>
+                                    <div class="spec-row flex justify-between py-2 text-sm"><span class="text-gray-500">Min. Order</span><span class="text-white font-medium">25 tonnes</span></div>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-[#C87533] uppercase tracking-wider mb-4">Ideal For</h4>
+                                <ul class="space-y-1.5 text-sm text-gray-400">
+                                    <li>✓ Ready-mix concrete plants (partial aggregate replacement)</li>
+                                    <li>✓ Precast concrete manufacturers</li>
+                                    <li>✓ Road sub-base &amp; fill</li>
+                                    <li>✓ Drainage aggregate</li>
+                                </ul>
+                                <a href="contact.html?product=aggregates&type=buyer" class="mt-6 w-full btn-primary py-3 px-6 rounded-xl text-sm font-semibold text-white text-center block" style="text-decoration:none;">Request Technical Sheet &amp; Pricing</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Geopolymer Binders -->
+                <div class="glass-card rounded-2xl border border-gray-700/40 overflow-hidden scroll-animate stagger-4">
+                    <button class="product-card w-full p-7 flex items-center justify-between text-left" onclick="toggleProduct(this)">
+                        <div class="flex items-center gap-5">
+                            <span class="text-3xl">🔬</span>
+                            <div>
+                                <h3 class="text-xl font-bold text-white">Geopolymer Binders</h3>
+                                <p class="text-gray-400 text-sm mt-0.5">Alkali-activated · Replaces 50–80% Portland cement · Up to 80% lower CO₂</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="hidden sm:block text-xs font-semibold text-green-400 bg-[rgba(74,124,89,0.15)] px-3 py-1 rounded-full">Lowest Carbon</span>
+                            <svg class="chevron w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </div>
+                    </button>
+                    <div class="product-detail px-7 pb-7">
+                        <div class="border-t border-gray-700/40 pt-6 grid md:grid-cols-2 gap-8">
+                            <div>
+                                <h4 class="text-sm font-semibold text-[#C87533] uppercase tracking-wider mb-4">Technical Specifications</h4>
+                                <div class="space-y-2">
+                                    <div class="spec-row flex justify-between py-2 text-sm"><span class="text-gray-500">Cement Replacement</span><span class="text-white font-medium">50–80%</span></div>
+                                    <div class="spec-row flex justify-between py-2 text-sm"><span class="text-gray-500">CO₂ Reduction vs OPC</span><span class="text-green-400 font-medium">Up to −80%</span></div>
+                                    <div class="spec-row flex justify-between py-2 text-sm"><span class="text-gray-500">28-day Strength</span><span class="text-white font-medium">30–60 MPa</span></div>
+                                    <div class="spec-row flex justify-between py-2 text-sm"><span class="text-gray-500">Chemical Resistance</span><span class="text-white font-medium">Superior to OPC</span></div>
+                                    <div class="spec-row flex justify-between py-2 text-sm"><span class="text-gray-500">Supply Format</span><span class="text-white font-medium">Dry premix (1-tonne bags)</span></div>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-semibold text-[#C87533] uppercase tracking-wider mb-4">Best Suited For</h4>
+                                <ul class="space-y-1.5 text-sm text-gray-400">
+                                    <li>✓ Ultra-low-carbon construction targets</li>
+                                    <li>✓ Chemical-resistant flooring</li>
+                                    <li>✓ High-performance precast</li>
+                                    <li>✓ Projects requiring EPD with minimum CO₂</li>
+                                </ul>
+                                <div class="mt-4 p-4 rounded-xl bg-[rgba(74,124,89,0.1)] border border-[rgba(74,124,89,0.3)]">
+                                    <p class="text-xs text-gray-400"><strong class="text-green-400">LEED Note:</strong> Geopolymer Binders can contribute to LEED v4 Materials & Resources credits (Responsible Sourcing) and Innovation credits.</p>
+                                </div>
+                                <a href="contact.html?product=geopolymer&type=buyer" class="mt-4 w-full btn-primary py-3 px-6 rounded-xl text-sm font-semibold text-white text-center block" style="text-decoration:none;">Request Datasheet &amp; Quote</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ — TECHNICAL QUESTIONS FROM CLASS -->
+    <section class="relative py-24 px-6 bg-[#0f0f0f]" style="z-index: 1;">
+        <div class="container mx-auto max-w-3xl">
+            <div class="text-center mb-14 scroll-animate blur-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 text-white">Technical <span class="gradient-text">FAQ</span></h2>
+                <p class="text-gray-400 text-lg">Real answers to the questions architects, engineers and procurement teams ask.</p>
+            </div>
+
+            <div class="space-y-4" id="faq-accordion">
+
+                <div class="glass-card rounded-2xl border border-gray-700/40 overflow-hidden scroll-animate">
+                    <button class="w-full p-6 flex justify-between items-start text-left" onclick="toggleFAQ(this)">
+                        <span class="text-white font-semibold pr-4">Do your products replace cement or the aggregate in concrete?</span>
+                        <svg class="chevron w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="faq-answer px-6 pb-6">
+                        <div class="border-t border-gray-700/40 pt-4">
+                            <p class="text-gray-400 text-sm leading-relaxed mb-3">It depends on the product line. In our <strong class="text-white">Eco-Concrete and Recycled Aggregate</strong> products, we replace the <em>aggregate</em> (sand and gravel) — not the cement. Up to 70% of the aggregate fraction is substituted with processed mining tailings. Your cement type and dosage stays the same.</p>
+                            <p class="text-gray-400 text-sm leading-relaxed">In our <strong class="text-white">Geopolymer Binder</strong> product, we go further and also replace 50–80% of the <em>Portland cement</em> with an alkali-activated slag binder. This is the highest-carbon-reduction option, cutting embodied CO₂ by up to 80%.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl border border-gray-700/40 overflow-hidden scroll-animate stagger-1">
+                    <button class="w-full p-6 flex justify-between items-start text-left" onclick="toggleFAQ(this)">
+                        <span class="text-white font-semibold pr-4">What components of the mining tailings do you actually use?</span>
+                        <svg class="chevron w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="faq-answer px-6 pb-6">
+                        <div class="border-t border-gray-700/40 pt-4">
+                            <p class="text-gray-400 text-sm leading-relaxed mb-3">Mining tailings are the finely ground rock remaining after ore extraction — typically 60–80% silica, alumina, and iron oxide. After extraction of residual metals (via our bioleaching process), the silica-rich fraction is the main component we use.</p>
+                            <p class="text-gray-400 text-sm leading-relaxed">The silica (SiO₂) and alumina (Al₂O₃) fractions are excellent natural pozzolans and aggregates. They are chemically inert once processed, well-graded, and comply with EN 12620 particle size standards for concrete aggregate.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl border border-gray-700/40 overflow-hidden scroll-animate stagger-2">
+                    <button class="w-full p-6 flex justify-between items-start text-left" onclick="toggleFAQ(this)">
+                        <span class="text-white font-semibold pr-4">Are there heavy metals in the materials? Is it safe?</span>
+                        <svg class="chevron w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="faq-answer px-6 pb-6">
+                        <div class="border-t border-gray-700/40 pt-4">
+                            <p class="text-gray-400 text-sm leading-relaxed mb-3">Yes, raw tailings contain trace heavy metals (copper, zinc, lead, arsenic depending on the ore type). Our processing step — bioleaching using naturally occurring microorganisms — selectively extracts these metals before the material is used in construction.</p>
+                            <p class="text-gray-400 text-sm leading-relaxed">All finished materials are tested by independent labs and certified to comply with EU heavy metal limit values for construction materials. Test certificates are provided with every delivery.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl border border-gray-700/40 overflow-hidden scroll-animate stagger-3">
+                    <button class="w-full p-6 flex justify-between items-start text-left" onclick="toggleFAQ(this)">
+                        <span class="text-white font-semibold pr-4">What certifications do your products carry?</span>
+                        <svg class="chevron w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="faq-answer px-6 pb-6">
+                        <div class="border-t border-gray-700/40 pt-4">
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="cert-badge">EN 206 — Concrete Specification</span>
+                                <span class="cert-badge">EN 12620 — Aggregates</span>
+                                <span class="cert-badge">BS EN 1338 — Paving Blocks</span>
+                                <span class="cert-badge">ISO 14001 — Environmental Mgmt</span>
+                                <span class="cert-badge">LEED Eligible</span>
+                            </div>
+                            <p class="text-gray-400 text-sm leading-relaxed">We provide Environmental Product Declarations (EPD) for Eco-Concrete and Paving Block products. EPDs quantify embodied CO₂ per m³ / per tonne and are required by most LEED / BREEAM projects.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl border border-gray-700/40 overflow-hidden scroll-animate stagger-4">
+                    <button class="w-full p-6 flex justify-between items-start text-left" onclick="toggleFAQ(this)">
+                        <span class="text-white font-semibold pr-4">How does pricing compare to conventional materials?</span>
+                        <svg class="chevron w-5 h-5 text-gray-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="faq-answer px-6 pb-6">
+                        <div class="border-t border-gray-700/40 pt-4">
+                            <p class="text-gray-400 text-sm leading-relaxed mb-3">Our target is price parity with conventional materials for bulk orders. Eco-Concrete is priced competitively with C25/30 ready-mix; Recycled Aggregates are positioned at or below virgin quarry aggregate pricing in regions with green procurement incentives.</p>
+                            <p class="text-gray-400 text-sm leading-relaxed">For projects qualifying for EU green public procurement or LEED credits, the net cost including incentives is typically lower than conventional alternatives. We're happy to prepare a cost-per-m³ comparison for your project — contact us for a quote.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="relative py-24 px-6 bg-gradient-to-b from-[#0f0f0f] to-[#1a1a1a]" style="z-index: 1;">
+        <div class="container mx-auto max-w-4xl text-center scroll-animate blur-in">
+            <h2 class="text-5xl md:text-6xl font-bold text-white mb-6">
+                Ready to Specify<br><span class="gradient-text">Sustainably?</span>
+            </h2>
+            <p class="text-xl text-gray-400 mb-10 max-w-2xl mx-auto font-light">
+                Send us your project brief. We'll respond with product recommendations, technical datasheets, and a preliminary price within 48 hours.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="contact.html?type=buyer" class="btn-primary px-10 py-5 rounded-full text-lg font-semibold text-white inline-block" style="text-decoration:none;">
+                    Talk to Our Technical Team
+                </a>
+                <a href="products.html" class="btn-secondary px-10 py-5 rounded-full text-lg font-semibold text-white inline-block" style="text-decoration:none;">
+                    Full Product Catalogue
+                </a>
+            </div>
+            <p class="mt-6 text-gray-600 text-sm">Average response: 24 hours · Material samples available · No commitment required</p>
+        </div>
+    </section>
+
+    <script>
+        function toggleProduct(btn) {
+            const detail = btn.nextElementSibling;
+            const chevron = btn.querySelector('.chevron');
+            const isOpen = detail.classList.contains('open');
+            // Close all
+            document.querySelectorAll('.product-detail').forEach(d => d.classList.remove('open'));
+            document.querySelectorAll('.product-card .chevron').forEach(c => c.classList.remove('open'));
+            // Open clicked if it was closed
+            if (!isOpen) {
+                detail.classList.add('open');
+                chevron.classList.add('open');
+            }
+        }
+
+        function toggleFAQ(btn) {
+            const answer = btn.nextElementSibling;
+            const chevron = btn.querySelector('.chevron');
+            const isOpen = answer.classList.contains('open');
+            document.querySelectorAll('.faq-answer').forEach(d => d.classList.remove('open'));
+            document.querySelectorAll('#faq-accordion .chevron').forEach(c => c.classList.remove('open'));
+            if (!isOpen) {
+                answer.classList.add('open');
+                chevron.classList.add('open');
+            }
+        }
+
+        // Scroll animations (reuse from existing pages)
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.scroll-animate').forEach(el => scrollObserver.observe(el));
+
+        // Hero fade-in
+        document.querySelectorAll('.animate-fade-in-up').forEach((el, i) => {
+            setTimeout(() => { el.style.opacity = '1'; el.style.animation = 'none'; el.style.transform = 'translateY(0)'; }, 100 + i * 100);
+        });
+    </script>
+</body>
+</html>
